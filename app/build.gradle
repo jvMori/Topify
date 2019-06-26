@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.jvmori.topify"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -18,6 +18,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
         }
     }
 }
@@ -35,4 +41,6 @@ dependencies {
     // spotify sdk
     implementation project(':spotify-app-remote')
     implementation "com.google.code.gson:gson:2.8.5"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.spotify.sdk:spotify-auth:1.1.0@aar"
 }

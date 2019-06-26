@@ -1,14 +1,14 @@
-package com.jvmori.topify
+package com.jvmori.topify.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jvmori.topify.R
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
     }
 }
