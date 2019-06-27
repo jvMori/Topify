@@ -1,10 +1,10 @@
 package com.jvmori.topify.di.module
 
+import com.jvmori.topify.data.network.AccessToken
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
-import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import javax.inject.Named
 
@@ -16,7 +16,7 @@ class NetworkModule {
     @ApplicationScope
     @Named("Access_Token")
     fun provideAccessToken() : String {
-        return ""
+        return AccessToken.accessToken
     }
 
     @Provides
