@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.jvmori.topify.data.Repository
 import com.jvmori.topify.data.response.Artists
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class DiscoverViewModel(
+class DiscoverViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
