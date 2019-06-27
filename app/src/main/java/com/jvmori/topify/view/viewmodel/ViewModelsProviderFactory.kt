@@ -10,7 +10,7 @@ import com.jvmori.topify.di.scope.ApplicationScope
 @ApplicationScope
 class ViewModelFactory @Inject
 constructor(
-    private val creators: MutableMap<Class<out ViewModel>,
+    private val creators: Map<Class<out ViewModel>,
             @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
