@@ -31,6 +31,8 @@ class NetworkModule {
             val request = chain.request()
                 .newBuilder()
                 .addHeader("Authorization", "Bearer $accessToken")
+                .addHeader("Content-type", "application/json")
+                .addHeader("Accept", "application/json")
                 .url(url)
                 .build()
             return@Interceptor chain.proceed(request)
