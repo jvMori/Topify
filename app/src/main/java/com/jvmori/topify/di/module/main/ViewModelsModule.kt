@@ -9,6 +9,7 @@ import dagger.Binds
 
 @Module
 abstract class ViewModelsModule {
+
     @Binds
     @IntoMap
     @ViewModelKey(DiscoverViewModel::class)
