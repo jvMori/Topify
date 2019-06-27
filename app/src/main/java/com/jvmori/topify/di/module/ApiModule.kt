@@ -14,7 +14,7 @@ import dagger.Provides
 class ApiModule {
 
     companion object {
-        private const val BASE_URL = "https://api.spotify.com/v1"
+        private const val BASE_URL = "https://api.spotify.com/v1/"
     }
 
     @Provides

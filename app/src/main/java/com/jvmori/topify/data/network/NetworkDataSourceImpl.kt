@@ -9,6 +9,6 @@ class NetworkDataSourceImpl @Inject constructor(
 ) : NetworkDataSource {
 
     override fun searchArtists(query: String): Observable<List<Artists>> {
-       return api.search(query)
+       return api.search(query, "artist")
     }
 }
