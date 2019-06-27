@@ -1,4 +1,4 @@
-package com.jvmori.topify.data.response
+package com.jvmori.topify.data.response.search
 
 import com.google.gson.annotations.SerializedName
 

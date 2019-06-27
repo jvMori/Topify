@@ -1,4 +1,4 @@
-package com.jvmori.topify.data.response
+package com.jvmori.topify.data.response.search
 
 data class Artists(
     val href: String,

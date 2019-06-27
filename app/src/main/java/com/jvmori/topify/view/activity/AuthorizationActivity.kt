@@ -33,9 +33,13 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
         val discoverViewModel = ViewModelProviders.of(this).get(DiscoverViewModel::class.java)
         discoverViewModel.repository = repository
         button.setOnClickListener{
-            discoverViewModel.search("The xx")
+           // discoverViewModel.search("Muse")
+            discoverViewModel.currentUser()
         }
         discoverViewModel.artists().observe(this, Observer {
+            Log.i("TOPIFY", it.toString())
+        })
+        discoverViewModel.user().observe(this, Observer {
             Log.i("TOPIFY", it.toString())
         })
     }
