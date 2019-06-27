@@ -5,6 +5,7 @@ import com.jvmori.topify.application.BaseApplication
 import com.jvmori.topify.di.module.ActivityBuildersModule
 import com.jvmori.topify.di.module.DataSourceModule
 import com.jvmori.topify.di.module.ViewModelFactoryModule
+import com.jvmori.topify.di.module.main.ViewModelsModule
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.BindsInstance
 import dagger.Component
@@ -19,6 +20,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidInjectionModule::class,
         ActivityBuildersModule::class,
         ViewModelFactoryModule::class,
+        ViewModelsModule::class,
         DataSourceModule::class
     ]
 )

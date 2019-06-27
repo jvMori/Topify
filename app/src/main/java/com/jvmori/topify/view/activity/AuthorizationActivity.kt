@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
+import com.jvmori.topify.data.Repository
 import com.jvmori.topify.view.viewmodel.AuthViewModel
 import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import dagger.android.AndroidInjection
@@ -19,9 +20,8 @@ import javax.inject.Inject
 class AuthorizationActivity : DaggerAppCompatActivity() {
 
     private lateinit var authViewModel: AuthViewModel
-
     @Inject
-    lateinit var viewmodelsProvidersFactory : ViewModelProvider.Factory
+    lateinit var repository : Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,8 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
 
         authViewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         authViewModel.authorize(this)
-        val discoverViewModel = ViewModelProviders.of(this, viewmodelsProvidersFactory).get(DiscoverViewModel::class.java)
+        val discoverViewModel = ViewModelProviders.of(this).get(DiscoverViewModel::class.java)
+        discoverViewModel.repository = repository
         button.setOnClickListener{
             discoverViewModel.search("The xx")
         }
