@@ -1,7 +1,7 @@
 package com.jvmori.topify.di.module
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import com.jvmori.topify.data.SpotifyApi
+import com.jvmori.topify.data.network.SpotifyApi
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import okhttp3.OkHttpClient

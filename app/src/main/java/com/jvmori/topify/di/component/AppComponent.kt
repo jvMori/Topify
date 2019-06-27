@@ -2,6 +2,7 @@ package com.jvmori.topify.di.component
 
 import android.app.Application
 import com.jvmori.topify.application.BaseApplication
+import com.jvmori.topify.di.module.DataSourceModule
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.BindsInstance
 import dagger.Component
@@ -13,7 +14,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        AndroidInjectionModule::class
+        AndroidInjectionModule::class,
+        DataSourceModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication>{
