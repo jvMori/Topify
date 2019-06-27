@@ -1,11 +1,12 @@
 package com.jvmori.topify.data.network
 
-import io.reactivex.Single
+import com.jvmori.topify.data.response.Artists
+import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.QueryMap
-import retrofit2.http.Url
+import retrofit2.http.Query
+
 
 interface SpotifyApi {
-    @GET
-    fun authorize(@Url authorizeUrl : String, @QueryMap parameters : Map<String, String>) : Single<String>
+    @GET("/search&type=track,artist")
+    fun search(@Query("q") query : String) : Observable<List<Artists>>
 }

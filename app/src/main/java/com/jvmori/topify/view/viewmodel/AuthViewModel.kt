@@ -2,6 +2,7 @@ package com.jvmori.topify.view.viewmodel
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.CLIENT_ID
 import com.jvmori.topify.data.network.AccessToken
@@ -10,7 +11,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 
 class AuthViewModel : ViewModel() {
-    private val REDIRECT_URI = "https://topify"
+    private val REDIRECT_URI = "jvmori://topify"
 
     fun authorize(activity: Activity) {
         val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
@@ -31,7 +32,7 @@ class AuthViewModel : ViewModel() {
 
                 AuthenticationResponse.Type.ERROR ->
                 {
-
+                    Log.i("TOPIFY", response.error)
                 }
                 else -> {}
             }

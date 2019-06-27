@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.view.viewmodel.AuthViewModel
+import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 
 
 class AuthorizationActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class AuthorizationActivity : AppCompatActivity() {
 
         authViewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         authViewModel.authorize(this)
+        val discoverViewModel = ViewModelProviders.of(this).get(DiscoverViewModel::class.java)
+
     }
 
     override fun onNewIntent(intent: Intent?) {

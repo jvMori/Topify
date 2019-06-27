@@ -20,7 +20,7 @@
 
                 <data
                         android:host="topify"
-                        android:scheme="https"/>
+                        android:scheme="jvmori"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
