@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.jvmori.topify.R
 
 
-class TopifyActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
