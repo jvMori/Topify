@@ -38,6 +38,7 @@ class AuthViewModel : ViewModel() {
                 AuthenticationResponse.Type.TOKEN -> {
                     myServiceInterceptor.setSessionToken(response.accessToken)
                     AccessToken.accessToken = response.accessToken
+                    //TODO: Open new activity if logged sucessfuly
                 }
 
                 AuthenticationResponse.Type.ERROR -> {
