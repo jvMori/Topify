@@ -1,12 +1,11 @@
 package com.jvmori.topify.di.module
 
-import com.jvmori.topify.Utils.MyServiceInterceptor
+import com.jvmori.topify.data.network.MyServiceInterceptor
 import com.jvmori.topify.data.network.AccessToken
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
-import okhttp3.Interceptor
 import javax.inject.Named
 
 
