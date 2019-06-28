@@ -16,7 +16,7 @@ class NetworkModule {
     @Provides
     @ApplicationScope
     @Named("Access_Token")
-    fun provideAccessToken(): String {
+    fun provideAccessToken() : String {
         return AccessToken.accessToken
     }
 
@@ -26,35 +26,16 @@ class NetworkModule {
         return MyServiceInterceptor()
     }
 
-    //    @Provides
-//    @ApplicationScope
-//    fun provideInterceptor(myServiceInterceptor: MyServiceInterceptor): MyServiceInterceptor {
-////        return Interceptor { chain ->
-////            val url = chain.request()
-////                .url()
-////                .newBuilder()
-////                .build()
-////
-////            val request = chain.request()
-////                .newBuilder()
-////                .addHeader("Authorization", "Bearer $accessToken")
-////                .url(url)
-////                .build()
-////            return@Interceptor chain.proceed(request)
-//        return MyServiceInterceptor()
-//        }
-//    }
     @Provides
     @ApplicationScope
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
         return OkHttpClient.Builder()
     }
 
-
     @Provides
     @ApplicationScope
-    fun okHttpClient(interceptor: MyServiceInterceptor, okHttpClientBuilder: OkHttpClient.Builder): OkHttpClient {
-        return okHttpClientBuilder
+    fun okHttpClient(interceptor: MyServiceInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .retryOnConnectionFailure(true)
             .build()
