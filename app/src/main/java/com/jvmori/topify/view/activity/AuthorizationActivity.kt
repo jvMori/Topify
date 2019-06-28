@@ -27,7 +27,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_auth)
         AndroidInjection.inject(this)
 
         authViewModel = ViewModelProviders.of(this, viewModelProvider).get(AuthViewModel::class.java)
