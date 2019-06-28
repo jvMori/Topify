@@ -1,6 +1,5 @@
 package com.jvmori.topify.data.network
 
-import com.jvmori.topify.data.network.AccessToken
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -8,7 +7,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class MyServiceInterceptor @Inject constructor() : Interceptor {
+class MyServiceInterceptor @Inject constructor(private var accessToken: String) : Interceptor {
 
     private var sessionToken: String? = null
 
@@ -21,7 +20,7 @@ class MyServiceInterceptor @Inject constructor() : Interceptor {
         val builder = request.newBuilder()
         val response = chain.proceed(request)
 
-        if (request.header(AccessToken.accessToken) == "") {
+        if (request.header(accessToken) == "") {
             if (sessionToken == null) {
                 throw RuntimeException("Session token should be defined for auth apis")
             } else {

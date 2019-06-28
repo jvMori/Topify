@@ -6,24 +6,24 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.CLIENT_ID
 import com.jvmori.topify.data.network.MyServiceInterceptor
-import com.jvmori.topify.data.network.AccessToken
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
+import javax.inject.Inject
+import javax.inject.Named
 
 
-class AuthViewModel : ViewModel() {
-    private val REDIRECT_URI = "jvmori://topify"
+class AuthViewModel @Inject constructor(
+    @Named("Access_Token") var accessToken: String?,
+    @Named("REDIRECT_URI") var redirectUri : String?
+) : ViewModel() {
 
-    //TODO: Inject with dagger
-    private lateinit var myServiceInterceptor: MyServiceInterceptor
+    @Inject lateinit var myServiceInterceptor: MyServiceInterceptor
+    //@Inject  @Named("Access_Token") lateinit var accessToken: String
 
-    fun setInterceptor(myServiceInterceptor: MyServiceInterceptor) {
-        this.myServiceInterceptor = myServiceInterceptor
-    }
 
     fun authorize(activity: Activity) {
-        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
+        val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, redirectUri)
         builder.setScopes(arrayOf("user-read-private", "user-read-email"))
         val request = builder.build()
         AuthenticationClient.openLoginInBrowser(activity, request)
@@ -36,7 +36,7 @@ class AuthViewModel : ViewModel() {
             when (response.type) {
                 AuthenticationResponse.Type.TOKEN -> {
                     myServiceInterceptor.setSessionToken(response.accessToken)
-                    AccessToken.accessToken = response.accessToken
+                    accessToken = response.accessToken
                     //TODO: Open new activity if logged sucessfuly
                 }
 

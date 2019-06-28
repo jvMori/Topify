@@ -1,7 +1,7 @@
 package com.jvmori.topify.di.module
 
 import com.jvmori.topify.data.network.MyServiceInterceptor
-import com.jvmori.topify.data.network.AccessToken
+import com.jvmori.topify.di.module.auth.AuthModule
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.Module
@@ -9,20 +9,17 @@ import dagger.Provides
 import javax.inject.Named
 
 
-@Module
+@Module(
+    includes = [
+        AuthModule::class
+    ]
+)
 class NetworkModule {
 
     @Provides
     @ApplicationScope
-    @Named("Access_Token")
-    fun provideAccessToken() : String {
-        return AccessToken.accessToken
-    }
-
-    @Provides
-    @ApplicationScope
-    fun provideMySessionInterceptor(): MyServiceInterceptor {
-        return MyServiceInterceptor()
+    fun provideMySessionInterceptor(@Named("Access_Token") accessToken: String): MyServiceInterceptor {
+        return MyServiceInterceptor(accessToken)
     }
 
     @Provides

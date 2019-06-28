@@ -8,9 +8,10 @@ import com.jvmori.topify.data.Repository
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.user.User
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 
-class DiscoverViewModel  : ViewModel() {
+class DiscoverViewModel @Inject constructor()  : ViewModel() {
 
     private val disposable = CompositeDisposable()
     private val _artists = MutableLiveData<List<Artists>>()
@@ -19,7 +20,7 @@ class DiscoverViewModel  : ViewModel() {
     private val _currentUser = MutableLiveData<User>()
     fun user(): LiveData<User> = _currentUser
 
-    lateinit var  repository: Repository
+    @Inject lateinit var  repository: Repository
 
     fun search(query: String) {
         disposable.add(

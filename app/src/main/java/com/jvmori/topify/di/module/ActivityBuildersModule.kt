@@ -1,6 +1,6 @@
 package com.jvmori.topify.di.module
 
-import com.jvmori.topify.di.module.main.ViewModelsModule
+import com.jvmori.topify.di.module.auth.AuthModule
 import com.jvmori.topify.view.activity.AuthorizationActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,7 +10,7 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
         modules = [
-            ViewModelsModule::class
+           // AuthModule::class
         ]
     )
     abstract fun contributeAuthActivity() : AuthorizationActivity
