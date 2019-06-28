@@ -2,10 +2,9 @@ package com.jvmori.topify.di.component
 
 import android.app.Application
 import com.jvmori.topify.application.BaseApplication
-import com.jvmori.topify.di.module.ActivityBuildersModule
-import com.jvmori.topify.di.module.DataSourceModule
-import com.jvmori.topify.di.module.auth.AuthModule
-import com.jvmori.topify.di.module.main.ViewModelsModule
+import com.jvmori.topify.di.module.app.ActivityBuildersModule
+import com.jvmori.topify.di.module.app.DataSourceModule
+import com.jvmori.topify.di.module.app.ViewModelsModule
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.BindsInstance
 import dagger.Component

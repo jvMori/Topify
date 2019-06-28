@@ -1,4 +1,4 @@
-package com.jvmori.topify.di.module
+package com.jvmori.topify.di.module.app
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.jvmori.topify.data.network.SpotifyApi

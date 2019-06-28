@@ -1,4 +1,4 @@
-package com.jvmori.topify.di.module
+package com.jvmori.topify.di.module.app
 
 import com.jvmori.topify.data.network.MyServiceInterceptor
 import com.jvmori.topify.di.module.auth.AuthModule

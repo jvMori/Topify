@@ -1,4 +1,4 @@
-package com.jvmori.topify.di.module.main
+package com.jvmori.topify.di.module.app
 
 import dagger.Module
 import androidx.lifecycle.ViewModel
