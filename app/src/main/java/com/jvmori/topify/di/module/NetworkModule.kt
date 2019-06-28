@@ -1,5 +1,6 @@
 package com.jvmori.topify.di.module
 
+import com.jvmori.topify.Utils.MyServiceInterceptor
 import com.jvmori.topify.data.network.AccessToken
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
@@ -15,33 +16,45 @@ class NetworkModule {
     @Provides
     @ApplicationScope
     @Named("Access_Token")
-    fun provideAccessToken() : String {
+    fun provideAccessToken(): String {
         return AccessToken.accessToken
     }
 
     @Provides
     @ApplicationScope
-    fun provideInterceptor(@Named("Access_Token") accessToken : String): Interceptor {
-        return Interceptor { chain ->
-            val url = chain.request()
-                .url()
-                .newBuilder()
-                .build()
+    fun provideMySessionInterceptor(): MyServiceInterceptor {
+        return MyServiceInterceptor()
+    }
 
-            val request = chain.request()
-                .newBuilder()
-                .addHeader("Authorization", "Bearer $accessToken")
-                .url(url)
-                .build()
-            return@Interceptor chain.proceed(request)
-        }
+    //    @Provides
+//    @ApplicationScope
+//    fun provideInterceptor(myServiceInterceptor: MyServiceInterceptor): MyServiceInterceptor {
+////        return Interceptor { chain ->
+////            val url = chain.request()
+////                .url()
+////                .newBuilder()
+////                .build()
+////
+////            val request = chain.request()
+////                .newBuilder()
+////                .addHeader("Authorization", "Bearer $accessToken")
+////                .url(url)
+////                .build()
+////            return@Interceptor chain.proceed(request)
+//        return MyServiceInterceptor()
+//        }
+//    }
+    @Provides
+    @ApplicationScope
+    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+        return OkHttpClient.Builder()
     }
 
 
     @Provides
     @ApplicationScope
-    fun okHttpClient(interceptor: Interceptor): OkHttpClient {
-        return OkHttpClient.Builder()
+    fun okHttpClient(interceptor: MyServiceInterceptor, okHttpClientBuilder: OkHttpClient.Builder): OkHttpClient {
+        return okHttpClientBuilder
             .addInterceptor(interceptor)
             .retryOnConnectionFailure(true)
             .build()
