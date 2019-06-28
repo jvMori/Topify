@@ -1,4 +1,4 @@
-package com.jvmori.topify.Utils
+package com.jvmori.topify.data.network
 
 import com.jvmori.topify.data.network.AccessToken
 import okhttp3.Interceptor

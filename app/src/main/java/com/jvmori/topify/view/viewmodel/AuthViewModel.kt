@@ -5,12 +5,11 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.CLIENT_ID
-import com.jvmori.topify.Utils.MyServiceInterceptor
+import com.jvmori.topify.data.network.MyServiceInterceptor
 import com.jvmori.topify.data.network.AccessToken
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
-import okhttp3.*
 
 
 class AuthViewModel : ViewModel() {
