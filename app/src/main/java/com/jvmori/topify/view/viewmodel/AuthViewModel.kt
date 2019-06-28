@@ -16,15 +16,11 @@ import okhttp3.*
 class AuthViewModel : ViewModel() {
     private val REDIRECT_URI = "jvmori://topify"
 
+    //TODO: Inject with dagger
     private lateinit var myServiceInterceptor: MyServiceInterceptor
-    private lateinit var okHttp: OkHttpClient.Builder
 
     fun setInterceptor(myServiceInterceptor: MyServiceInterceptor) {
         this.myServiceInterceptor = myServiceInterceptor
-    }
-
-    fun setOkHttpBuilder(okHttp: OkHttpClient.Builder) {
-        this.okHttp = okHttp
     }
 
     fun authorize(activity: Activity) {
