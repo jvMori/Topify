@@ -1,5 +1,6 @@
 package com.jvmori.topify.di.module
 
+import com.jvmori.topify.Utils.MyServiceInterceptor
 import com.jvmori.topify.data.network.AccessToken
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
@@ -19,26 +20,16 @@ class NetworkModule {
         return AccessToken.accessToken
     }
 
-    @Provides
-    @ApplicationScope
-    fun provideInterceptor(@Named("Access_Token") accessToken : String): Interceptor {
-        return Interceptor { chain ->
-            val url = chain.request()
-                .url()
-                .newBuilder()
-                .build()
-
-            val request = chain.request()
-                .newBuilder()
-                .addHeader("Authorization", "Bearer $accessToken")
-                .addHeader("Content-type", "application/json")
-                .addHeader("Accept", "application/json")
-                .url(url)
-                .build()
-            return@Interceptor chain.proceed(request)
-        }
+    fun provideMySessionInterceptor(): MyServiceInterceptor {
+        return MyServiceInterceptor()
     }
 
+
+    @Provides
+    @ApplicationScope
+    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+        return OkHttpClient.Builder()
+    }
 
     @Provides
     @ApplicationScope
