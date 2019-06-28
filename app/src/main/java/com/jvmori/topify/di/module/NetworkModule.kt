@@ -20,10 +20,11 @@ class NetworkModule {
         return AccessToken.accessToken
     }
 
+    @Provides
+    @ApplicationScope
     fun provideMySessionInterceptor(): MyServiceInterceptor {
         return MyServiceInterceptor()
     }
-
 
     @Provides
     @ApplicationScope
@@ -33,7 +34,7 @@ class NetworkModule {
 
     @Provides
     @ApplicationScope
-    fun okHttpClient(interceptor: Interceptor): OkHttpClient {
+    fun okHttpClient(interceptor: MyServiceInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .retryOnConnectionFailure(true)
