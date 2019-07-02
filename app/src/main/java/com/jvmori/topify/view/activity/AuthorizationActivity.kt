@@ -29,7 +29,9 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
         AndroidInjection.inject(this)
 
         authViewModel = ViewModelProviders.of(this, viewModelProvider).get(AuthViewModel::class.java)
-        authViewModel.authorize(this)
+        loginBtn.setOnClickListener{
+            authViewModel.authorize(this)
+        }
         authViewModel.response().observe(this, Observer {
            when (it.status){
                AuthResource.AuthStatus.LOADING -> loading()
@@ -47,7 +49,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
     }
 
     private fun loading(){
-        loginBtn.visibility = View.GONE
+
     }
 
     private fun error(){
@@ -55,10 +57,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
     }
 
     private fun onSuccess(){
-        loginBtn.visibility = View.VISIBLE
-        loginBtn.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
