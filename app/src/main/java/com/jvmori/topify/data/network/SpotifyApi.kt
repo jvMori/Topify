@@ -1,6 +1,8 @@
 package com.jvmori.topify.data.network
 
 import com.jvmori.topify.data.response.search.Artists
+import com.jvmori.topify.data.response.top.TopArtistsResponse
+import com.jvmori.topify.data.response.top.TopTracksResponse
 import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -15,6 +17,9 @@ interface SpotifyApi {
     @GET("me")
     fun getUser() : Observable<User>
 
-    @GET("me/top/{type}")
-    fun getTop(@Path("type") type: String)
+    @GET("me/top/artists")
+    fun getTopArtists(@Query("limit") limit : Int) : Observable<TopArtistsResponse>
+
+    @GET("me/top/tracks")
+    fun getTopTracks(@Query("limit") limit : Int) : Observable<TopTracksResponse>
 }
