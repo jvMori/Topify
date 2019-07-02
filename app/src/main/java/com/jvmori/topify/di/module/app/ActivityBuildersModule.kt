@@ -1,6 +1,7 @@
 package com.jvmori.topify.di.module.app
 
 import com.jvmori.topify.di.module.main.MainFragmentBuildersModule
+import com.jvmori.topify.di.module.main.MainViewModelsModule
 import com.jvmori.topify.view.activity.AuthorizationActivity
 import com.jvmori.topify.view.activity.MainActivity
 import dagger.Module
@@ -14,7 +15,8 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
         modules = [
-            MainFragmentBuildersModule::class
+            MainFragmentBuildersModule::class,
+            MainViewModelsModule::class
         ]
     )
     abstract fun contributeMainActivity() : MainActivity

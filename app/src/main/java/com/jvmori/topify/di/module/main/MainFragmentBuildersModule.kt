@@ -1,5 +1,6 @@
 package com.jvmori.topify.di.module.main
 
+import com.jvmori.topify.view.fragment.FragmentCreateTop
 import com.jvmori.topify.view.fragment.FragmentHome
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,4 +10,7 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contibuteHomeFragment() : FragmentHome
+
+    @ContributesAndroidInjector
+    abstract fun contributeCreateTopFrament() : FragmentCreateTop
 }

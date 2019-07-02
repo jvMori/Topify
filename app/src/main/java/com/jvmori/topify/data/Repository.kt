@@ -2,6 +2,9 @@ package com.jvmori.topify.data
 
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.response.search.Artists
+import com.jvmori.topify.data.response.top.TopArtistsResponse
+import com.jvmori.topify.data.response.top.TopParam
+import com.jvmori.topify.data.response.top.TopTracksResponse
 import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,5 +27,15 @@ class Repository @Inject constructor(
             .subscribeOn(Schedulers.io())
     }
 
+    override fun getTopArtists(param: TopParam): Observable<TopArtistsResponse> {
+       return networkDataSource.getTopArtists(param)
+           .observeOn(AndroidSchedulers.mainThread())
+           .subscribeOn(Schedulers.io())
+    }
 
+    override fun getTopTracks(param: TopParam): Observable<TopTracksResponse> {
+        return networkDataSource.getTopTracks(param)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+    }
 }
