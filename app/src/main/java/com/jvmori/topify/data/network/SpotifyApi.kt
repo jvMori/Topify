@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 
 interface SpotifyApi {
@@ -18,8 +19,8 @@ interface SpotifyApi {
     fun getUser() : Observable<User>
 
     @GET("me/top/artists")
-    fun getTopArtists(@Query("limit") limit : Int) : Observable<TopArtistsResponse>
+    fun getTopArtists(@QueryMap parameters : Map<String, String>) : Observable<TopArtistsResponse>
 
     @GET("me/top/tracks")
-    fun getTopTracks(@Query("limit") limit : Int) : Observable<TopTracksResponse>
+    fun getTopTracks(@QueryMap parameters : Map<String, String>) : Observable<TopTracksResponse>
 }
