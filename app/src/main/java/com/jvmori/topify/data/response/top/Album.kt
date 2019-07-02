@@ -10,10 +10,10 @@ data class Album(
     @SerializedName("available_markets")
     val availableMarkets: List<String>,
     @SerializedName("external_urls")
-    val externalUrls: ExternalUrlsXXX,
+    val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
-    val images: List<ImageX>,
+    val images: List<Image>,
     val name: String,
     @SerializedName("release_date")
     val releaseDate: String,
