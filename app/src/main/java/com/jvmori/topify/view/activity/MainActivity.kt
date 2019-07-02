@@ -1,30 +1,23 @@
 package com.jvmori.topify.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.jvmori.topify.R
-import com.jvmori.topify.view.viewmodel.DiscoverViewModel
-import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var viewModelProvider: ViewModelProvider.Factory
+
+class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AndroidInjection.inject(this)
+        setupBottomNav()
+    }
 
-        val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
-        discoverViewModel.currentUser()
-        discoverViewModel.user().observe(this, Observer {
-            hello.text = it.displayName
-        })
+    private fun setupBottomNav() {
+        val controller = Navigation.findNavController(this, R.id.navHostFragment)
+        NavigationUI.setupWithNavController(bottom_navigation, controller)
     }
 }
