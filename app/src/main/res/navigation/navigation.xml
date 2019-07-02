@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+            app:startDestination="@id/fragmentHome">
+
+    <fragment android:id="@+id/fragmentCreateTop" android:name="com.jvmori.topify.view.fragment.FragmentCreateTop"
+              android:label="fragment_create_top" tools:layout="@layout/fragment_create_top"/>
+    <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
+              android:label="fragment_home" tools:layout="@layout/fragment_home"/>
+    <fragment android:id="@+id/fragmentDiscover" android:name="com.jvmori.topify.view.fragment.FragmentDiscover"
+              android:label="fragment_fragment_discover" tools:layout="@layout/fragment_fragment_discover"/>
+</navigation>
