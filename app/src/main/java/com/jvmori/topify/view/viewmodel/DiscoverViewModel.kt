@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jvmori.topify.data.IRepository
 import com.jvmori.topify.data.Repository
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.user.User
@@ -20,7 +21,7 @@ class DiscoverViewModel @Inject constructor()  : ViewModel() {
     private val _currentUser = MutableLiveData<User>()
     fun user(): LiveData<User> = _currentUser
 
-    @Inject lateinit var  repository: Repository
+    @Inject lateinit var  repository: IRepository
 
     fun search(query: String) {
         disposable.add(

@@ -10,16 +10,19 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val networkDataSource: NetworkDataSource
-){
-    fun searchArtist(query: String) : Observable<List<Artists>>{
+) : IRepository
+{
+    override fun searchArtist(query: String) : Observable<List<Artists>>{
         return networkDataSource.searchArtists(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }
 
-    fun getCurrentUser() : Observable<User>{
+    override fun getCurrentUser() : Observable<User>{
         return networkDataSource.getCurrentUser()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }
+
+
 }
