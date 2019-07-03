@@ -55,7 +55,7 @@ class FragmentCreateTop : DaggerFragment() {
             }
         })
     }
-    
+
     private fun showLoading(){
 
     }
