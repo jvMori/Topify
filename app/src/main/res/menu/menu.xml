@@ -9,14 +9,14 @@
     <item
             android:id="@+id/fragmentCreateTop"
             android:enabled="true"
-            android:icon="@drawable/ic_playlist"
+            android:icon="@drawable/ic_discover"
             android:title="@string/text_create"
             app:showAsAction="ifRoom" />
 
     <item
             android:id="@+id/fragmentDiscover"
             android:enabled="true"
-            android:icon="@drawable/ic_discover"
+            android:icon="@drawable/ic_playlist"
             android:title="@string/text_discover"
             app:showAsAction="ifRoom" />
 </menu>
