@@ -61,7 +61,9 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     private fun success(data : TopTracksResponse?){
-        Log.i("TOPIFY", data?.tracks.toString() )
+        Log.i("TOPIFY", data?.tracks?.let{
+            it[0].name
+        })
     }
 
     private fun error(message : String?){

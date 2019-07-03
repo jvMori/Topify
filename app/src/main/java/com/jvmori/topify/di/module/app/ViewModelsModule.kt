@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.jvmori.topify.di.ViewModelKey
 import com.jvmori.topify.di.scope.ApplicationScope
 import com.jvmori.topify.view.viewmodel.AuthViewModel
+import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import com.jvmori.topify.view.viewmodel.ViewModelFactory
 import dagger.multibindings.IntoMap
@@ -18,6 +19,11 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(DiscoverViewModel::class)
     abstract fun bindDiscoverViewModel(discoverViewModel: DiscoverViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateTopViewModel::class)
+    abstract fun bindCreateTopViewModel(createTopViewModel: CreateTopViewModel): ViewModel
 
     @Binds
     @IntoMap
