@@ -44,7 +44,7 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val topViewModel = ViewModelProviders.of(this, factory)[CreateTopViewModel::class.java]
+        val topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         val params = TopParam(50, TimeRange().shortTerm) //TODO: user can change it in settings
         topViewModel.fetchTopTracks(params)
         topViewModel.topTracks().observe(this, Observer {
