@@ -7,7 +7,6 @@
 
     <TextView
             android:text="01"
-            android:theme="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/index"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"

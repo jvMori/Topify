@@ -10,14 +10,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.jvmori.topify.R
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.TopTracksResponse
+import com.jvmori.topify.data.response.top.Track
+import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_create_top.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -64,9 +69,17 @@ class FragmentCreateTop : DaggerFragment() {
         Log.i("TOPIFY", data?.tracks?.let{
             it[0].name
         })
+        createTopTracksAdapter(data?.tracks)
     }
 
     private fun error(message : String?){
         Log.i("TOPIFY", message )
+    }
+
+    private fun createTopTracksAdapter(tracks : List<Track>?){
+        val topTracksAdapter = TopTracksAdapter(tracks)
+        topRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
+        topRecyclerView.setHasFixedSize(true)
+        topRecyclerView.adapter = topTracksAdapter
     }
 }

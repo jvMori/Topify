@@ -46,7 +46,5 @@ class FragmentHome : DaggerFragment() {
         discoverViewModel.user().observe(this, Observer {
              hello.text = it.displayName
         })
-
     }
-
 }
