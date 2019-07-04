@@ -53,6 +53,7 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+       // activity?.setActionBar(my_toolbar)
         val topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         val params = TopParam(50, TimeRange().shortTerm) //TODO: user can change it in settings
         topViewModel.fetchTopTracks(params)

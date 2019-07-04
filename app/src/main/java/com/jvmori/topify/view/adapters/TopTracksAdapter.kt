@@ -25,8 +25,8 @@ class TopTracksAdapter(
                 item?.let {item ->
                     title.text = item.name
                     artist.text = item.let { it.artists[0].name }
-                    length.text = item.durationMs.toString()
-                    index.text = if (adapterPosition < 9) "0${adapterPosition + 1}" else {adapterPosition + 1}.toString()
+                    length.text = item.getDurationMinutes()
+                    index.text = item.getIndex(adapterPosition)
                     imageLoader.loadImage(item.album.images[1].url, icon)
                 }
             }

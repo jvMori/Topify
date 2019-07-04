@@ -23,4 +23,14 @@ data class Track(
     val trackNumber: Int,
     val type: String,
     val uri: String
-)
+){
+    fun getDurationMinutes() : String{
+        val seconds = (durationMs / 1000) % 60
+        val secondsString: String = if ( seconds < 9)  "0$seconds" else seconds.toString()
+        return "${durationMs / 1000 / 60}:$secondsString"
+    }
+
+    fun getIndex(adapterPosition : Int) : String{
+        return if (adapterPosition < 9) "0${adapterPosition + 1}" else {adapterPosition + 1}.toString()
+    }
+}
