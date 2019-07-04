@@ -4,16 +4,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter<T>(var items : List<T>?) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder<T>>(){
+abstract class BaseAdapter<T>(private var items : List<T>?) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder<T>>(){
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T>
 
     override fun getItemCount(): Int = items?.size ?: 0
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
-        holder.bindView(items?.let{
-            it[position]
-        })
+        holder.bindView(items?.let { it[position] })
     }
 
     abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView){

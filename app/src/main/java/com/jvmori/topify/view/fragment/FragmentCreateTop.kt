@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.jvmori.topify.R
+import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopParam
@@ -38,6 +39,9 @@ class FragmentCreateTop : DaggerFragment() {
 
     @Inject
     lateinit var factory : ViewModelProvider.Factory
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +81,7 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     private fun createTopTracksAdapter(tracks : List<Track>?){
-        val topTracksAdapter = TopTracksAdapter(tracks)
+        val topTracksAdapter = TopTracksAdapter(tracks, imageLoader)
         topRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         topRecyclerView.setHasFixedSize(true)
         topRecyclerView.adapter = topTracksAdapter

@@ -4,6 +4,7 @@ import android.app.Application
 import com.jvmori.topify.application.BaseApplication
 import com.jvmori.topify.di.module.app.ActivityBuildersModule
 import com.jvmori.topify.di.module.app.DataSourceModule
+import com.jvmori.topify.di.module.app.ImageLoaderModule
 import com.jvmori.topify.di.module.app.ViewModelsModule
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.BindsInstance
@@ -19,10 +20,11 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidInjectionModule::class,
         ActivityBuildersModule::class,
         ViewModelsModule::class,
-        DataSourceModule::class
+        DataSourceModule::class,
+        ImageLoaderModule::class
     ]
 )
-interface AppComponent : AndroidInjector<BaseApplication>{
+interface AppComponent : AndroidInjector<BaseApplication> {
     @Component.Builder
     interface Builder {
         fun build(): AppComponent
