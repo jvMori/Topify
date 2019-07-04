@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 import com.jvmori.topify.R
+import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -45,6 +46,7 @@ class FragmentHome : DaggerFragment() {
         discoverViewModel.user().observe(this, Observer {
              hello.text = it.displayName
         })
+
     }
 
 }
