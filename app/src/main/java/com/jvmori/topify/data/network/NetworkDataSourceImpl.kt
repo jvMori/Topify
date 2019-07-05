@@ -1,5 +1,6 @@
 package com.jvmori.topify.data.network
 
+import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.top.TopArtistsResponse
 import com.jvmori.topify.data.response.top.TopParam
@@ -30,10 +31,15 @@ class NetworkDataSourceImpl @Inject constructor(
         return api.getTopTracks(map)
     }
 
+    override fun createPlaylist(userId: Int, playlistName: String): Observable<PlaylistResponse> {
+        return api.createPlaylist(userId, playlistName)
+    }
+
     private fun createMap(param: TopParam): HashMap<String, String> {
         val map = hashMapOf<String, String>()
         map["limit"] = param.limit.toString()
         map["time_range"] = param.timeRange
         return map
     }
+
 }
