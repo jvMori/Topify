@@ -23,7 +23,7 @@ class Resource<T>(
             return Resource(Status.ERROR, data, msg)
         }
 
-        fun <T> loading(@Nullable data: T): Resource<T> {
+        fun <T> loading(@Nullable data: T?): Resource<T> {
             return Resource(Status.LOADING, data, null)
         }
     }

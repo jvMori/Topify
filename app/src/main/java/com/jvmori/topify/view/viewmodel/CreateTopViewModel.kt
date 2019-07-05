@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.data.IRepository
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.TopTracksResponse
 import io.reactivex.disposables.CompositeDisposable
@@ -16,8 +17,12 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     lateinit var repository: IRepository
 
     private val disposable = CompositeDisposable()
+
     private val _topTracks = MutableLiveData<Resource<TopTracksResponse>>()
     fun topTracks(): LiveData<Resource<TopTracksResponse>> = _topTracks
+
+    private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
+    fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
 
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
@@ -28,6 +33,20 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
                         _topTracks.value = Resource.success(success)
                     }, { error ->
                         _topTracks.value = Resource.error("Error $error.message", null)
+                    }
+                )
+        )
+    }
+    
+    fun createTopTracksPlaylist(userId : Int, playlistName: String) {
+        _topTracksPlaylist.value = Resource.loading(null)
+        disposable.add(
+            repository.createPlaylist(userId, playlistName)
+                .subscribe(
+                    {
+                        success -> _topTracksPlaylist.value = Resource.success(success)
+                    }, {
+                        error -> _topTracksPlaylist.value = Resource.error("ERROR ${error?.message}", null)
                     }
                 )
         )

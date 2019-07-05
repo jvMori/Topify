@@ -29,7 +29,7 @@ class AuthViewModel @Inject constructor(
     fun authorize(activity: Activity) {
         _response.value= AuthResource.loading(null)
         val builder = AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, redirectUri)
-        builder.setScopes(arrayOf("user-read-private", "user-read-email", "user-top-read"))
+        builder.setScopes(arrayOf("user-read-private", "user-read-email", "user-top-read", "playlist-modify-public"))
         val request = builder.build()
         AuthenticationClient.openLoginInBrowser(activity, request)
     }

@@ -1,6 +1,7 @@
 package com.jvmori.topify.data
 
 import com.jvmori.topify.data.network.NetworkDataSource
+import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.top.TopArtistsResponse
 import com.jvmori.topify.data.response.top.TopParam
@@ -35,6 +36,12 @@ class Repository @Inject constructor(
 
     override fun getTopTracks(param: TopParam): Observable<TopTracksResponse> {
         return networkDataSource.getTopTracks(param)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+    }
+
+    override fun createPlaylist(userId: Int, playlistName: String): Observable<PlaylistResponse> {
+        return networkDataSource.createPlaylist(userId, playlistName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }
