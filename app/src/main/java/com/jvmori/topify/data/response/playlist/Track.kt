@@ -17,7 +17,7 @@ data class Track(
     @SerializedName("external_ids")
     val externalIds: ExternalIds,
     @SerializedName("external_urls")
-    val externalUrls: ExternalUrlsX,
+    val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
     @SerializedName("is_local")

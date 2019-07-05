@@ -13,5 +13,5 @@ interface IRepository {
     fun getCurrentUser() : Observable<User>
     fun getTopTracks(param: TopParam) : Observable<TopTracksResponse>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
-    fun createPlaylist(userId: Int, playlistName : String) : Observable<PlaylistResponse>
+    fun createPlaylist(userId: String, playlistName : String) : Observable<PlaylistResponse>
 }

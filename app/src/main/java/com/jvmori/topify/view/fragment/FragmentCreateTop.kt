@@ -43,6 +43,8 @@ class FragmentCreateTop : DaggerFragment() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
+    private lateinit var topViewModel: CreateTopViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +56,26 @@ class FragmentCreateTop : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        // activity?.setActionBar(my_toolbar)
-        val topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
+        topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
+        displayTop()
+        createPlaylist()
+    }
+
+    private fun createPlaylist() {
+        create_btn.setOnClickListener {
+            topViewModel.createTopTracksPlaylist("jeivsss", "Topify top 50")
+        }
+        topViewModel.topTracksPlaylist().observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS ->
+                        Log.i("TOPIFY", it.data?.name.toString())
+                Resource.Status.ERROR -> error(it.message)
+            }
+        })
+    }
+
+    private fun displayTop() {
         val params = TopParam(50, TimeRange().shortTerm) //TODO: user can change it in settings
         topViewModel.fetchTopTracks(params)
         topViewModel.topTracks().observe(this, Observer {

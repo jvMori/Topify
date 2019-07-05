@@ -26,7 +26,7 @@ interface SpotifyApi {
     @FormUrlEncoded
     @Headers("Content-Type: application/json")
     fun createPlaylist(
-        @Path("user_id") userId : Int,
+        @Path("user_id") userId : String,
         @Field("name" ) playlistName: String
     ) : Observable<PlaylistResponse>
 }
