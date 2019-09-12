@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.data.IRepository
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
@@ -24,6 +26,9 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
     fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
+
+    private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
+    fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
 
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
@@ -48,6 +53,20 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
                         success -> _topTracksPlaylist.value = Resource.success(success)
                     }, {
                         error -> _topTracksPlaylist.value = Resource.error("ERROR ${error?.message}", null)
+                    }
+                )
+        )
+    }
+
+    fun addTracksToPlaylist(playlistId : String, tracks: AddTracks) {
+        _topTracksPlaylist.value = Resource.loading(null)
+        disposable.add(
+            repository.addTracksToPlaylist(playlistId, tracks)
+                .subscribe(
+                    {
+                            success -> _addTracksSnapshot.value = Resource.success(success)
+                    }, {
+                            error -> _addTracksSnapshot.value = Resource.error("ERROR ${error?.message}", null)
                     }
                 )
         )

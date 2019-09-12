@@ -1,5 +1,7 @@
 package com.jvmori.topify.data.network
 
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.top.TopArtistsResponse
@@ -14,4 +16,5 @@ interface NetworkDataSource {
     fun getTopTracks(param: TopParam) : Observable<TopTracksResponse>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
     fun createPlaylist(userId: String, playlistName : String) : Observable<PlaylistResponse>
+    fun addTracksToPlaylist(playlistId : String, tracks : AddTracks) : Observable<AddTracksResponse>
 }

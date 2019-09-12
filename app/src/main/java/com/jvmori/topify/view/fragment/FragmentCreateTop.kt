@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.TopTracksResponse
@@ -44,6 +46,7 @@ class FragmentCreateTop : DaggerFragment() {
     lateinit var imageLoader: ImageLoader
 
     private lateinit var topViewModel: CreateTopViewModel
+    private val tracksUris = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +62,9 @@ class FragmentCreateTop : DaggerFragment() {
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         displayTop()
         createPlaylist()
+        topViewModel.addTracksSnapshot().observe(this, Observer {
+            Log.i("TOPIFY", it.data?.snapshot_id)
+        })
     }
 
     private fun createPlaylist() {
@@ -68,8 +74,10 @@ class FragmentCreateTop : DaggerFragment() {
         topViewModel.topTracksPlaylist().observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS ->
-                        Log.i("TOPIFY", it.data?.name.toString())
+                Resource.Status.SUCCESS ->{
+                    Log.i("TOPIFY", it.data?.name.toString())
+                    topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
+                }
                 Resource.Status.ERROR -> error(it.message)
             }
         })
@@ -81,7 +89,9 @@ class FragmentCreateTop : DaggerFragment() {
         topViewModel.topTracks().observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS -> success(it.data)
+                Resource.Status.SUCCESS -> {
+                    success(it.data)
+                }
                 Resource.Status.ERROR -> error(it.message)
             }
         })
@@ -92,10 +102,14 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     private fun success(data : TopTracksResponse?){
-        Log.i("TOPIFY", data?.tracks?.let{
-            it[0].name
-        })
         createTopTracksAdapter(data?.tracks)
+        createUris(data)
+    }
+
+    private fun createUris(data : TopTracksResponse?){
+        data?.tracks?.forEach { item ->
+            tracksUris.add(item.uri)
+        }
     }
 
     private fun error(message : String?){

@@ -1,5 +1,7 @@
 package com.jvmori.topify.data.network
 
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
@@ -34,6 +36,10 @@ class NetworkDataSourceImpl @Inject constructor(
 
     override fun createPlaylist(userId: String, playlistName: String): Observable<PlaylistResponse> {
         return api.createPlaylist(userId, NewPlaylist(name = playlistName))
+    }
+
+    override fun addTracksToPlaylist(playlistId: String, tracks: AddTracks): Observable<AddTracksResponse> {
+        return api.addTracksToPlaylist(playlistId, tracks)
     }
 
     private fun createMap(param: TopParam): HashMap<String, String> {

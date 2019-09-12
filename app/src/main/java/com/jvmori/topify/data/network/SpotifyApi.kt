@@ -1,5 +1,7 @@
 package com.jvmori.topify.data.network
 
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
@@ -23,18 +25,17 @@ interface SpotifyApi {
     @GET("me/top/tracks")
     fun getTopTracks(@QueryMap parameters: Map<String, String>): Observable<TopTracksResponse>
 
-//    @POST("users/{user_id}/playlists")
-//    @FormUrlEncoded
-//    @Headers("Content-Type: application/json")
-//    fun createPlaylist(
-//        @Path("user_id") userId : String,
-//        @Field("name" ) playlistName: String
-//    ) : Observable<PlaylistResponse>
-
     @POST("users/{user_id}/playlists")
     @Headers("Content-Type: application/json")
     fun createPlaylist(
         @Path("user_id") userId: String,
         @Body playlist: NewPlaylist
     ): Observable<PlaylistResponse>
+
+    @POST("playlists/{playlist_id}/tracks")
+    @Headers("Content-Type: application/json")
+    fun addTracksToPlaylist(
+        @Path("playlist_id") playlistId: String,
+        @Body tracks: AddTracks
+    ): Observable<AddTracksResponse>
 }
