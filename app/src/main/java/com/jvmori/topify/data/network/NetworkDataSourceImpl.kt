@@ -32,7 +32,7 @@ class NetworkDataSourceImpl @Inject constructor(
         return api.getTopTracks(map)
     }
 
-    override fun createPlaylist(userId: String, playlistName: String): Observable<NewPlaylist> {
+    override fun createPlaylist(userId: String, playlistName: String): Observable<PlaylistResponse> {
         return api.createPlaylist(userId, NewPlaylist(name = playlistName))
     }
 

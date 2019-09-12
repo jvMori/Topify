@@ -22,8 +22,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topTracks = MutableLiveData<Resource<TopTracksResponse>>()
     fun topTracks(): LiveData<Resource<TopTracksResponse>> = _topTracks
 
-    private val _topTracksPlaylist = MutableLiveData<Resource<NewPlaylist>>()
-    fun topTracksPlaylist(): LiveData<Resource<NewPlaylist>> = _topTracksPlaylist
+    private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
+    fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
 
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)

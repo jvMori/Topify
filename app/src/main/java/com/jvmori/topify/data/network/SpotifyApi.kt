@@ -36,5 +36,5 @@ interface SpotifyApi {
     fun createPlaylist(
         @Path("user_id") userId: String,
         @Body playlist: NewPlaylist
-    ): Observable<NewPlaylist>
+    ): Observable<PlaylistResponse>
 }
