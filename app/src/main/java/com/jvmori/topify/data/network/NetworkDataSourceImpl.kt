@@ -33,7 +33,7 @@ class NetworkDataSourceImpl @Inject constructor(
     }
 
     override fun createPlaylist(userId: String, playlistName: String): Observable<NewPlaylist> {
-        return api.createPlaylist(userId, NewPlaylist())
+        return api.createPlaylist(userId, NewPlaylist(name = playlistName))
     }
 
     private fun createMap(param: TopParam): HashMap<String, String> {
