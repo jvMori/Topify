@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.data.IRepository
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.TopTracksResponse
@@ -21,8 +22,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topTracks = MutableLiveData<Resource<TopTracksResponse>>()
     fun topTracks(): LiveData<Resource<TopTracksResponse>> = _topTracks
 
-    private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
-    fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
+    private val _topTracksPlaylist = MutableLiveData<Resource<NewPlaylist>>()
+    fun topTracksPlaylist(): LiveData<Resource<NewPlaylist>> = _topTracksPlaylist
 
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
