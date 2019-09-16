@@ -41,7 +41,7 @@ class AuthViewModel @Inject constructor(
             when (response.type) {
                 AuthenticationResponse.Type.TOKEN -> {
                     myServiceInterceptor.setSessionToken(response.accessToken)
-                    accessToken = response.accessToken
+                    //accessToken = response.accessToken
                     _response.value= AuthResource.authenticated(response)
                 }
                 AuthenticationResponse.Type.ERROR -> {
