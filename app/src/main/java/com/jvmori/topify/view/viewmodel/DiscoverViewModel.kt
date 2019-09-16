@@ -8,6 +8,7 @@ import com.jvmori.topify.data.IRepository
 import com.jvmori.topify.data.Repository
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.user.User
+import com.jvmori.topify.view.activity.AuthResource
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -18,8 +19,8 @@ class DiscoverViewModel @Inject constructor()  : ViewModel() {
     private val _artists = MutableLiveData<List<Artists>>()
     fun artists(): LiveData<List<Artists>> = _artists
 
-    private val _currentUser = MutableLiveData<User>()
-    fun user(): LiveData<User> = _currentUser
+    private val _currentUser = MutableLiveData<AuthResource<User>>()
+    fun user(): LiveData<AuthResource<User>> = _currentUser
 
     @Inject lateinit var  repository: IRepository
 
@@ -41,9 +42,10 @@ class DiscoverViewModel @Inject constructor()  : ViewModel() {
             repository.getCurrentUser()
                 .subscribe (
                     {
-                            success -> _currentUser.value = success
+                            success -> _currentUser.value = AuthResource.authenticated(success)
                     }, {
                             error -> Log.i("TOPIFY", error.message)
+                        _currentUser.value = AuthResource.error( error.message!!, null)
                     }
                 )
         )

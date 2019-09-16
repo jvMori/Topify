@@ -2,37 +2,30 @@ package com.jvmori.topify.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.SessionManager
+import com.jvmori.topify.view.viewmodel.AuthViewModel
+import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class SplashActivity : DaggerAppCompatActivity() {
 
-    @Inject lateinit var sessionManager: SessionManager
+    @Inject
+    lateinit var sessionManager: SessionManager
+    @Inject
+    lateinit var viewModelProvider: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-//        if (sessionManager.getUser().value == null)
-//            openAuthActivity()
 
-        sessionManager.getUser().observe(this, Observer {
-            Log.i("Main", it.status.toString())
-            when(it.status){
-                AuthResource.AuthStatus.AUTHENTICATED -> {
-                    val intent = Intent(this, MainActivity::class.java )
-                    startActivity(intent)
-                    finish()
-                }
-                else -> {
-                    openAuthActivity()
-                }
-            }
-        })
     }
 
     private fun openAuthActivity() {

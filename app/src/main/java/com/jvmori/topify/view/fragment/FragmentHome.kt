@@ -44,7 +44,7 @@ class FragmentHome : DaggerFragment() {
         val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
         discoverViewModel.currentUser()
         discoverViewModel.user().observe(this, Observer {
-             hello.text = it.displayName
+             hello.text = it.data?.displayName
         })
     }
 }
