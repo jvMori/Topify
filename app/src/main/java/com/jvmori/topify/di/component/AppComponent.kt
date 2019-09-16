@@ -1,6 +1,7 @@
 package com.jvmori.topify.di.component
 
 import android.app.Application
+import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.application.BaseApplication
 import com.jvmori.topify.di.module.app.ActivityBuildersModule
 import com.jvmori.topify.di.module.app.DataSourceModule
@@ -25,6 +26,9 @@ import dagger.android.support.AndroidSupportInjectionModule
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
+
+    val sessionManager : SessionManager
+
     @Component.Builder
     interface Builder {
         fun build(): AppComponent

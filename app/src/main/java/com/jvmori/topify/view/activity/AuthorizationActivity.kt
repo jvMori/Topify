@@ -29,6 +29,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
         AndroidInjection.inject(this)
 
         authViewModel = ViewModelProviders.of(this, viewModelProvider).get(AuthViewModel::class.java)
+        //authViewModel.authorize(this)
         loginBtn.setOnClickListener{
             authViewModel.authorize(this)
         }
