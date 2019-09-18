@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
-class DiscoverViewModel @Inject constructor()  : ViewModel() {
+class DiscoverViewModel @Inject constructor() : ViewModel() {
 
     private val disposable = CompositeDisposable()
     private val _artists = MutableLiveData<List<Artists>>()
@@ -21,16 +21,17 @@ class DiscoverViewModel @Inject constructor()  : ViewModel() {
     private val _currentUser = MutableLiveData<AuthResource<User>>()
     fun user(): LiveData<AuthResource<User>> = _currentUser
 
-    @Inject lateinit var  repository: IRepository
+    @Inject
+    lateinit var repository: IRepository
 
     fun search(query: String) {
         disposable.add(
             repository.searchArtist(query)
-                .subscribe (
-                    {
-                        success -> _artists.value = success
-                    }, {
-                        error -> Log.i("TOPIFY", error.message)
+                .subscribe(
+                    { success ->
+                        _artists.value = success
+                    }, { error ->
+                        Log.i("TOPIFY", error.message)
                     }
                 )
         )
@@ -39,12 +40,12 @@ class DiscoverViewModel @Inject constructor()  : ViewModel() {
     fun currentUser() {
         disposable.add(
             repository.getCurrentUser()
-                .subscribe (
-                    {
-                            success -> _currentUser.value = AuthResource.authenticated(success)
-                    }, {
-                            error -> Log.i("TOPIFY", error.message)
-                        _currentUser.value = AuthResource.error( error.message!!, null)
+                .subscribe(
+                    { success ->
+                        _currentUser.value = AuthResource.authenticated(success)
+                    }, { error ->
+                        Log.i("TOPIFY", error.message)
+                        _currentUser.value = AuthResource.error(error.message!!, null)
                     }
                 )
         )

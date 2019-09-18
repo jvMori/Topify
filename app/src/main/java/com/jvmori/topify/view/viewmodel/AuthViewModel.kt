@@ -54,8 +54,11 @@ class AuthViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .subscribe({ success ->
                     _token.value = Resource.success(success)
+                    myServiceInterceptor.setSessionToken(success.key)
                 }, {
                     _token.value = Resource.error("No key", null)
+                }, {
+                   _token.value = Resource.error("No such key in db", null)
                 })
         )
     }
