@@ -1,9 +1,8 @@
-package com.jvmori.topify.data
+package com.jvmori.topify.data.repository
 
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
-import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.top.TopArtistsResponse

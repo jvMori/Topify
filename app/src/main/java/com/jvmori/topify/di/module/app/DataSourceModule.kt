@@ -1,7 +1,7 @@
 package com.jvmori.topify.di.module.app
 
-import com.jvmori.topify.data.IRepository
-import com.jvmori.topify.data.Repository
+import com.jvmori.topify.data.repository.IRepository
+import com.jvmori.topify.data.repository.Repository
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.network.NetworkDataSourceImpl
 import com.jvmori.topify.data.network.SpotifyApi
@@ -14,7 +14,8 @@ class DataSourceModule {
 
     @Provides
     @ApplicationScope
-    fun repository(networkDataSource : NetworkDataSource) : IRepository = Repository(networkDataSource)
+    fun repository(networkDataSource : NetworkDataSource) : IRepository =
+        Repository(networkDataSource)
 
     @Provides
     @ApplicationScope

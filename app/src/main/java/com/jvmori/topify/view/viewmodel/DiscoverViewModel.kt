@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jvmori.topify.data.IRepository
-import com.jvmori.topify.data.Repository
+import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.response.user.User
 import com.jvmori.topify.view.activity.AuthResource

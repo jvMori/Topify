@@ -3,11 +3,10 @@ package com.jvmori.topify.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jvmori.topify.data.IRepository
+import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
-import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.TopTracksResponse

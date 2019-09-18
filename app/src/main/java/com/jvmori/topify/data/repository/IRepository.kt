@@ -1,4 +1,4 @@
-package com.jvmori.topify.data
+package com.jvmori.topify.data.repository
 
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
