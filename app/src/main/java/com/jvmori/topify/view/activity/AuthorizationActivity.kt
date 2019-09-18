@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.SessionManager
+import com.jvmori.topify.data.Resource
 
 import com.jvmori.topify.view.viewmodel.AuthViewModel
 import com.jvmori.topify.view.viewmodel.DiscoverViewModel
@@ -23,9 +24,9 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
     private lateinit var authViewModel: AuthViewModel
 
     @Inject
-    lateinit var viewModelProvider : ViewModelProvider.Factory
+    lateinit var viewModelProvider: ViewModelProvider.Factory
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,28 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
 
         loginBtn.visibility = View.GONE
 
+        authViewModel = ViewModelProviders.of(this, viewModelProvider).get(AuthViewModel::class.java)
+        authViewModel.fetchTokenLocal()
+        authViewModel.token().observe(this, Observer {
+            when (it.status) {
+                Resource.Status.SUCCESS -> authenticateUser()
+                Resource.Status.ERROR -> authViewModel.authorize(this)
+                else -> {
+                    loading()
+                }
+            }
+        })
+
+        authViewModel.response().observe(this, Observer {
+            when (it.status) {
+                AuthResource.AuthStatus.LOADING -> loading()
+                AuthResource.AuthStatus.AUTHENTICATED -> onSuccess()
+                AuthResource.AuthStatus.ERROR, AuthResource.AuthStatus.NOT_AUTHENTICATED -> error()
+            }
+        })
+    }
+
+    private fun authenticateUser() {
         val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
         discoverViewModel.currentUser()
         sessionManager.authenticateWithId(discoverViewModel.user())
@@ -55,18 +78,6 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
                 }
             }
         })
-
-        authViewModel = ViewModelProviders.of(this, viewModelProvider).get(AuthViewModel::class.java)
-        loginBtn.setOnClickListener{
-            authViewModel.authorize(this)
-        }
-        authViewModel.response().observe(this, Observer {
-           when (it.status){
-               AuthResource.AuthStatus.LOADING -> loading()
-               AuthResource.AuthStatus.AUTHENTICATED ->  onSuccess()
-               AuthResource.AuthStatus.ERROR, AuthResource.AuthStatus.NOT_AUTHENTICATED ->  error()
-           }
-        })
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -76,15 +87,15 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun loading(){
+    private fun loading() {
 
     }
 
-    private fun error(){
+    private fun error() {
 
     }
 
-    private fun onSuccess(){
+    private fun onSuccess() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

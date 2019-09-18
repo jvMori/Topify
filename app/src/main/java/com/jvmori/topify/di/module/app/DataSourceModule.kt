@@ -17,6 +17,7 @@ class DataSourceModule {
     fun repository(networkDataSource : NetworkDataSource) : IRepository =
         Repository(networkDataSource)
 
+
     @Provides
     @ApplicationScope
     fun provideNetworkDataSource(spotifyApi: SpotifyApi) : NetworkDataSource = NetworkDataSourceImpl(spotifyApi)

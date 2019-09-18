@@ -26,7 +26,6 @@ import javax.inject.Named
 
 class AuthViewModel @Inject constructor(
     private var authRepository: AuthRepository,
-    @Named("Access_Token") var accessToken: String,
     @Named("REDIRECT_URI") var redirectUri: String,
     private var myServiceInterceptor: MyServiceInterceptor
 ) : ViewModel() {
