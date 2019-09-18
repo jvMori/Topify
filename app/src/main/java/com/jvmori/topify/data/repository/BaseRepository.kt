@@ -12,7 +12,7 @@ interface BaseRepository<T> {
     fun getItems() : Observable<T>{
         return Maybe.concat(getItemsLocal(), getItemsRemote())
             .filter {
-                isItemUpToDate()
+                isItemUpToDate(it)
             }
             .take(1)
             .toObservable()
@@ -29,5 +29,5 @@ interface BaseRepository<T> {
     }
 
     fun getItemsRemote() : Maybe<T>
-    fun isItemUpToDate() : Boolean 
+    fun isItemUpToDate(item : T) : Boolean
 }

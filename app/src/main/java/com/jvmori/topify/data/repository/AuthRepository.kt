@@ -1,19 +1,33 @@
 package com.jvmori.topify.data.repository
 
 import com.jvmori.topify.data.db.BaseDao
+import com.jvmori.topify.data.db.dao.AuthDao
+import com.jvmori.topify.data.db.entity.AuthKey
+import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-interface AuthRepository : BaseRepository<String>{
-    
-    override var baseDao: BaseDao<String>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+class AuthRepository @Inject constructor(
+    private  var authDao: AuthDao
+) : BaseRepository<AuthKey> {
+
+    override var baseDao: BaseDao<AuthKey>
+        get() = authDao
         set(value) {}
 
-    override fun getItemsRemote(): Maybe<String> {
+    fun insert(key : String){
+        Completable.fromAction {
+            authDao.insert(AuthKey(key=key, timestamp =  System.currentTimeMillis()))
+        }.subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    override fun getItemsRemote(): Maybe<AuthKey> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun isItemUpToDate(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun isItemUpToDate(item : AuthKey): Boolean {
+        return false
     }
 }
