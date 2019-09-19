@@ -49,7 +49,7 @@ class AuthViewModel @Inject constructor(
     fun fetchTokenLocal() {
         _token.value = Resource.loading(null)
         disposable.add(
-            authRepository.getItemsLocal()
+            authRepository.getItemsLocal("")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ success ->

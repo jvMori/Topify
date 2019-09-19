@@ -1,11 +1,11 @@
 package com.jvmori.topify.data.repository
 
 import android.util.Log
-import com.jvmori.topify.data.db.dao.BaseDao
 import com.jvmori.topify.data.db.dao.TopTracksDao
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
+import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,6 +19,12 @@ class TopTracksRepository @Inject constructor(
     override fun getItemsRemote(params: TopParam): Maybe<TopTracksResponse> {
         return networkDataSource.getTopTracks(params)
             .firstElement()
+            .doOnSuccess {
+                it.timestamp = System.currentTimeMillis()
+                it.timeRange = params.timeRange
+                it.countLimit = params.limit
+               // insert(it)
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }
@@ -35,8 +41,16 @@ class TopTracksRepository @Inject constructor(
             }
     }
 
+    private fun insert(data : TopTracksResponse){
+        Completable.fromAction {
+            topTracksDao.insert(data)
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
     override fun isItemUpToDate(item: TopTracksResponse): Boolean {
-        return item.timestamp != 0L &&   System.currentTimeMillis() - item.timestamp < 3600000
+        return item.timestamp == 0L || System.currentTimeMillis() - item.timestamp < 3600000
     }
 
 }

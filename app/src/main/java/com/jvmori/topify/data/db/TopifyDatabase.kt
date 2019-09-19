@@ -13,7 +13,7 @@ import com.jvmori.topify.data.db.entity.TopTracksResponse
     entities = [
         AuthKey::class,
         TopTracksResponse::class
-    ], version = 2, exportSchema = false
+    ], version = 4, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class TopifyDatabase : RoomDatabase() {

@@ -14,6 +14,6 @@ interface TopTracksDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items : TopTracksResponse)
 
-    @Query("Select * from topify_top_tracks where timeRange like:timesRange AND `limit` like:count")
+    @Query("Select * from topify_top_tracks where timeRange like:timesRange AND countLimit like:count")
     fun getItems(timesRange: String, count : Int): Maybe<TopTracksResponse>
 }

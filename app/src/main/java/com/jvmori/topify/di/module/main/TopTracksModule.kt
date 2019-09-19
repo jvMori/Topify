@@ -18,7 +18,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 
-@Module(includes = [ApiModule::class, DatabaseModule::class])
+@Module
 class TopTracksModule {
 
     @Provides
@@ -28,6 +28,6 @@ class TopTracksModule {
     @Provides
     @ApplicationScope
     @Named(TOP_TRACKS)
-    fun repository(networkDataSource : NetworkDataSource, topTracksDao: TopTracksDao) : BaseRepository<TopTracksResponse, TopParam> =
+    fun provideTopTracksRepository(networkDataSource : NetworkDataSource, topTracksDao: TopTracksDao) : BaseRepository<TopTracksResponse, TopParam> =
         TopTracksRepository(networkDataSource, topTracksDao)
 }

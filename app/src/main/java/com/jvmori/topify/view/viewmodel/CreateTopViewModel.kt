@@ -12,7 +12,9 @@ import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.BaseRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -39,6 +41,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
         Resource.loading(null)
         disposable.add(
             topTracksRepository.getItems(topParam)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(
                     { success ->
                         _topTracks.value = Resource.success(success)

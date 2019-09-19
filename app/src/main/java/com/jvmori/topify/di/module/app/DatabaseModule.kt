@@ -17,7 +17,7 @@ class DatabaseModule {
         return  Room.databaseBuilder(
             context.applicationContext,
             TopifyDatabase::class.java,
-            "topifyDb.db"
+            "topifyAppDb.db"
         )
             .fallbackToDestructiveMigration()
             .build()
