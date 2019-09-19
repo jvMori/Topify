@@ -19,7 +19,7 @@ import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopParam
-import com.jvmori.topify.data.response.top.TopTracksResponse
+import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.activity.AuthResource
 import com.jvmori.topify.view.adapters.TopTracksAdapter

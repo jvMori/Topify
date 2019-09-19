@@ -1,6 +1,7 @@
-package com.jvmori.topify.data.response.top
+package com.jvmori.topify.data.db.entity
 
 import com.google.gson.annotations.SerializedName
+import com.jvmori.topify.data.response.top.ArtistItem
 
 
 data class TopArtistsResponse(

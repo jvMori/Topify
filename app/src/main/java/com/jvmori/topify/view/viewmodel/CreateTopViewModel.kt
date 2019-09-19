@@ -3,20 +3,26 @@ package com.jvmori.topify.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
-import com.jvmori.topify.data.response.top.TopTracksResponse
+import com.jvmori.topify.data.db.entity.TopTracksResponse
+import com.jvmori.topify.data.repository.BaseRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
+import javax.inject.Named
 
 class CreateTopViewModel @Inject constructor() : ViewModel() {
 
+    @field:[Inject Named(TOP_TRACKS)]
+    lateinit var topTracksRepository: BaseRepository<TopTracksResponse, TopParam>
+
     @Inject
-    lateinit var repository: IRepository
+    lateinit var repository : IRepository
 
     private val disposable = CompositeDisposable()
 
@@ -32,7 +38,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
         disposable.add(
-            repository.getTopTracks(topParam)
+            topTracksRepository.getItems(topParam)
                 .subscribe(
                     { success ->
                         _topTracks.value = Resource.success(success)

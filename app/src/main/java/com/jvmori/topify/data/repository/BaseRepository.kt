@@ -1,16 +1,12 @@
 package com.jvmori.topify.data.repository
 
-import android.util.Log
-import com.jvmori.topify.data.db.BaseDao
 import io.reactivex.Maybe
 import io.reactivex.Observable
 
-interface BaseRepository<T> {
+interface BaseRepository<T, K> {
 
-    var baseDao : BaseDao<T>
-
-    fun getItems() : Observable<T>{
-        return Maybe.concat(getItemsLocal(), getItemsRemote())
+    fun getItems(params : K) : Observable<T>{
+        return Maybe.concat(getItemsLocal(params), getItemsRemote(params))
             .filter {
                 isItemUpToDate(it)
             }
@@ -18,16 +14,7 @@ interface BaseRepository<T> {
             .toObservable()
     }
 
-    fun getItemsLocal() : Maybe<T>{
-        return baseDao.getItems()
-            .doOnSuccess {
-                Log.i("TOPIFY", it.toString())
-            }
-            .doOnComplete {
-                Log.i("TOPIFY", "No data in db!")
-            }
-    }
-
-    fun getItemsRemote() : Maybe<T>
+    fun getItemsLocal(params: K) : Maybe<T>
+    fun getItemsRemote(params : K) : Maybe<T>
     fun isItemUpToDate(item : T) : Boolean
 }
