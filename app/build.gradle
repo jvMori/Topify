@@ -11,6 +11,9 @@ kapt {
 
 android {
     compileSdkVersion 28
+    androidExtensions {
+        experimental = true
+    }
     defaultConfig {
         applicationId "com.jvmori.topify"
         minSdkVersion 24

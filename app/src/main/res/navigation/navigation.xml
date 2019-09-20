@@ -5,9 +5,14 @@
             app:startDestination="@id/fragmentHome">
 
     <fragment android:id="@+id/fragmentCreateTop" android:name="com.jvmori.topify.view.fragment.FragmentCreateTop"
-              android:label="fragment_create_top" tools:layout="@layout/fragment_create_top"/>
+              android:label="fragment_create_top" tools:layout="@layout/fragment_create_top">
+        <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
+                app:destination="@id/fragmentTopDetails"/>
+    </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
     <fragment android:id="@+id/fragmentDiscover" android:name="com.jvmori.topify.view.fragment.FragmentDiscover"
               android:label="fragment_fragment_discover" tools:layout="@layout/fragment_fragment_discover"/>
+    <fragment android:id="@+id/fragmentTopDetails" android:name="com.jvmori.topify.view.fragment.FragmentTopDetails"
+              android:label="fragment_fragment_top_details" tools:layout="@layout/fragment_fragment_top_details"/>
 </navigation>

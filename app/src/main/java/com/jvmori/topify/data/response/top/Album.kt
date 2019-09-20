@@ -1,8 +1,11 @@
 package com.jvmori.topify.data.response.top
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Album(
     @SerializedName("album_type")
     val albumType: String,
@@ -23,4 +26,4 @@ data class Album(
     val totalTracks: Int,
     val type: String,
     val uri: String
-)
+) : Parcelable

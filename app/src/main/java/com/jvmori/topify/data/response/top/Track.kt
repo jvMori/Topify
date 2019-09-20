@@ -1,8 +1,11 @@
 package com.jvmori.topify.data.response.top
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Track(
     val album: Album,
     val artists: List<Artist>,
@@ -23,7 +26,7 @@ data class Track(
     val trackNumber: Int,
     val type: String,
     val uri: String
-){
+) : Parcelable {
     fun getDurationMinutes() : String{
         val seconds = (durationMs / 1000) % 60
         val secondsString: String = if ( seconds < 9)  "0$seconds" else seconds.toString()

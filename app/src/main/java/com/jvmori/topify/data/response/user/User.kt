@@ -2,6 +2,9 @@ package com.jvmori.topify.data.response.user
 
 
 import com.google.gson.annotations.SerializedName
+import com.jvmori.topify.data.response.top.ExternalUrls
+import com.jvmori.topify.data.response.top.Followers
+import com.jvmori.topify.data.response.top.Image
 
 data class User(
     @SerializedName("display_name")

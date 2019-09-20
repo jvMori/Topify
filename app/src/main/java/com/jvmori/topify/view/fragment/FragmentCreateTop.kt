@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.SessionManager
+import com.jvmori.topify.Utils.navigateToDetails
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.top.TimeRange
@@ -64,10 +65,10 @@ class FragmentCreateTop : DaggerFragment() {
         // activity?.setActionBar(my_toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         displayTop()
-        createPlaylist()
-        topViewModel.addTracksSnapshot().observe(this, Observer {
-            Log.i("TOPIFY", it.data?.snapshot_id)
-        })
+        //createPlaylist()
+//        topViewModel.addTracksSnapshot().observe(this, Observer {
+//            Log.i("TOPIFY", it.data?.snapshot_id)
+//        })
     }
 
     private fun createPlaylist() {
@@ -84,7 +85,8 @@ class FragmentCreateTop : DaggerFragment() {
             when (it.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
-                    topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
+                    //topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
+
                 }
                 Resource.Status.ERROR -> error(it.message)
             }
@@ -94,13 +96,16 @@ class FragmentCreateTop : DaggerFragment() {
     private fun displayTop() {
         val params = TopParam(50, TimeRange().shortTerm) //TODO: user can change it in settings
         topViewModel.fetchTopTracks(params)
-        topViewModel.topTracks().observe(this, Observer {
-            when (it.status) {
+        topViewModel.topTracks().observe(this, Observer {topTracks ->
+            when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
-                    success(it.data)
+                    success(topTracks.data)
+                    create_btn.setOnClickListener {
+                        navigateToDetails(topTracks.data, this, R.id.action_fragmentCreateTop_to_fragmentTopDetails)
+                    }
                 }
-                Resource.Status.ERROR -> error(it.message)
+                Resource.Status.ERROR -> error(topTracks.message)
             }
         })
     }

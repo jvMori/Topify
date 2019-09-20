@@ -1,18 +1,16 @@
 package com.jvmori.topify.data.response.playlist
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.jvmori.topify.data.response.top.Track
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Item(
     @SerializedName("added_at")
     val addedAt: String,
-    @SerializedName("added_by")
-    val addedBy: AddedBy,
     @SerializedName("is_local")
     val isLocal: Boolean,
-    @SerializedName("primary_color")
-    val primaryColor: Any,
-    val track: Track,
-    @SerializedName("video_thumbnail")
-    val videoThumbnail: VideoThumbnail
-)
+    val track: Track
+) : Parcelable
