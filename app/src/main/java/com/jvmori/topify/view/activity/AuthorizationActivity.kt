@@ -70,7 +70,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
                     finish()
                 }
                 AuthResource.AuthStatus.NOT_AUTHENTICATED, AuthResource.AuthStatus.ERROR -> {
-                    loginBtn.visibility = View.VISIBLE
+                    authViewModel.authorize(this)
                 }
                 else -> {
                     loginBtn.visibility = View.GONE

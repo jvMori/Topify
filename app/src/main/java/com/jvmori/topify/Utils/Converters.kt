@@ -17,10 +17,10 @@ class Converters {
         @JvmStatic
         fun stringToList(data: String?): List<Track> {
             if (data == null) {
-                mutableListOf<Int>()
+                mutableListOf<Track>()
             }
 
-            val listType = object : TypeToken<List<Int>>() {
+            val listType = object : TypeToken<List<Track>>() {
 
             }.type
             return gson.fromJson(data, listType)
@@ -36,10 +36,10 @@ class Converters {
         @JvmStatic
         fun stringToListArtist(data: String?): List<Artist> {
             if (data == null) {
-                mutableListOf<Int>()
+                mutableListOf<Artist>()
             }
 
-            val listType = object : TypeToken<List<Int>>() {
+            val listType = object : TypeToken<List<Artist>>() {
 
             }.type
             return gson.fromJson(data, listType)

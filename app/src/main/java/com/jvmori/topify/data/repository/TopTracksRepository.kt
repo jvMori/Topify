@@ -23,7 +23,7 @@ class TopTracksRepository @Inject constructor(
                 it.timestamp = System.currentTimeMillis()
                 it.timeRange = params.timeRange
                 it.countLimit = params.limit
-               // insert(it)
+                insert(it)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
