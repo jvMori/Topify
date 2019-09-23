@@ -50,7 +50,6 @@ class FragmentCreateTop : DaggerFragment() {
     lateinit var sessionManager: SessionManager
 
     private lateinit var topViewModel: CreateTopViewModel
-    private val tracksUris = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,32 +64,7 @@ class FragmentCreateTop : DaggerFragment() {
         // activity?.setActionBar(my_toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         displayTop()
-        //createPlaylist()
-//        topViewModel.addTracksSnapshot().observe(this, Observer {
-//            Log.i("TOPIFY", it.data?.snapshot_id)
-//        })
-    }
 
-    private fun createPlaylist() {
-        sessionManager.getUser().observe(this, Observer { user ->
-            when (user.status) {
-                AuthResource.AuthStatus.AUTHENTICATED-> {
-                    create_btn.setOnClickListener {
-                        topViewModel.createTopTracksPlaylist(user.data?.id!!, "Topify top 50")
-                    }
-                }
-            }
-        })
-        topViewModel.topTracksPlaylist().observe(this, Observer {
-            when (it.status) {
-                Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS -> {
-                    //topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
-
-                }
-                Resource.Status.ERROR -> error(it.message)
-            }
-        })
     }
 
     private fun displayTop() {
@@ -116,13 +90,6 @@ class FragmentCreateTop : DaggerFragment() {
 
     private fun success(data: TopTracksResponse?) {
         createTopTracksAdapter(data?.tracks)
-        createUris(data)
-    }
-
-    private fun createUris(data: TopTracksResponse?) {
-        data?.tracks?.forEach { item ->
-            tracksUris.add(item.uri)
-        }
     }
 
     private fun error(message: String?) {

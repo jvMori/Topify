@@ -2,13 +2,28 @@ package com.jvmori.topify.view.fragment
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 
 import com.jvmori.topify.R
+import com.jvmori.topify.Utils.SessionManager
+import com.jvmori.topify.Utils.TOP_TRACKS
+import com.jvmori.topify.Utils.topDetailsKey
+import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.db.entity.TopTracksResponse
+import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.playlist.PlaylistResponse
+import com.jvmori.topify.view.activity.AuthResource
+import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_create_top.*
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,13 +36,71 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentTopDetails : DaggerFragment() {
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+
+    private lateinit var topViewModel: CreateTopViewModel
+    private val tracksUris = mutableListOf<String>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
+        createPlaylist()
+        topViewModel.addTracksSnapshot().observe(this, Observer {
+            Log.i("TOPIFY", it.data?.snapshot_id)
+        })
         return inflater.inflate(R.layout.fragment_fragment_top_details, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val playlistResponse = getTopTracksResponse()
+        playlistResponse?.let {
+            createUris(it)
+        }
+    }
 
+    private fun getTopTracksResponse(): TopTracksResponse? {
+        return (arguments?.getParcelable(topDetailsKey)) as TopTracksResponse?
+    }
+
+    private fun createUris(data: TopTracksResponse?) {
+        data?.tracks?.forEach { item ->
+            tracksUris.add(item.uri)
+        }
+    }
+
+    private fun createPlaylist() {
+        sessionManager.getUser().observe(this, Observer { user ->
+            when (user.status) {
+                AuthResource.AuthStatus.AUTHENTICATED -> {
+                    topViewModel.createTopTracksPlaylist(user.data?.id!!, "Topify top 50")
+                }
+            }
+        })
+        topViewModel.topTracksPlaylist().observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                    topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
+                }
+                Resource.Status.ERROR -> error(it.message)
+            }
+        })
+    }
+
+    private fun showLoading() {
+
+    }
+
+    private fun error(message: String?) {
+        Log.i("TOPIFY", message)
+    }
 }
