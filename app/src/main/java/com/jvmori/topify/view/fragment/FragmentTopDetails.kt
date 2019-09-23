@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.SessionManager
@@ -19,10 +21,17 @@ import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
+import com.jvmori.topify.data.response.playlist.Tracks
+import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.activity.AuthResource
+import com.jvmori.topify.view.adapters.createdPlaylist.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
+import com.xwray.groupie.Group
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_create_top.*
+import kotlinx.android.synthetic.main.fragment_fragment_top_details.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,14 +65,16 @@ class FragmentTopDetails : DaggerFragment() {
         topViewModel.addTracksSnapshot().observe(this, Observer {
             Log.i("TOPIFY", it.data?.snapshot_id)
         })
+
         return inflater.inflate(R.layout.fragment_fragment_top_details, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val playlistResponse = getTopTracksResponse()
         playlistResponse?.let {
             createUris(it)
+            showCreatedPlaylist(it.tracks)
         }
     }
 
@@ -98,6 +109,15 @@ class FragmentTopDetails : DaggerFragment() {
 
     private fun showLoading() {
 
+    }
+
+    private fun showCreatedPlaylist(tracks : List<Track>){
+        val adapter = GroupAdapter<ViewHolder>()
+        tracks.forEach {
+            adapter.add(TrackItem(it))
+        }
+        playlistRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
+        playlistRecyclerView.adapter = adapter
     }
 
     private fun error(message: String?) {
