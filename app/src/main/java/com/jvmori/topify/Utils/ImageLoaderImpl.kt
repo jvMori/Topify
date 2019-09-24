@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ImageLoaderImpl @Inject constructor(
     private val picasso: Picasso
 ): ImageLoader {
-    override fun loadImage(url: String, imageView: ImageView) {
+    override fun loadImage(url: String?, imageView: ImageView) {
         picasso
             .load(url)
             .placeholder(R.drawable.placeholder_img)

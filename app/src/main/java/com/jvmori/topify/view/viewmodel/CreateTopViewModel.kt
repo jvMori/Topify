@@ -2,6 +2,7 @@ package com.jvmori.topify.view.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.data.repository.IRepository
@@ -12,6 +13,8 @@ import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.BaseRepository
+import com.jvmori.topify.data.response.playlist.PlaylistCoverResponse
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +27,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     lateinit var topTracksRepository: BaseRepository<TopTracksResponse, TopParam>
 
     @Inject
-    lateinit var repository : IRepository
+    lateinit var repository: IRepository
 
     private val disposable = CompositeDisposable()
 
@@ -33,6 +36,9 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
     fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
+
+    private val _playlistCoverImage = MutableLiveData<Resource<PlaylistCoverResponse>>()
+    fun getPlaylistCoverImage() : LiveData<Resource<PlaylistCoverResponse>> = _playlistCoverImage
 
     private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
     fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
@@ -53,29 +59,43 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
         )
     }
 
-    fun createTopTracksPlaylist(userId : String, playlistName: String) {
+    fun createTopTracksPlaylist(userId: String, playlistName: String) {
         _topTracksPlaylist.value = Resource.loading(null)
         disposable.add(
             repository.createPlaylist(userId, playlistName)
                 .subscribe(
-                    {
-                        success -> _topTracksPlaylist.value = Resource.success(success)
-                    }, {
-                        error -> _topTracksPlaylist.value = Resource.error("ERROR ${error?.message}", null)
+                    { success ->
+                        _topTracksPlaylist.value = Resource.success(success)
+                    }, { error ->
+                        _topTracksPlaylist.value = Resource.error("ERROR ${error?.message}", null)
                     }
                 )
         )
     }
 
-    fun addTracksToPlaylist(playlistId : String, tracks: AddTracks) {
+    fun addTracksToPlaylist(playlistId: String, tracks: AddTracks) {
         _topTracksPlaylist.value = Resource.loading(null)
         disposable.add(
             repository.addTracksToPlaylist(playlistId, tracks)
                 .subscribe(
-                    {
-                            success -> _addTracksSnapshot.value = Resource.success(success)
-                    }, {
-                            error -> _addTracksSnapshot.value = Resource.error("ERROR ${error?.message}", null)
+                    { success ->
+                        _addTracksSnapshot.value = Resource.success(success)
+                    }, { error ->
+                        _addTracksSnapshot.value = Resource.error("ERROR ${error?.message}", null)
+                    }
+                )
+        )
+    }
+
+    fun fetchPlaylistCoverImage(playlistId: String) {
+        _playlistCoverImage.value = Resource.loading(null)
+        disposable.add(
+            repository.getPlaylistCoverImage(playlistId)
+                .subscribe(
+                    { success ->
+                       _playlistCoverImage.value = Resource.success(success)
+                    }, { error ->
+                       _playlistCoverImage.value = Resource.error(error.message!!, null)
                     }
                 )
         )

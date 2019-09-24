@@ -105,7 +105,7 @@ class FragmentTopDetails : DaggerFragment() {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
                     topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
-                    showPlaylistImage(it.data)
+                    showPlaylistImage(it.data.id)
                 }
                 Resource.Status.ERROR -> error(it.message)
             }
@@ -125,8 +125,18 @@ class FragmentTopDetails : DaggerFragment() {
         playlistRecyclerView.adapter = adapter
     }
 
-    private fun showPlaylistImage(playlistResponse: PlaylistResponse){
-        imageLoader.loadImage(playlistResponse.images[0].url, playlistsCoverImg)
+    private fun showPlaylistImage(playlistId : String){
+        topViewModel.fetchPlaylistCoverImage(playlistId)
+        topViewModel.getPlaylistCoverImage().observe(this, Observer {
+            when (it.status){
+                Resource.Status.SUCCESS -> imageLoader.loadImage(
+                    it.data?.images?.let{
+                       images -> images[0].url
+                    },
+                    playlistsCoverImg
+                )
+            }
+        })
     }
 
     private fun error(message: String?) {
