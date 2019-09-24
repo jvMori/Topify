@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.jvmori.topify.R
+import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.Utils.topDetailsKey
@@ -50,6 +51,9 @@ class FragmentTopDetails : DaggerFragment() {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var imageLoader : ImageLoader
 
     private lateinit var topViewModel: CreateTopViewModel
     private val tracksUris = mutableListOf<String>()
@@ -101,6 +105,7 @@ class FragmentTopDetails : DaggerFragment() {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
                     topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
+                    showPlaylistImage(it.data)
                 }
                 Resource.Status.ERROR -> error(it.message)
             }
@@ -118,6 +123,10 @@ class FragmentTopDetails : DaggerFragment() {
         }
         playlistRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         playlistRecyclerView.adapter = adapter
+    }
+
+    private fun showPlaylistImage(playlistResponse: PlaylistResponse){
+        imageLoader.loadImage(playlistResponse.images[0].url, playlistsCoverImg)
     }
 
     private fun error(message: String?) {
