@@ -16,23 +16,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.SessionManager
-import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.Utils.topDetailsKey
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.AddTracks
-import com.jvmori.topify.data.response.playlist.PlaylistResponse
-import com.jvmori.topify.data.response.playlist.Tracks
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.activity.AuthResource
 import com.jvmori.topify.view.adapters.createdPlaylist.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
-import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_create_top.*
-import kotlinx.android.synthetic.main.fragment_fragment_top_details.*
+import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -73,7 +68,7 @@ class FragmentTopDetails : DaggerFragment() {
             showPlaylistImage(playlistId)
         })
 
-        return inflater.inflate(R.layout.fragment_fragment_top_details, container, false)
+        return inflater.inflate(R.layout.fragment_top_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
