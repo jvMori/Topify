@@ -5,6 +5,7 @@ import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.*
 import com.jvmori.topify.data.response.search.Artists
+import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -39,7 +40,7 @@ class NetworkDataSourceImpl @Inject constructor(
         return api.addTracksToPlaylist(playlistId, tracks)
     }
 
-    override fun getPlaylistCoverImage(playlistId: String): Observable<PlaylistCoverResponse> {
+    override fun getPlaylistCoverImage(playlistId: String): Observable<List<Image>> {
         return api.getPlaylistCoverImage(playlistId)
     }
 

@@ -53,10 +53,12 @@ class FragmentTopDetails : DaggerFragment() {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var imageLoader : ImageLoader
+    lateinit var imageLoader: ImageLoader
 
     private lateinit var topViewModel: CreateTopViewModel
     private val tracksUris = mutableListOf<String>()
+
+    private lateinit var playlistId : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +70,7 @@ class FragmentTopDetails : DaggerFragment() {
         createPlaylist()
         topViewModel.addTracksSnapshot().observe(this, Observer {
             Log.i("TOPIFY", it.data?.snapshot_id)
+            showPlaylistImage(playlistId)
         })
 
         return inflater.inflate(R.layout.fragment_fragment_top_details, container, false)
@@ -105,7 +108,7 @@ class FragmentTopDetails : DaggerFragment() {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
                     topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
-                    showPlaylistImage(it.data.id)
+                    playlistId = it.data.id
                 }
                 Resource.Status.ERROR -> error(it.message)
             }
@@ -116,7 +119,7 @@ class FragmentTopDetails : DaggerFragment() {
 
     }
 
-    private fun showCreatedPlaylist(tracks : List<Track>){
+    private fun showCreatedPlaylist(tracks: List<Track>) {
         val adapter = GroupAdapter<ViewHolder>()
         tracks.forEach {
             adapter.add(TrackItem(it))
@@ -125,16 +128,17 @@ class FragmentTopDetails : DaggerFragment() {
         playlistRecyclerView.adapter = adapter
     }
 
-    private fun showPlaylistImage(playlistId : String){
+    private fun showPlaylistImage(playlistId: String) {
         topViewModel.fetchPlaylistCoverImage(playlistId)
         topViewModel.getPlaylistCoverImage().observe(this, Observer {
-            when (it.status){
+            when (it.status) {
                 Resource.Status.SUCCESS -> imageLoader.loadImage(
-                    it.data?.images?.let{
-                       images -> images[0].url
+                    it.data?.let{
+                       list -> list[0].url
                     },
                     playlistsCoverImg
                 )
+                Resource.Status.ERROR -> Log.i("Topify", "something went wrong!")
             }
         })
     }

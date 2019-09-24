@@ -2,7 +2,6 @@ package com.jvmori.topify.view.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.data.repository.IRepository
@@ -13,8 +12,7 @@ import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.BaseRepository
-import com.jvmori.topify.data.response.playlist.PlaylistCoverResponse
-import io.reactivex.Observable
+import com.jvmori.topify.data.response.top.Image
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -37,8 +35,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
     fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
 
-    private val _playlistCoverImage = MutableLiveData<Resource<PlaylistCoverResponse>>()
-    fun getPlaylistCoverImage() : LiveData<Resource<PlaylistCoverResponse>> = _playlistCoverImage
+    private val _playlistCoverImage = MutableLiveData<Resource<List<Image>>>()
+    fun getPlaylistCoverImage() : LiveData<Resource<List<Image>>> = _playlistCoverImage
 
     private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
     fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
