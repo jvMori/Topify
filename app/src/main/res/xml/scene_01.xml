@@ -9,7 +9,7 @@
             motion:duration="1000">
         <OnSwipe
                 motion:touchAnchorId="@+id/playlistRecyclerView"
-                motion:touchAnchorSide="right"
+                motion:touchAnchorSide="top"
                 motion:dragDirection="dragUp" />
     </Transition>
 
