@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
 import androidx.appcompat.app.AppCompatActivity
 import android.R
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import dagger.android.support.DaggerAppCompatActivity
 
 
@@ -58,12 +60,16 @@ class FragmentTopDetails : DaggerFragment() {
 
     private lateinit var playlistId : String
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as DaggerAppCompatActivity).setSupportActionBar(toolbar)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (activity as DaggerAppCompatActivity).setSupportActionBar(toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         createPlaylist()
         topViewModel.addTracksSnapshot().observe(this, Observer {

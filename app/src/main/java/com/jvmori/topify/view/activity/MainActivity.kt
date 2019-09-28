@@ -7,6 +7,7 @@ import androidx.navigation.ui.NavigationUI
 import com.jvmori.topify.R
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_top_details.*
 
 
 class MainActivity : DaggerAppCompatActivity() {
