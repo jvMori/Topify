@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.Utils.topDetailsKey
@@ -29,6 +28,10 @@ import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
+import androidx.appcompat.app.AppCompatActivity
+import android.R
+import dagger.android.support.DaggerAppCompatActivity
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +63,7 @@ class FragmentTopDetails : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
+        (activity as DaggerAppCompatActivity).setSupportActionBar(toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         createPlaylist()
         topViewModel.addTracksSnapshot().observe(this, Observer {
@@ -68,7 +71,7 @@ class FragmentTopDetails : DaggerFragment() {
             showPlaylistImage(playlistId)
         })
 
-        return inflater.inflate(R.layout.fragment_top_details, container, false)
+        return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -22,28 +22,76 @@
                 android:layout_marginStart="8dp"
                 motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="12dp"
-                motion:layout_constraintTop_toBottomOf="@+id/playlistName">
+                android:layout_marginTop="8dp"
+                motion:layout_constraintTop_toBottomOf="@+id/toolbar">
             <CustomAttribute
                     motion:attributeName="scale"
                     motion:customFloatValue="1" />
+        </Constraint>
+        <Constraint
+                android:text="Open in Spotify"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btnOpenInSpotify"
+                motion:layout_constraintStart_toStartOf="@+id/playlistsCoverImg"
+                motion:layout_constraintEnd_toEndOf="@+id/playlistsCoverImg" android:textStyle="bold"
+                motion:layout_constraintHorizontal_bias="0.51"
+                android:layout_marginTop="260dp" motion:layout_constraintTop_toTopOf="parent">
+        </Constraint>
+        <Constraint
+                android:id="@+id/toolbarPlaylistName"
+                android:text="Topify top 50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif"
+                motion:layout_editor_absoluteX="16dp" motion:layout_editor_absoluteY="16dp">
+            <CustomAttribute
+                motion:attributeName="textColor">
+                motion:customColorValue="#00000000"
+            </CustomAttribute>
         </Constraint>
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
                 android:id="@+id/playlistsCoverImg"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 motion:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="12dp"
-                motion:layout_constraintTop_toBottomOf="@+id/playlistName">
+                android:layout_marginTop="8dp"
+                motion:layout_constraintTop_toBottomOf="@+id/toolbar">
             <CustomAttribute
                     motion:attributeName="scale"
-                    motion:customFloatValue="0" />
+                    motion:customFloatValue=".8" />
+        </Constraint>
+        <Constraint
+                android:text="Open in Spotify"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/btnOpenInSpotify"
+                motion:layout_constraintStart_toStartOf="@+id/playlistsCoverImg"
+                motion:layout_constraintEnd_toEndOf="@+id/playlistsCoverImg" android:textStyle="bold"
+                motion:layout_constraintHorizontal_bias="0.51"
+                android:layout_marginTop="60dp" motion:layout_constraintTop_toTopOf="parent">
+        </Constraint>
+        <Constraint
+                android:id="@+id/toolbarPlaylistName"
+                android:text="Topify top 50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif"
+                motion:layout_editor_absoluteX="16dp" motion:layout_editor_absoluteY="16dp">
+            <CustomAttribute
+                    motion:attributeName="textColor">
+                motion:customColorValue="#fff"
+            </CustomAttribute>
         </Constraint>
     </ConstraintSet>
 
