@@ -1,6 +1,7 @@
 package com.jvmori.topify.view.activity
 
 import android.os.Bundle
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.jvmori.topify.R
@@ -9,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : DaggerAppCompatActivity() {
+    lateinit var controller : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +19,12 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupBottomNav() {
-        val controller = Navigation.findNavController(this, R.id.navHostFragment)
+        controller = Navigation.findNavController(this, R.id.navHostFragment)
         NavigationUI.setupWithNavController(bottom_navigation, controller)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        controller.navigateUp()
+        return super.onSupportNavigateUp()
     }
 }

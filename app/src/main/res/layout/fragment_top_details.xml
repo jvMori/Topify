@@ -25,8 +25,8 @@
                 tools:layout_editor_absoluteX="16dp" tools:layout_editor_absoluteY="16dp"/>
     </androidx.appcompat.widget.Toolbar>
     <ImageView android:id="@+id/playlistsCoverImg"
-               android:layout_width="180dp"
-               android:layout_height="180dp"
+               android:layout_width="160dp"
+               android:layout_height="160dp"
                tools:srcCompat="@drawable/placeholder_img"
                app:layout_constraintStart_toStartOf="parent"
                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="260dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:paddingLeft="48dp" android:paddingRight="48dp"/>
+            app:layout_constraintStart_toStartOf="parent" android:paddingLeft="32dp" android:paddingRight="32dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:background="@color/colorPrimaryDark"
