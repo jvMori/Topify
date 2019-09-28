@@ -52,6 +52,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/created_playlist_item" app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
-    />
+            android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
