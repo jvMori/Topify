@@ -28,10 +28,6 @@ import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
-import androidx.appcompat.app.AppCompatActivity
-import android.R
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import dagger.android.support.DaggerAppCompatActivity
 
 
@@ -73,8 +69,13 @@ class FragmentTopDetails : DaggerFragment() {
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         createPlaylist()
         topViewModel.addTracksSnapshot().observe(this, Observer {
-            Log.i("TOPIFY", it.data?.snapshot_id)
-            showPlaylistImage(playlistId)
+           when(it.status){
+               Resource.Status.SUCCESS -> {
+                   Log.i("TOPIFY", it.data?.snapshot_id)
+                   showPlaylistImage(playlistId)
+                   hideProgressBar()
+               }
+           }
         })
 
         return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
@@ -109,18 +110,24 @@ class FragmentTopDetails : DaggerFragment() {
         })
         topViewModel.topTracksPlaylist().observe(this, Observer {
             when (it.status) {
-                Resource.Status.LOADING -> showLoading()
+                Resource.Status.LOADING -> showProgressBar()
                 Resource.Status.SUCCESS -> {
+                    hideProgressBar()
                     topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
                     playlistId = it.data.id
+                    toolbarPlaylistName.text = it.data.name
                 }
                 Resource.Status.ERROR -> error(it.message)
             }
         })
     }
 
-    private fun showLoading() {
+    private fun hideProgressBar(){
+        loadingLayout.visibility = View.GONE
+    }
 
+    private fun showProgressBar() {
+       //loadingLayout.visibility = View.VISIBLE
     }
 
     private fun showCreatedPlaylist(tracks: List<Track>) {
@@ -148,6 +155,7 @@ class FragmentTopDetails : DaggerFragment() {
     }
 
     private fun error(message: String?) {
+        hideProgressBar()
         Log.i("TOPIFY", message)
     }
 }

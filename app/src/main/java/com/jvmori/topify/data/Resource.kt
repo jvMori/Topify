@@ -9,8 +9,10 @@ class Resource<T>(
     val message: String?
 ) {
 
-    enum class Status {
-        SUCCESS, ERROR, LOADING
+    sealed class Status{
+        object SUCCESS : Status()
+        object ERROR : Status()
+        object LOADING : Status()
     }
 
     companion object {

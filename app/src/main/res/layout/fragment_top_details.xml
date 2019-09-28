@@ -55,4 +55,6 @@
             app:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
             android:layout_marginTop="16dp" android:paddingBottom="16dp"/>
 
+    <include android:id="@+id/loadingLayout" layout="@layout/loading" android:visibility="gone"/>
+
 </androidx.constraintlayout.motion.widget.MotionLayout>
