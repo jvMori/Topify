@@ -8,9 +8,9 @@
               android:label="fragment_create_top" tools:layout="@layout/fragment_create_top">
         <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
                 app:destination="@id/fragmentTopDetails" app:popUpTo="@+id/fragmentCreateTop"
-                app:popUpToInclusive="false" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:launchSingleTop="false"/>
+                app:popUpToInclusive="false" app:enterAnim="@anim/slide_in_top"
+                app:exitAnim="@anim/slide_out_bottom" app:popEnterAnim="@anim/slide_in_bottom"
+                app:popExitAnim="@anim/slide_out_top" app:launchSingleTop="false"/>
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
