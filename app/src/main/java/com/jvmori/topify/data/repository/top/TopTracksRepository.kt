@@ -30,12 +30,11 @@ class TopTracksRepository @Inject constructor(
                 it.timestamp = System.currentTimeMillis()
                 it.timeRange = params.timeRange
                 it.countLimit = params.limit
-                insert(it)
+                insert {topTracksDao.insert(it)}
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }
-
     override fun getItemsLocal(params: TopParam): Maybe<TopTracksResponse> {
         return topTracksDao.getItems(params.timeRange, params.limit)
             .observeOn(AndroidSchedulers.mainThread())
@@ -46,14 +45,6 @@ class TopTracksRepository @Inject constructor(
             .doOnComplete {
                 Log.i("TOPIFY", "No data in db!")
             }
-    }
-
-    private fun insert(data: TopTracksResponse) {
-        Completable.fromAction {
-            topTracksDao.insert(data)
-        }.observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe()
     }
 
     override fun isItemUpToDate(item: TopTracksResponse): Boolean {

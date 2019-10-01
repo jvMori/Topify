@@ -24,19 +24,20 @@ class TopArtistsRepository @Inject constructor(
         return networkDataSource.getTopArtists(params)
             .firstElement()
             .doOnSuccess {
-
+                it.timeRange = params.timeRange
+                it.timestamp = System.currentTimeMillis()
+                it.countLimit = params.limit
+               // insert(it)
             }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
     }
 
     override fun isItemUpToDate(item: TopArtistsResponse): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return item.timestamp == 0L || System.currentTimeMillis() - item.timestamp < 3600000
     }
 
     override fun getTop(topParam: TopParam): Observable<TopArtistsResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return getItems(topParam)
     }
-
-
 }

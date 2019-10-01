@@ -1,8 +1,11 @@
 package com.jvmori.topify.data.response.top
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ArtistItem(
     @SerializedName("external_urls")
     val externalUrls: ExternalUrls,
@@ -15,4 +18,4 @@ data class ArtistItem(
     val popularity: Int,
     val type: String,
     val uri: String
-)
+) : Parcelable
