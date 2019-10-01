@@ -1,5 +1,6 @@
 package com.jvmori.topify.data.repository.top
 
+import com.jvmori.topify.data.db.dao.TopArtistsDao
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.repository.BaseRepository
@@ -11,13 +12,16 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class TopArtistsRepository @Inject constructor(
-    private var networkDataSource: NetworkDataSource
+    private var networkDataSource: NetworkDataSource,
+    private var topArtistsDao : TopArtistsDao
     ) :
     BaseRepository<TopArtistsResponse, TopParam>,
     TopRepository<TopArtistsResponse>
 {
     override fun getItemsLocal(params: TopParam): Maybe<TopArtistsResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return topArtistsDao.getItems(params.timeRange, params.limit)
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getItemsRemote(params: TopParam): Maybe<TopArtistsResponse> {
@@ -27,7 +31,9 @@ class TopArtistsRepository @Inject constructor(
                 it.timeRange = params.timeRange
                 it.timestamp = System.currentTimeMillis()
                 it.countLimit = params.limit
-               // insert(it)
+                insert{
+                    topArtistsDao.insert(it)
+                }
             }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
