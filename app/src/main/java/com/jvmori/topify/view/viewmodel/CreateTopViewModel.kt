@@ -42,6 +42,13 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
     fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
 
+    private val _topParam = MutableLiveData<TopParam>()
+    fun getTopParam(): LiveData<TopParam> = _topParam
+
+    fun setTopParams(topParam: TopParam){
+        _topParam.value = topParam
+    }
+
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
         disposable.add(

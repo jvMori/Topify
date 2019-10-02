@@ -1,6 +1,7 @@
 package com.jvmori.topify.view.fragment
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,15 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
-import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.Utils.navigateToDetails
 import com.jvmori.topify.data.Resource
-import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.top.TimeRange
+import com.jvmori.topify.data.response.top.TopCategory
 import com.jvmori.topify.data.response.top.TopParam
-import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.top.Track
-import com.jvmori.topify.view.activity.AuthResource
 import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import dagger.android.support.DaggerFragment
@@ -48,7 +46,6 @@ class FragmentCreateTop : DaggerFragment() {
 
     private lateinit var topViewModel: CreateTopViewModel
 
-    private lateinit var topBehavior : (topParam : TopParam) -> Unit
     private lateinit var topParam: TopParam
 
     override fun onCreateView(
@@ -63,25 +60,29 @@ class FragmentCreateTop : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         // activity?.setActionBar(my_toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
+        topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.TRACKS)) //save in db
 
-        topParam = TopParam(50, TimeRange().shortTerm)
-        topBehavior = {displayTopTracks(topParam)}
-
-        displayTop(topParam) {
-            topBehavior(topParam)
-        }
+        topViewModel.getTopParam().observe(this, Observer {
+            topParam = it
+            when(it.topCategory){
+                TopCategory.TRACKS -> displayTopTracks(topParam)
+                TopCategory.ARTISTS -> displayTopArtists(topParam)
+            }
+        })
     }
 
-    private fun displayTop(topParam: TopParam,  topBehavior : (topParam: TopParam) -> Unit) {
-        topBehavior.invoke(topParam)
+    private fun displayTopArtists(topParam: TopParam){
+
     }
 
+    @SuppressLint("RestrictedApi")
     private fun displayTopTracks(topParam: TopParam){
         topViewModel.fetchTopTracks(topParam)
         topViewModel.topTracks().observe(this, Observer {topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
+                    create_btn.visibility = View.VISIBLE
                     createTopTracksAdapter(topTracks.data?.tracks)
                     create_btn.setOnClickListener {
                         navigateToDetails(topTracks.data, this, R.id.action_fragmentCreateTop_to_fragmentTopDetails)
