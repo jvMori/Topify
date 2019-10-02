@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jvmori.topify.data.response.top.Artist
+import com.jvmori.topify.data.response.top.ArtistItem
 import com.jvmori.topify.data.response.top.Track
 
 class Converters {
@@ -11,7 +12,6 @@ class Converters {
         @JvmStatic
         var gson = Gson()
         var gsonForGenres = Gson()
-
 
         @TypeConverter
         @JvmStatic
@@ -29,25 +29,25 @@ class Converters {
         @TypeConverter
         @JvmStatic
         fun listToString(movie: List<Track>): String {
-            return gsonForGenres.toJson(movie)
+            return gson.toJson(movie)
         }
 
         @TypeConverter
         @JvmStatic
-        fun stringToListArtist(data: String?): List<Artist> {
+        fun stringToListArtist(data: String?): List<ArtistItem> {
             if (data == null) {
-                mutableListOf<Artist>()
+                mutableListOf<ArtistItem>()
             }
 
-            val listType = object : TypeToken<List<Artist>>() {
+            val listType = object : TypeToken<List<ArtistItem>>() {
 
             }.type
-            return gson.fromJson(data, listType)
+            return gsonForGenres.fromJson(data, listType)
         }
 
         @TypeConverter
         @JvmStatic
-        fun listArtistsToString(movie: List<Artist>): String {
+        fun listArtistsToString(movie: List<ArtistItem>): String {
             return gsonForGenres.toJson(movie)
         }
     }

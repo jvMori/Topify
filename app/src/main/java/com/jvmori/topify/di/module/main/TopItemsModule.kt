@@ -12,6 +12,7 @@ import com.jvmori.topify.data.repository.top.TopTracksRepository
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.top.TopArtistsRepository
+import com.jvmori.topify.data.repository.top.TopRepository
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
@@ -34,7 +35,7 @@ class TopItemsModule {
     fun provideTopTracksRepository(
         networkDataSource: NetworkDataSource,
         topTracksDao: TopTracksDao
-    ): BaseRepository<TopTracksResponse, TopParam> =
+    ): TopRepository<TopTracksResponse> =
         TopTracksRepository(networkDataSource, topTracksDao)
 
     @Provides
@@ -43,6 +44,6 @@ class TopItemsModule {
     fun provideTopArtistsRepository(
         networkDataSource: NetworkDataSource,
         topArtistsDao: TopArtistsDao
-    ): BaseRepository<TopArtistsResponse, TopParam> =
+    ): TopRepository<TopArtistsResponse> =
         TopArtistsRepository(networkDataSource, topArtistsDao)
 }

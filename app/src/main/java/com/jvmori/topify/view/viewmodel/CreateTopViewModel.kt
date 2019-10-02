@@ -12,6 +12,7 @@ import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.BaseRepository
+import com.jvmori.topify.data.repository.top.TopRepository
 import com.jvmori.topify.data.response.top.Image
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,7 +23,7 @@ import javax.inject.Named
 class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     @field:[Inject Named(TOP_TRACKS)]
-    lateinit var topTracksRepository: BaseRepository<TopTracksResponse, TopParam>
+    lateinit var topTracksRepository: TopRepository<TopTracksResponse>
 
     @Inject
     lateinit var repository: IRepository
@@ -44,7 +45,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     fun fetchTopTracks(topParam: TopParam) {
         Resource.loading(null)
         disposable.add(
-            topTracksRepository.getItems(topParam)
+            topTracksRepository.getTop(topParam)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(

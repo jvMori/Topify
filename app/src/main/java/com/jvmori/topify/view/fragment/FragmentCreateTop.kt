@@ -46,10 +46,10 @@ class FragmentCreateTop : DaggerFragment() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    @Inject
-    lateinit var sessionManager: SessionManager
-
     private lateinit var topViewModel: CreateTopViewModel
+
+    private lateinit var topBehavior : (topParam : TopParam) -> Unit
+    private lateinit var topParam: TopParam
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,18 +63,26 @@ class FragmentCreateTop : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         // activity?.setActionBar(my_toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        displayTop()
 
+        topParam = TopParam(50, TimeRange().shortTerm)
+        topBehavior = {displayTopTracks(topParam)}
+
+        displayTop(topParam) {
+            topBehavior(topParam)
+        }
     }
 
-    private fun displayTop() {
-        val params = TopParam(50, TimeRange().shortTerm) //TODO: user can change it in settings
-        topViewModel.fetchTopTracks(params)
+    private fun displayTop(topParam: TopParam,  topBehavior : (topParam: TopParam) -> Unit) {
+        topBehavior.invoke(topParam)
+    }
+
+    private fun displayTopTracks(topParam: TopParam){
+        topViewModel.fetchTopTracks(topParam)
         topViewModel.topTracks().observe(this, Observer {topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
-                    success(topTracks.data)
+                    createTopTracksAdapter(topTracks.data?.tracks)
                     create_btn.setOnClickListener {
                         navigateToDetails(topTracks.data, this, R.id.action_fragmentCreateTop_to_fragmentTopDetails)
                     }
@@ -84,22 +92,19 @@ class FragmentCreateTop : DaggerFragment() {
         })
     }
 
-    private fun showLoading() {
-
-    }
-
-    private fun success(data: TopTracksResponse?) {
-        createTopTracksAdapter(data?.tracks)
-    }
-
-    private fun error(message: String?) {
-        Log.i("TOPIFY", message)
-    }
-
     private fun createTopTracksAdapter(tracks: List<Track>?) {
         val topTracksAdapter = TopTracksAdapter(tracks, imageLoader)
         topRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         topRecyclerView.setHasFixedSize(true)
         topRecyclerView.adapter = topTracksAdapter
     }
+
+    private fun showLoading() {
+
+    }
+
+    private fun error(message: String?) {
+        Log.i("TOPIFY", message)
+    }
+
 }
