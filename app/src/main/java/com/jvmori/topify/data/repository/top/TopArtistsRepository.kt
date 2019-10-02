@@ -20,8 +20,8 @@ class TopArtistsRepository @Inject constructor(
 {
     override fun getItemsLocal(params: TopParam): Maybe<TopArtistsResponse> {
         return topArtistsDao.getItems(params.timeRange, params.limit)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
     }
 
     override fun getItemsRemote(params: TopParam): Maybe<TopArtistsResponse> {
@@ -35,8 +35,8 @@ class TopArtistsRepository @Inject constructor(
                     topArtistsDao.insert(it)
                 }
             }
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
     }
 
     override fun isItemUpToDate(item: TopArtistsResponse): Boolean {

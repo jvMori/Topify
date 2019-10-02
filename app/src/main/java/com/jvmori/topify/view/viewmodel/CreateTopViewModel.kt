@@ -3,15 +3,17 @@ package com.jvmori.topify.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jvmori.topify.Utils.TOP_ARTISTS
 import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
-import com.jvmori.topify.data.repository.BaseRepository
+import com.jvmori.topify.data.repository.top.TopArtistsRepository
 import com.jvmori.topify.data.repository.top.TopRepository
 import com.jvmori.topify.data.response.top.Image
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,10 +27,16 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     @field:[Inject Named(TOP_TRACKS)]
     lateinit var topTracksRepository: TopRepository<TopTracksResponse>
 
+    @field:[Inject Named(TOP_ARTISTS)]
+    lateinit var topArtistsRepository: TopRepository<TopArtistsResponse>
+
     @Inject
     lateinit var repository: IRepository
 
     private val disposable = CompositeDisposable()
+
+    private val _topArtists = MutableLiveData<Resource<TopArtistsResponse>>()
+    fun topArtists(): LiveData<Resource<TopArtistsResponse>> = _topArtists
 
     private val _topTracks = MutableLiveData<Resource<TopTracksResponse>>()
     fun topTracks(): LiveData<Resource<TopTracksResponse>> = _topTracks
@@ -37,7 +45,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
 
     private val _playlistCoverImage = MutableLiveData<Resource<List<Image>>>()
-    fun getPlaylistCoverImage() : LiveData<Resource<List<Image>>> = _playlistCoverImage
+    fun getPlaylistCoverImage(): LiveData<Resource<List<Image>>> = _playlistCoverImage
 
     private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
     fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
@@ -45,7 +53,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topParam = MutableLiveData<TopParam>()
     fun getTopParam(): LiveData<TopParam> = _topParam
 
-    fun setTopParams(topParam: TopParam){
+    fun setTopParams(topParam: TopParam) {
         _topParam.value = topParam
     }
 
@@ -63,6 +71,21 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
                     }
                 )
         )
+    }
+
+    fun fetchTopArtists(topParam: TopParam) {
+        Resource.loading(null)
+        disposable.add(
+            topArtistsRepository.getTop(topParam)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    { success ->
+                        _topArtists.value = Resource.success(success)
+                    }, { error ->
+                        _topArtists.value = Resource.error("Error $error.message", null)
+                    }
+                ))
     }
 
     fun createTopTracksPlaylist(userId: String, playlistName: String) {
@@ -99,9 +122,9 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
             repository.getPlaylistCoverImage(playlistId)
                 .subscribe(
                     { success ->
-                       _playlistCoverImage.value = Resource.success(success)
+                        _playlistCoverImage.value = Resource.success(success)
                     }, { error ->
-                       _playlistCoverImage.value = Resource.error(error.message!!, null)
+                        _playlistCoverImage.value = Resource.error(error.message!!, null)
                     }
                 )
         )

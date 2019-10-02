@@ -46,8 +46,6 @@ class FragmentCreateTop : DaggerFragment() {
 
     private lateinit var topViewModel: CreateTopViewModel
 
-    private lateinit var topParam: TopParam
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,19 +58,29 @@ class FragmentCreateTop : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         // activity?.setActionBar(my_toolbar)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.TRACKS)) //save in db
+        topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.ARTISTS)) //save in db
 
         topViewModel.getTopParam().observe(this, Observer {
-            topParam = it
             when(it.topCategory){
-                TopCategory.TRACKS -> displayTopTracks(topParam)
-                TopCategory.ARTISTS -> displayTopArtists(topParam)
+                TopCategory.TRACKS -> displayTopTracks(it)
+                TopCategory.ARTISTS -> displayTopArtists(it)
             }
         })
     }
 
-    private fun displayTopArtists(topParam: TopParam){
 
+    private fun displayTopArtists(topParam: TopParam){
+        topViewModel.fetchTopArtists(topParam)
+        topViewModel.topArtists().observe(this, Observer { topArtists ->
+            when(topArtists.status){
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                   // create_btn.visibility = View.GONE
+                    Log.i("TOPIFY", topArtists.toString())
+                }
+                Resource.Status.ERROR -> error(topArtists.message)
+            }
+        })
     }
 
     @SuppressLint("RestrictedApi")
