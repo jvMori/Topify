@@ -5,7 +5,7 @@
             app:startDestination="@id/fragmentHome">
 
     <fragment android:id="@+id/fragmentCreateTop" android:name="com.jvmori.topify.view.fragment.FragmentCreateTop"
-              android:label="Create top" tools:layout="@layout/fragment_create_top">
+              android:label="Top tracks last week" tools:layout="@layout/fragment_create_top">
         <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
                 app:destination="@id/fragmentTopDetails"
                 app:enterAnim="@anim/slide_in_top"

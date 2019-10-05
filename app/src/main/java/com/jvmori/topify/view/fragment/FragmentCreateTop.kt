@@ -51,7 +51,6 @@ class FragmentCreateTop : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        activity?.title = "Create top items"
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_create_top, container, false)
     }
