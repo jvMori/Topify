@@ -60,7 +60,7 @@ class FragmentCreateTop : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.ARTISTS)) //save in db
+        topViewModel.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
 
         topViewModel.getTopParam().observe(this, Observer {
             when (it.topCategory) {

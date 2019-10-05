@@ -56,11 +56,6 @@ class FragmentTopDetails : DaggerFragment() {
 
     private lateinit var playlistId : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as DaggerAppCompatActivity).setSupportActionBar(toolbar)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
