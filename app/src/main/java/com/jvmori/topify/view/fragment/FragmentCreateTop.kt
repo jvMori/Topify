@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
@@ -25,6 +26,7 @@ import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_create_top.*
+import kotlinx.android.synthetic.main.top_toolbar.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,7 +58,11 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // activity?.setActionBar(my_toolbar)
+        activity?.setActionBar(my_toolbar)
+//        my_toolbar.setNavigationOnClickListener {
+//            Navigation.findNavController(this.requireView()).navigateUp()
+//        }
+
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.ARTISTS)) //save in db
 
