@@ -15,6 +15,7 @@
             app:titleTextAppearance="@style/Toolbar.TitleText"
             android:elevation="4dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:contentInsetRight="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

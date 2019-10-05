@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/action_controls"
-            android:icon="@drawable/controls"
+            android:icon="@drawable/ic_sort_black_24dp"
+            android:iconTint="@color/colorAccent"
             android:title="@string/action_favorite"
             app:showAsAction="ifRoom"/>
 </menu>
