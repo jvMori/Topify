@@ -1,6 +1,7 @@
 package com.jvmori.topify.view.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -18,6 +19,12 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(my_toolbar)
         setupNavController()
+        controller.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id){
+                R.id.fragmentHome, R.id.fragmentTopDetails-> my_toolbar.visibility = View.GONE
+                R.id.fragmentCreateTop, R.id.fragmentDiscover -> my_toolbar.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setupNavController() {
