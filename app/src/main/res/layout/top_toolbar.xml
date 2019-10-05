@@ -5,15 +5,15 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:title="@string/create_top"
-            android:titleTextColor="@color/textColor"
+            android:theme="@style/ToolbarTheme"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
 

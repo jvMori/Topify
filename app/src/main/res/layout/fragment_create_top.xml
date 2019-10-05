@@ -5,7 +5,6 @@
              android:layout_height="match_parent"
              tools:context=".view.fragment.FragmentCreateTop">
 
-    <include android:id="@+id/toolbar" layout="@layout/top_toolbar"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:src="@drawable/ic_add_black_24dp"
@@ -24,7 +23,8 @@
                                                app:layout_constraintEnd_toEndOf="parent"
                                                android:id="@+id/topRecyclerView"
                                                app:layout_constraintHorizontal_bias="1.0"
-                                               app:layout_constraintTop_toBottomOf="@+id/toolbar">
+                                               app:layout_constraintTop_toTopOf="parent"
+    >
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

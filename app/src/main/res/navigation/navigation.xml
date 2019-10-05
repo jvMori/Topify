@@ -5,12 +5,17 @@
             app:startDestination="@id/fragmentHome">
 
     <fragment android:id="@+id/fragmentCreateTop" android:name="com.jvmori.topify.view.fragment.FragmentCreateTop"
-              android:label="fragment_create_top" tools:layout="@layout/fragment_create_top">
+              android:label="Create top" tools:layout="@layout/fragment_create_top">
         <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
-                app:destination="@id/fragmentTopDetails" app:popUpTo="@+id/fragmentCreateTop"
-                app:popUpToInclusive="false" app:enterAnim="@anim/slide_in_top"
-                app:exitAnim="@anim/slide_out_bottom" app:popEnterAnim="@anim/slide_in_bottom"
-                app:popExitAnim="@anim/slide_out_top" app:launchSingleTop="false"/>
+                app:destination="@id/fragmentTopDetails"
+                app:popUpTo="@+id/fragmentCreateTop"
+                app:popUpToInclusive="false"
+                app:enterAnim="@anim/slide_in_top"
+                app:exitAnim="@anim/slide_out_bottom"
+                app:popEnterAnim="@anim/slide_in_bottom"
+                app:popExitAnim="@anim/slide_out_top"
+                app:launchSingleTop="false"
+        />
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>

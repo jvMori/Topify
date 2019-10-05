@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.ui.NavigationUI
 
 import com.jvmori.topify.R
 import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.top_toolbar.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,6 +43,7 @@ class FragmentHome : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
         discoverViewModel.currentUser()
         discoverViewModel.user().observe(this, Observer {

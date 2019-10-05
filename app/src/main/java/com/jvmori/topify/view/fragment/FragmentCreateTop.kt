@@ -4,9 +4,7 @@ package com.jvmori.topify.view.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -53,35 +51,52 @@ class FragmentCreateTop : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        activity?.title = "Create top items"
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_create_top, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.setActionBar(my_toolbar)
-//        my_toolbar.setNavigationOnClickListener {
-//            Navigation.findNavController(this.requireView()).navigateUp()
-//        }
 
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
         topViewModel.setTopParams(TopParam(50, TimeRange().shortTerm, TopCategory.ARTISTS)) //save in db
 
         topViewModel.getTopParam().observe(this, Observer {
-            when(it.topCategory){
+            when (it.topCategory) {
                 TopCategory.TRACKS -> displayTopTracks(it)
                 TopCategory.ARTISTS -> displayTopArtists(it)
             }
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_actions, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-    private fun displayTopArtists(topParam: TopParam){
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_controls -> {
+            displaySettingsDialog()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    private fun displaySettingsDialog() {
+        Log.i("TOPIFY", "clicked")
+    }
+
+    private fun displayTopArtists(topParam: TopParam) {
         topViewModel.fetchTopArtists(topParam)
         topViewModel.topArtists().observe(this, Observer { topArtists ->
-            when(topArtists.status){
+            when (topArtists.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
-                   // create_btn.visibility = View.GONE
+                    // create_btn.visibility = View.GONE
                     Log.i("TOPIFY", topArtists.toString())
                 }
                 Resource.Status.ERROR -> error(topArtists.message)
@@ -90,9 +105,9 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun displayTopTracks(topParam: TopParam){
+    private fun displayTopTracks(topParam: TopParam) {
         topViewModel.fetchTopTracks(topParam)
-        topViewModel.topTracks().observe(this, Observer {topTracks ->
+        topViewModel.topTracks().observe(this, Observer { topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {

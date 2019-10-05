@@ -7,7 +7,7 @@ import androidx.navigation.ui.NavigationUI
 import com.jvmori.topify.R
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_top_details.*
+import kotlinx.android.synthetic.main.top_toolbar.*
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -16,12 +16,14 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupBottomNav()
+        setSupportActionBar(my_toolbar)
+        setupNavController()
     }
 
-    private fun setupBottomNav() {
+    private fun setupNavController() {
         controller = Navigation.findNavController(this, R.id.navHostFragment)
         NavigationUI.setupWithNavController(bottom_navigation, controller)
+        NavigationUI.setupActionBarWithNavController(this, controller)
     }
 
     override fun onSupportNavigateUp(): Boolean {
