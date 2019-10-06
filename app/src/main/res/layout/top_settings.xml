@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+    <TextView
+            android:text="Display top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="21sp"
+            android:textStyle="bold" android:textAlignment="center"/>
+    <RadioButton
+            android:text="Tracks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonTracks"
+            android:textAppearance="@style/Toolbar.TitleText"
+            style="@style/RadioButton"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:clickable="true" android:checked="true" android:paddingLeft="16dp" android:textSize="18sp"/>
+    <RadioButton
+            android:text="Artists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonArtists"
+            android:textAppearance="@style/Toolbar.TitleText"
+            style="@style/RadioButton"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            android:clickable="true" android:checked="false"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/radioButtonTracks" android:paddingLeft="16dp"
+            android:textSize="18sp"/>
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/textSecondary"
+            app:layout_constraintTop_toBottomOf="@+id/radioButtonArtists"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
+    <TextView
+            android:text="Amount of items"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="21sp"
+            android:textStyle="bold" android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/divider"
+            android:layout_marginTop="24dp"/>
+    <TextView
+            android:text="50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView4" android:textSize="21sp"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <SeekBar
+            style="@style/MySeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="50"
+            android:progress="20"
+            android:id="@+id/seekBar"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+    <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/textSecondary"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
