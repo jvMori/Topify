@@ -1,9 +1,9 @@
 package com.jvmori.topify.data.response.top
 
 data class TopParam (
-    val limit : Int = 50,
-    val timeRange : String = TimeRange().mediumTerm,
-    val topCategory : TopCategory
+    var limit : Int = 50,
+    var timeRange : String = TimeRange().mediumTerm,
+    var topCategory : TopCategory
 )
 data class TimeRange(
     val longTerm : String = "long_term",

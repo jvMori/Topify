@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 import com.jvmori.topify.R
+import com.jvmori.topify.Utils.TOP_ARTISTS
+import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopCategory
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
@@ -35,6 +37,8 @@ class FragmentTopSettings : DaggerDialogFragment() {
 
     private var topViewModel : CreateTopViewModel? = null
 
+    private lateinit var topParam: TopParam
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,13 +52,26 @@ class FragmentTopSettings : DaggerDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        radioButtonArtists.setOnClickListener {
-            topViewModel?.setTopParams(TopParam(topCategory = TopCategory.ARTISTS))
+        topParam = TopParam(topCategory = TopCategory.ARTISTS) //load from db
+
+        radioGroupCategory.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radioButtonArtists -> topParam.topCategory = TopCategory.ARTISTS
+                R.id.radioButtonTracks ->  topParam.topCategory =  TopCategory.TRACKS
+            }
         }
-        radioButtonTracks.setOnClickListener {
-            topViewModel?.setTopParams(TopParam(topCategory = TopCategory.TRACKS))
+        radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.radioButtonShortTime -> topParam.timeRange = TimeRange().shortTerm
+                R.id.radioButtonMediumTime -> topParam.timeRange = TimeRange().mediumTerm
+                R.id.radioButtonLongTime -> topParam.timeRange = TimeRange().longTerm
+            }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        topViewModel?.setTopParams(topParam)
+    }
 
 }
