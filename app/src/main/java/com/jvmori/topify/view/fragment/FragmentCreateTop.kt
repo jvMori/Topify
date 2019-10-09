@@ -45,7 +45,7 @@ class FragmentCreateTop : DaggerFragment() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private lateinit var topViewModel: CreateTopViewModel
+    private  var topViewModel: CreateTopViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,10 +59,12 @@ class FragmentCreateTop : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        topViewModel.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
+        topViewModel = activity?.let {
+            ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
+        }
+        topViewModel?.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
 
-        topViewModel.getTopParam().observe(this, Observer {
+        topViewModel?.getTopParam()?.observe(this, Observer {
             when (it.topCategory) {
                 TopCategory.TRACKS -> displayTopTracks(it)
                 TopCategory.ARTISTS -> displayTopArtists(it)
@@ -92,8 +94,8 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     private fun displayTopArtists(topParam: TopParam) {
-        topViewModel.fetchTopArtists(topParam)
-        topViewModel.topArtists().observe(this, Observer { topArtists ->
+        topViewModel?.fetchTopArtists(topParam)
+        topViewModel?.topArtists()?.observe(this, Observer { topArtists ->
             when (topArtists.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
@@ -107,8 +109,8 @@ class FragmentCreateTop : DaggerFragment() {
 
     @SuppressLint("RestrictedApi")
     private fun displayTopTracks(topParam: TopParam) {
-        topViewModel.fetchTopTracks(topParam)
-        topViewModel.topTracks().observe(this, Observer { topTracks ->
+        topViewModel?.fetchTopTracks(topParam)
+        topViewModel?.topTracks()?.observe(this, Observer { topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
@@ -125,10 +127,11 @@ class FragmentCreateTop : DaggerFragment() {
 
     private fun createTopTracksAdapter(tracks: List<Track>?) {
         val topTracksAdapter = TopTracksAdapter(tracks, imageLoader)
-
-        topRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
-        topRecyclerView.setHasFixedSize(true)
-        topRecyclerView.adapter = topTracksAdapter
+        topRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = topTracksAdapter
+        }
     }
 
     private fun showLoading() {
