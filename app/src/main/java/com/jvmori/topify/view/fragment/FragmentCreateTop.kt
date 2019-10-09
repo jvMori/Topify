@@ -47,6 +47,14 @@ class FragmentCreateTop : DaggerFragment() {
 
     private  var topViewModel: CreateTopViewModel? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        topViewModel = activity?.let {
+            ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
+        }
+        topViewModel?.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,11 +66,6 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        topViewModel = activity?.let {
-            ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
-        }
-        topViewModel?.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
 
         topViewModel?.getTopParam()?.observe(this, Observer {
             when (it.topCategory) {
