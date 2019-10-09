@@ -40,7 +40,8 @@
             android:background="@color/textSecondary"
             app:layout_constraintTop_toBottomOf="@+id/radioButtonArtists"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="32dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="32dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            android:visibility="invisible"/>
     <TextView
             android:text="Amount of items"
             android:layout_width="0dp"
@@ -49,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="21sp"
             android:textStyle="bold" android:textAlignment="center"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/divider"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="8dp"/>
     <TextView
             android:text="50"
             android:layout_width="wrap_content"
@@ -77,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/seekBar"/>
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" android:visibility="invisible"/>
     <TextView
             android:text="Time range"
             android:layout_width="0dp"
@@ -86,7 +87,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="21sp"
             android:textStyle="bold" android:textAlignment="center"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toBottomOf="@+id/divider2" android:layout_marginTop="24dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/divider2" android:layout_marginTop="8dp"/>
     <RadioButton
             android:text="Last week"
             android:layout_width="wrap_content"
@@ -132,5 +133,6 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/radioButtonLongTime" android:layout_marginTop="24dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/radioButtonLongTime" android:layout_marginTop="24dp"
+            android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

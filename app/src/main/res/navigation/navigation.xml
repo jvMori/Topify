@@ -14,6 +14,10 @@
                 app:popExitAnim="@anim/slide_out_top"
                 app:launchSingleTop="false"
                 app:popUpToInclusive="false" app:popUpTo="@+id/fragmentCreateTop"/>
+        <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopSettings2"
+                app:destination="@id/fragmentTopSettings2" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
@@ -21,4 +25,6 @@
               android:label="fragment_fragment_discover" tools:layout="@layout/fragment_fragment_discover"/>
     <fragment android:id="@+id/fragmentTopDetails" android:name="com.jvmori.topify.view.fragment.FragmentTopDetails"
               android:label="fragment_fragment_top_details" tools:layout="@layout/fragment_top_details"/>
+    <fragment android:id="@+id/fragmentTopSettings2" android:name="com.jvmori.topify.view.fragment.FragmentTopSettings"
+              android:label="Settings"/>
 </navigation>

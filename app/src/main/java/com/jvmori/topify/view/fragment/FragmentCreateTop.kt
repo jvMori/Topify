@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.navigateToDetails
+import com.jvmori.topify.Utils.navigateToTopSettings
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopCategory
@@ -76,7 +77,7 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_controls -> {
-            displaySettingsDialog()
+            displaySettings()
             true
         }
         else -> {
@@ -85,8 +86,9 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
 
-    private fun displaySettingsDialog() {
+    private fun displaySettings(){
         Log.i("TOPIFY", "clicked")
+        navigateToTopSettings(this)
     }
 
     private fun displayTopArtists(topParam: TopParam) {
@@ -123,6 +125,7 @@ class FragmentCreateTop : DaggerFragment() {
 
     private fun createTopTracksAdapter(tracks: List<Track>?) {
         val topTracksAdapter = TopTracksAdapter(tracks, imageLoader)
+
         topRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         topRecyclerView.setHasFixedSize(true)
         topRecyclerView.adapter = topTracksAdapter
