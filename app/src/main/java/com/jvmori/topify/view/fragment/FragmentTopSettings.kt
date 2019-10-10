@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
@@ -33,9 +34,9 @@ private const val ARG_PARAM2 = "param2"
 class FragmentTopSettings : DaggerDialogFragment() {
 
     @Inject
-    lateinit var factory : ViewModelProvider.Factory
+    lateinit var factory: ViewModelProvider.Factory
 
-    private var topViewModel : CreateTopViewModel? = null
+    private var topViewModel: CreateTopViewModel? = null
 
     private lateinit var topParam: TopParam
 
@@ -52,16 +53,28 @@ class FragmentTopSettings : DaggerDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        topParam = TopParam(topCategory = TopCategory.ARTISTS) //load from db
+        topViewModel?.fetchTopParams()
+        topViewModel?.getTopParam()?.observe(this, Observer {
+            topParam = it
+            when (topParam.topCategory) {
+                TopCategory.TRACKS -> radioGroupCategory.check(R.id.radioButtonTracks)
+                TopCategory.ARTISTS -> radioGroupCategory.check(R.id.radioButtonArtists)
+            }
+            when (topParam.timeRange) {
+                TimeRange().shortTerm -> radioGroupTime.check(R.id.radioButtonShortTime)
+                TimeRange().mediumTerm -> radioGroupTime.check(R.id.radioButtonMediumTime)
+                TimeRange().longTerm -> radioGroupTime.check(R.id.radioButtonLongTime)
+            }
+        })
 
         radioGroupCategory.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId){
+            when (checkedId) {
                 R.id.radioButtonArtists -> topParam.topCategory = TopCategory.ARTISTS
-                R.id.radioButtonTracks ->  topParam.topCategory =  TopCategory.TRACKS
+                R.id.radioButtonTracks -> topParam.topCategory = TopCategory.TRACKS
             }
         }
         radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId){
+            when (checkedId) {
                 R.id.radioButtonShortTime -> topParam.timeRange = TimeRange().shortTerm
                 R.id.radioButtonMediumTime -> topParam.timeRange = TimeRange().mediumTerm
                 R.id.radioButtonLongTime -> topParam.timeRange = TimeRange().longTerm
