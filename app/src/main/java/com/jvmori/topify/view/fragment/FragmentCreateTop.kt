@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
@@ -17,6 +19,7 @@ import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.navigateToDetails
 import com.jvmori.topify.Utils.navigateToTopSettings
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopCategory
 import com.jvmori.topify.data.response.top.TopParam
@@ -53,6 +56,10 @@ class FragmentCreateTop : DaggerFragment() {
             ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
         }
         topViewModel?.fetchTopParams()
+        topViewModel?.getTopParam()?.observe(this, Observer {
+            displayArtistOrTracksList(it)
+            setActionBarTitle(it)
+        })
     }
 
     override fun onCreateView(
@@ -64,15 +71,23 @@ class FragmentCreateTop : DaggerFragment() {
         return inflater.inflate(R.layout.fragment_create_top, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setActionBarTitle(it: TopParam) {
+        val timeRange = when (it.timeRange) {
+            TimeRange().shortTerm -> "last week"
+            TimeRange().mediumTerm -> "last month"
+            TimeRange().longTerm -> "last year"
+            else -> ""
+        }
+        val navController = Navigation.findNavController(this.requireView())
+        navController.currentDestination?.label = "Top ${it.topCategory.toString().toLowerCase()} $timeRange"
+        Log.i("TOPIFY", "top")
+    }
 
-        topViewModel?.getTopParam()?.observe(this, Observer {
-            when (it.topCategory) {
-                TopCategory.TRACKS -> displayTopTracks(it)
-                TopCategory.ARTISTS -> displayTopArtists(it)
-            }
-        })
+    private fun displayArtistOrTracksList(it: TopParam) {
+        when (it.topCategory) {
+            TopCategory.TRACKS -> displayTopTracks(it)
+            TopCategory.ARTISTS -> displayTopArtists(it)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,7 +97,7 @@ class FragmentCreateTop : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_controls -> {
-            displaySettings()
+            navigateToTopSettings(this)
             true
         }
         else -> {
@@ -90,19 +105,14 @@ class FragmentCreateTop : DaggerFragment() {
         }
     }
 
-
-    private fun displaySettings() {
-        Log.i("TOPIFY", "clicked")
-        navigateToTopSettings(this)
-    }
-
+    @SuppressLint("RestrictedApi")
     private fun displayTopArtists(topParam: TopParam) {
         topViewModel?.fetchTopArtists(topParam)
         topViewModel?.topArtists()?.observe(this, Observer { topArtists ->
             when (topArtists.status) {
                 Resource.Status.LOADING -> showLoading()
                 Resource.Status.SUCCESS -> {
-                    // create_btn.visibility = View.GONE
+                    create_btn.visibility = View.GONE
                     Log.i("TOPIFY", topArtists.toString())
                 }
                 Resource.Status.ERROR -> error(topArtists.message)
@@ -110,26 +120,28 @@ class FragmentCreateTop : DaggerFragment() {
         })
     }
 
-    @SuppressLint("RestrictedApi")
     private fun displayTopTracks(topParam: TopParam) {
         topViewModel?.fetchTopTracks(topParam)
         topViewModel?.topTracks()?.observe(this, Observer { topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS -> {
-                    create_btn.visibility = View.VISIBLE
-                    createTopTracksAdapter(topTracks.data?.tracks)
-                    create_btn.setOnClickListener {
-                        navigateToDetails(
-                            topTracks.data,
-                            this,
-                            R.id.action_fragmentCreateTop_to_fragmentTopDetails
-                        )
-                    }
-                }
+                Resource.Status.SUCCESS -> success(topTracks)
                 Resource.Status.ERROR -> error(topTracks.message)
             }
         })
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun success(topTracks: Resource<TopTracksResponse>) {
+        create_btn.visibility = View.VISIBLE
+        createTopTracksAdapter(topTracks.data?.tracks)
+        create_btn.setOnClickListener {
+            navigateToDetails(
+                topTracks.data,
+                this,
+                R.id.action_fragmentCreateTop_to_fragmentTopDetails
+            )
+        }
     }
 
     private fun createTopTracksAdapter(tracks: List<Track>?) {

@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class FragmentTopSettings : DaggerDialogFragment() {
+class FragmentTopSettings : DaggerFragment() {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -41,14 +41,18 @@ class FragmentTopSettings : DaggerDialogFragment() {
 
     private lateinit var topParam: TopParam
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        topViewModel = activity?.let {
+            ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        topViewModel = activity?.let {
-            ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
-        }
+
         return inflater.inflate(R.layout.top_settings, container, false)
     }
 
@@ -124,9 +128,8 @@ class FragmentTopSettings : DaggerDialogFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         topViewModel?.setTopParams(topParam)
     }
-
 }

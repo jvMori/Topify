@@ -75,7 +75,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setTopParams(topParam: TopParam) {
-        _topParam.value = topParam
+        //_topParam.value = topParam
         topParamsRepository.insert(topParam)
     }
 
