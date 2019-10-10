@@ -10,17 +10,19 @@ import com.jvmori.topify.data.db.dao.TopTracksDao
 import com.jvmori.topify.data.db.entity.AuthKey
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
+import com.jvmori.topify.data.response.top.TopParam
 
 @Database(
     entities = [
         AuthKey::class,
         TopTracksResponse::class,
-        TopArtistsResponse::class
-    ], version = 6, exportSchema = false
+        TopArtistsResponse::class,
+        TopParam::class
+    ], version = 7, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class TopifyDatabase : RoomDatabase() {
     abstract fun authDao(): AuthDao
     abstract fun topTracksDao(): TopTracksDao
-    abstract fun topArtistsDao() : TopArtistsDao
+    abstract fun topArtistsDao(): TopArtistsDao
 }
