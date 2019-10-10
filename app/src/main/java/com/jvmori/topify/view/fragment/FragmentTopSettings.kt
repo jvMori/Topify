@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,29 +57,70 @@ class FragmentTopSettings : DaggerDialogFragment() {
         topViewModel?.fetchTopParams()
         topViewModel?.getTopParam()?.observe(this, Observer {
             topParam = it
-            when (topParam.topCategory) {
-                TopCategory.TRACKS -> radioGroupCategory.check(R.id.radioButtonTracks)
-                TopCategory.ARTISTS -> radioGroupCategory.check(R.id.radioButtonArtists)
-            }
-            when (topParam.timeRange) {
-                TimeRange().shortTerm -> radioGroupTime.check(R.id.radioButtonShortTime)
-                TimeRange().mediumTerm -> radioGroupTime.check(R.id.radioButtonMediumTime)
-                TimeRange().longTerm -> radioGroupTime.check(R.id.radioButtonLongTime)
-            }
+            setCategory()
+            setTimeRange()
+            setLimit()
         })
 
         radioGroupCategory.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioButtonArtists -> topParam.topCategory = TopCategory.ARTISTS
-                R.id.radioButtonTracks -> topParam.topCategory = TopCategory.TRACKS
-            }
+            chooseCategory(checkedId)
         }
         radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioButtonShortTime -> topParam.timeRange = TimeRange().shortTerm
-                R.id.radioButtonMediumTime -> topParam.timeRange = TimeRange().mediumTerm
-                R.id.radioButtonLongTime -> topParam.timeRange = TimeRange().longTerm
+            chooseTimeRange(checkedId)
+        }
+
+        seekBarAmount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if(progress > 0){
+                    seekBar?.progress = progress
+                    amountText.text = progress.toString()
+                    topParam.limit = progress
+                }
             }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+    }
+
+    private fun chooseTimeRange(checkedId: Int) {
+        when (checkedId) {
+            R.id.radioButtonShortTime -> topParam.timeRange = TimeRange().shortTerm
+            R.id.radioButtonMediumTime -> topParam.timeRange = TimeRange().mediumTerm
+            R.id.radioButtonLongTime -> topParam.timeRange = TimeRange().longTerm
+        }
+    }
+
+    private fun chooseCategory(checkedId: Int) {
+        when (checkedId) {
+            R.id.radioButtonArtists -> topParam.topCategory = TopCategory.ARTISTS
+            R.id.radioButtonTracks -> topParam.topCategory = TopCategory.TRACKS
+        }
+    }
+
+    private fun setLimit() {
+        seekBarAmount.progress = topParam.limit
+        amountText.text = topParam.limit.toString()
+    }
+
+    private fun setTimeRange() {
+        when (topParam.timeRange) {
+            TimeRange().shortTerm -> radioGroupTime.check(R.id.radioButtonShortTime)
+            TimeRange().mediumTerm -> radioGroupTime.check(R.id.radioButtonMediumTime)
+            TimeRange().longTerm -> radioGroupTime.check(R.id.radioButtonLongTime)
+        }
+    }
+
+    private fun setCategory() {
+        when (topParam.topCategory) {
+            TopCategory.TRACKS -> radioGroupCategory.check(R.id.radioButtonTracks)
+            TopCategory.ARTISTS -> radioGroupCategory.check(R.id.radioButtonArtists)
         }
     }
 
