@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jvmori.topify.Utils.TOP_ARTISTS
+import com.jvmori.topify.Utils.TOP_PARAMS
 import com.jvmori.topify.Utils.TOP_TRACKS
 import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.Resource
@@ -14,8 +15,13 @@ import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.top.TopArtistsRepository
+import com.jvmori.topify.data.repository.top.TopParamsRepository
 import com.jvmori.topify.data.repository.top.TopRepository
 import com.jvmori.topify.data.response.top.Image
+import com.jvmori.topify.data.response.top.TimeRange
+import com.jvmori.topify.data.response.top.TopCategory
+import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,6 +35,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     @field:[Inject Named(TOP_ARTISTS)]
     lateinit var topArtistsRepository: TopRepository<TopArtistsResponse>
+
+    lateinit var topParamsRepository: TopParamsRepository
 
     @Inject
     lateinit var repository: IRepository
@@ -53,8 +61,21 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topParam = MutableLiveData<TopParam>()
     fun getTopParam(): LiveData<TopParam> = _topParam
 
+    fun fetchTopParams() {
+        disposable.add(
+            topParamsRepository.getTop()
+                .doOnComplete {
+                    _topParam.value = TopParam(index=50, timeRange =  TimeRange().shortTerm,topCategory = TopCategory.TRACKS)
+                }
+                .subscribe {
+                   _topParam.value = it
+                }
+        )
+    }
+
     fun setTopParams(topParam: TopParam) {
         _topParam.value = topParam
+        topParamsRepository.insert(topParam)
     }
 
     fun fetchTopTracks(topParam: TopParam) {
