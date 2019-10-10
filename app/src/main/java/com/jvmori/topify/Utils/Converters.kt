@@ -5,10 +5,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jvmori.topify.data.response.top.Artist
 import com.jvmori.topify.data.response.top.ArtistItem
+import com.jvmori.topify.data.response.top.TopCategory
 import com.jvmori.topify.data.response.top.Track
 
 class Converters {
-    companion  object {
+    companion object {
         @JvmStatic
         var gson = Gson()
         var gsonForGenres = Gson()
@@ -30,6 +31,22 @@ class Converters {
         @JvmStatic
         fun listToString(movie: List<Track>): String {
             return gson.toJson(movie)
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun topCategoryToString(topCategory: TopCategory): String {
+            return topCategory.toString()
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun topCategoryToString(topCategory: String): TopCategory {
+            return when (topCategory) {
+                TopCategory.TRACKS.toString() -> TopCategory.TRACKS
+                TopCategory.ARTISTS.toString() -> TopCategory.ARTISTS
+                else -> TopCategory.ARTISTS
+            }
         }
 
         @TypeConverter
