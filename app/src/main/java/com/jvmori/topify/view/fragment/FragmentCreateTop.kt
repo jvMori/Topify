@@ -45,14 +45,14 @@ class FragmentCreateTop : DaggerFragment() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private  var topViewModel: CreateTopViewModel? = null
+    private var topViewModel: CreateTopViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         topViewModel = activity?.let {
             ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
         }
-        topViewModel?.setTopParams(TopParam(50, TimeRange().longTerm, TopCategory.TRACKS)) //save in db
+        topViewModel?.fetchTopParams()
     }
 
     override fun onCreateView(
@@ -91,7 +91,7 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
 
-    private fun displaySettings(){
+    private fun displaySettings() {
         Log.i("TOPIFY", "clicked")
         navigateToTopSettings(this)
     }
@@ -120,7 +120,11 @@ class FragmentCreateTop : DaggerFragment() {
                     create_btn.visibility = View.VISIBLE
                     createTopTracksAdapter(topTracks.data?.tracks)
                     create_btn.setOnClickListener {
-                        navigateToDetails(topTracks.data, this, R.id.action_fragmentCreateTop_to_fragmentTopDetails)
+                        navigateToDetails(
+                            topTracks.data,
+                            this,
+                            R.id.action_fragmentCreateTop_to_fragmentTopDetails
+                        )
                     }
                 }
                 Resource.Status.ERROR -> error(topTracks.message)
