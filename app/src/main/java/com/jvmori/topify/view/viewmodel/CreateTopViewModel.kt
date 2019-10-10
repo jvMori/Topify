@@ -36,6 +36,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     @field:[Inject Named(TOP_ARTISTS)]
     lateinit var topArtistsRepository: TopRepository<TopArtistsResponse>
 
+    @Inject
     lateinit var topParamsRepository: TopParamsRepository
 
     @Inject
