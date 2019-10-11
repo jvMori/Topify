@@ -1,4 +1,4 @@
-package com.jvmori.topify.view.adapters.createdPlaylist
+package com.jvmori.topify.view.adapters.top
 
 import com.jvmori.topify.R
 import com.jvmori.topify.data.response.top.Track

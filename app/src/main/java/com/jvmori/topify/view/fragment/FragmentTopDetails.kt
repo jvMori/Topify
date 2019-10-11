@@ -21,14 +21,13 @@ import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.activity.AuthResource
-import com.jvmori.topify.view.adapters.createdPlaylist.TrackItem
+import com.jvmori.topify.view.adapters.top.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
-import dagger.android.support.DaggerAppCompatActivity
 
 
 // TODO: Rename parameter arguments, choose names that match

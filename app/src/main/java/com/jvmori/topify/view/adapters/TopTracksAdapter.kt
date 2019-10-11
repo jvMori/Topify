@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.data.response.top.Track
-import kotlinx.android.synthetic.main.top_item.view.*
+import kotlinx.android.synthetic.main.top_track.view.*
 
 class TopTracksAdapter(
     tracks : List<Track>?,
@@ -15,7 +15,7 @@ class TopTracksAdapter(
 ) : BaseAdapter<Track>(tracks) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Track> {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.top_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.top_track, parent, false)
         return TopTracksViewHolder(view, imageLoader)
     }
 

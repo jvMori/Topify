@@ -40,12 +40,17 @@
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintBottom_toBottomOf="@+id/icon" android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/length"/>
+
     <TextView
-            android:text="03:28"
+            android:id="@+id/length"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/length"
-            app:layout_constraintTop_toTopOf="@+id/icon" app:layout_constraintBottom_toBottomOf="@+id/icon"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2" android:layout_marginEnd="8dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="03:28"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/icon"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/icon" />
     <ImageView
             android:layout_width="40dp"
             android:elevation="8dp"
