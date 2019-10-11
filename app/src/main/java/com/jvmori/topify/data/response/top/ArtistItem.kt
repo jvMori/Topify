@@ -18,4 +18,21 @@ data class ArtistItem(
     val popularity: Int,
     val type: String,
     val uri: String
-) : Parcelable
+) : Parcelable {
+
+    fun genresToString(): String {
+        var genresTxt = ""
+        genres.forEach {
+            genresTxt += "$it, "
+        }
+        return genresTxt
+    }
+
+    fun followersToString() : String {
+        return "Followers: ${followers.total}"
+    }
+
+    fun getImageUrl() : String {
+        return images[0].url
+    }
+}

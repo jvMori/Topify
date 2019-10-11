@@ -6,7 +6,7 @@
         android:layout_height="wrap_content">
 
     <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/artistImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
@@ -27,7 +27,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -38,7 +38,7 @@
             android:layout_marginTop="2dp"
             android:text="Rock, Metal, Post-Hardcore"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/artistName" />
 
     <TextView
@@ -50,7 +50,7 @@
             android:text="Followers: 1,280,340"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/genres" />
 
     <ProgressBar
