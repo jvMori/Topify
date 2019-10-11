@@ -19,15 +19,21 @@ import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.navigateToDetails
 import com.jvmori.topify.Utils.navigateToTopSettings
 import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopCategory
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.adapters.TopTracksAdapter
+import com.jvmori.topify.view.adapters.top.ArtistViewItem
+import com.jvmori.topify.view.adapters.top.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_create_top.*
+import kotlinx.android.synthetic.main.fragment_top_details.*
 import kotlinx.android.synthetic.main.top_toolbar.*
 import javax.inject.Inject
 
@@ -105,19 +111,28 @@ class FragmentCreateTop : DaggerFragment() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
     private fun displayTopArtists(topParam: TopParam) {
         topViewModel?.fetchTopArtists(topParam)
         topViewModel?.topArtists()?.observe(this, Observer { topArtists ->
             when (topArtists.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS -> {
-                    create_btn.visibility = View.GONE
-                    Log.i("TOPIFY", topArtists.toString())
-                }
+                Resource.Status.SUCCESS ->  artistsViewSuccess(topArtists)
                 Resource.Status.ERROR -> error(topArtists.message)
             }
         })
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun artistsViewSuccess(topArtists: Resource<TopArtistsResponse>) {
+        create_btn.visibility = View.GONE
+        val adapter = GroupAdapter<ViewHolder>()
+        topArtists.data?.artists?.let{artists ->
+            artists.forEach {
+                adapter.add(ArtistViewItem(imageLoader, it))
+            }
+        }
+        playlistRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
+        playlistRecyclerView.adapter = adapter
     }
 
     private fun displayTopTracks(topParam: TopParam) {
