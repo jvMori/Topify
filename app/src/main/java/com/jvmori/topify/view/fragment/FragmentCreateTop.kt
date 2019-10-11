@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
@@ -27,14 +25,12 @@ import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.adapters.top.ArtistViewItem
-import com.jvmori.topify.view.adapters.top.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_create_top.*
 import kotlinx.android.synthetic.main.fragment_top_details.*
-import kotlinx.android.synthetic.main.top_toolbar.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -85,7 +81,8 @@ class FragmentCreateTop : DaggerFragment() {
             else -> ""
         }
         val navController = Navigation.findNavController(this.requireView())
-        navController.currentDestination?.label = "Top ${it.topCategory.toString().toLowerCase()} $timeRange"
+        navController.currentDestination?.label =
+            "Top ${it.topCategory.toString().toLowerCase()} $timeRange"
         Log.i("TOPIFY", "top")
     }
 
@@ -116,22 +113,27 @@ class FragmentCreateTop : DaggerFragment() {
         topViewModel?.topArtists()?.observe(this, Observer { topArtists ->
             when (topArtists.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS ->  artistsViewSuccess(topArtists)
+                Resource.Status.SUCCESS -> artistsSuccess(topArtists)
                 Resource.Status.ERROR -> error(topArtists.message)
             }
         })
     }
 
     @SuppressLint("RestrictedApi")
-    private fun artistsViewSuccess(topArtists: Resource<TopArtistsResponse>) {
+    private fun artistsSuccess(topArtists: Resource<TopArtistsResponse>) {
         create_btn.visibility = View.GONE
+        createArtistsAdapter(topArtists)
+    }
+
+    private fun createArtistsAdapter(topArtists: Resource<TopArtistsResponse>) {
         val adapter = GroupAdapter<ViewHolder>()
-        topArtists.data?.artists?.let{artists ->
+        topArtists.data?.artists?.let { artists ->
             artists.forEach {
                 adapter.add(ArtistViewItem(imageLoader, it))
             }
         }
-        playlistRecyclerView.layoutManager = LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
+        playlistRecyclerView.layoutManager =
+            LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         playlistRecyclerView.adapter = adapter
     }
 
@@ -140,14 +142,14 @@ class FragmentCreateTop : DaggerFragment() {
         topViewModel?.topTracks()?.observe(this, Observer { topTracks ->
             when (topTracks.status) {
                 Resource.Status.LOADING -> showLoading()
-                Resource.Status.SUCCESS -> success(topTracks)
+                Resource.Status.SUCCESS -> topTracksSuccess(topTracks)
                 Resource.Status.ERROR -> error(topTracks.message)
             }
         })
     }
 
     @SuppressLint("RestrictedApi")
-    private fun success(topTracks: Resource<TopTracksResponse>) {
+    private fun topTracksSuccess(topTracks: Resource<TopTracksResponse>) {
         create_btn.visibility = View.VISIBLE
         createTopTracksAdapter(topTracks.data?.tracks)
         create_btn.setOnClickListener {
