@@ -9,7 +9,7 @@
             android:id="@+id/artistImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/artistName"
@@ -23,14 +23,14 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:ellipsize="end"
             android:fontFamily="sans-serif-smallcaps"
+            android:maxLines="1"
             android:text="Bring Me The Horizon"
             android:textAppearance="@style/TextViewShort"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toStartOf="@+id/popularity"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,12 +41,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Rock, Metal, Post-Hardcore"
             android:textAppearance="@style/TextViewShort"
             android:textSize="10sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toStartOf="@+id/popularity"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/artistName" />
 
@@ -57,29 +57,24 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Followers: 1,280,340"
             android:textAppearance="@style/TextViewShort"
             android:textSize="10sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/popularity"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/genres" />
 
-    <ProgressBar
-            android:id="@+id/popularity"
-            style="?android:attr/progressBarStyle"
+    <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="11dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="25"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_horiz" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

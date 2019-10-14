@@ -23,7 +23,6 @@ class ArtistViewItem (
            genres.text = artist.genresToString(2)
            followers.text = artist.followersToString()
            imageLoader.loadImage(artist.getImageUrl(), artistImage)
-           popularity.setProgress(artist.popularity, true)
        }
     }
 }
