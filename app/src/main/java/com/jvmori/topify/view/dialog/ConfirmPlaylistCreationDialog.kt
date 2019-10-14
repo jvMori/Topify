@@ -23,20 +23,15 @@ class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
                 .setTitle("Create playlist")
                 .setNegativeButton(
                     "cancel"
-                ) { dialog, which -> onCancel() }
-                .setPositiveButton("create", object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        onConfirmListener?.onConfirm(playlistsName.text.toString())
-                    }
-
-                })
+                ) { dialog, which -> }
+                .setPositiveButton(
+                    "create"
+                ) { dialog, which -> onConfirmListener?.onConfirm(playlistsName.text.toString()) }
             return builder.create()
         }
 
         return super.onCreateDialog(savedInstanceState)
     }
-
-    private fun onCancel() {}
 }
 
 interface ConfirmPlaylistCreationListener {
