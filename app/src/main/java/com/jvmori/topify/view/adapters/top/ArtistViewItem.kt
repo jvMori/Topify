@@ -20,10 +20,10 @@ class ArtistViewItem (
     override fun bind(viewHolder: ViewHolder, position: Int) {
        viewHolder.itemView.apply {
            artistName.text = artist.name
-           genres.text = artist.genresToString()
+           genres.text = artist.genresToString(2)
            followers.text = artist.followersToString()
            imageLoader.loadImage(artist.getImageUrl(), artistImage)
-           progressBar.setProgress(artist.popularity, true)
+           popularity.setProgress(artist.popularity, true)
        }
     }
 }

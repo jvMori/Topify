@@ -18,38 +18,52 @@
 
     <TextView
             android:id="@+id/artistName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="Bring Me The Horizon"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/TextViewShort"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/popularity"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/genres"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
             android:text="Rock, Metal, Post-Hardcore"
+            android:textAppearance="@style/TextViewShort"
             android:textSize="10sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/popularity"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/artistName" />
 
     <TextView
             android:id="@+id/followers"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="Followers: 1,280,340"
+            android:textAppearance="@style/TextViewShort"
             android:textSize="10sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/popularity"
             app:layout_constraintStart_toEndOf="@+id/artistImage"
             app:layout_constraintTop_toBottomOf="@+id/genres" />
 
@@ -61,6 +75,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="11dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="25"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

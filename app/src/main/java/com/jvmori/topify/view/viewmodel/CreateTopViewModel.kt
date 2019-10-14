@@ -96,7 +96,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     }
 
     fun fetchTopArtists(topParam: TopParam) {
-        Resource.loading(null)
+        _topArtists.value = Resource.loading(null)
         disposable.add(
             topArtistsRepository.getTop(topParam)
                 .observeOn(AndroidSchedulers.mainThread())

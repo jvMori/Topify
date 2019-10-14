@@ -20,10 +20,15 @@ data class ArtistItem(
     val uri: String
 ) : Parcelable {
 
-    fun genresToString(): String {
+    fun genresToString(maxGenresToDisplay : Int): String {
         var genresTxt = ""
-        genres.forEach {
-            genresTxt += "$it, "
+        genres.forEachIndexed { index, value ->
+            if(index < maxGenresToDisplay){
+                genresTxt += value
+                if(index == maxGenresToDisplay - 1 || index == genres.size - 1)
+                    return@forEachIndexed
+                genresTxt += ", "
+            }
         }
         return genresTxt
     }

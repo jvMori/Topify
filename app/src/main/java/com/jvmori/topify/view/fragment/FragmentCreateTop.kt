@@ -126,15 +126,16 @@ class FragmentCreateTop : DaggerFragment() {
     }
 
     private fun createArtistsAdapter(topArtists: Resource<TopArtistsResponse>) {
-        val adapter = GroupAdapter<ViewHolder>()
+        val artistsAdapter = GroupAdapter<ViewHolder>()
         topArtists.data?.artists?.let { artists ->
             artists.forEach {
-                adapter.add(ArtistViewItem(imageLoader, it))
+                artistsAdapter.add(ArtistViewItem(imageLoader, it))
             }
         }
-        playlistRecyclerView.layoutManager =
-            LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
-        playlistRecyclerView.adapter = adapter
+        topRecyclerView.apply{
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = artistsAdapter
+        }
     }
 
     private fun displayTopTracks(topParam: TopParam) {

@@ -33,6 +33,12 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="TextViewShort" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
        <item name="android:buttonTint">@color/colorAccent</item>
         <item name="android:textColor">@color/textColor</item>
