@@ -6,18 +6,13 @@
 
     <fragment android:id="@+id/fragmentCreateTop" android:name="com.jvmori.topify.view.fragment.FragmentCreateTop"
               android:label="Top tracks last week" tools:layout="@layout/fragment_create_top">
-        <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
-                app:destination="@id/fragmentTopDetails"
-                app:enterAnim="@anim/slide_in_top"
-                app:exitAnim="@anim/slide_out_bottom"
-                app:popEnterAnim="@anim/slide_in_bottom"
-                app:popExitAnim="@anim/slide_out_top"
-                app:launchSingleTop="false"
-                app:popUpToInclusive="false" app:popUpTo="@+id/fragmentCreateTop"/>
         <action android:id="@+id/action_fragmentCreateTop_to_fragmentTopSettings2"
                 app:destination="@id/fragmentTopSettings" app:enterAnim="@anim/slide_in_right"
                 app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
+        <action
+                android:id="@+id/action_fragmentCreateTop_to_confirmPlaylistCreationDialog"
+                app:destination="@id/confirmPlaylistCreationDialog" />
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
@@ -27,4 +22,12 @@
               android:label="fragment_fragment_top_details" tools:layout="@layout/fragment_top_details"/>
     <fragment android:id="@+id/fragmentTopSettings" android:name="com.jvmori.topify.view.fragment.FragmentTopSettings"
               android:label="Settings"/>
+    <dialog
+            android:id="@+id/confirmPlaylistCreationDialog"
+            android:name="com.jvmori.topify.view.dialog.ConfirmPlaylistCreationDialog"
+            android:label="Create Playlist">
+        <action
+                android:id="@+id/action_confirmPlaylistCreationDialog_to_fragmentTopDetails"
+                app:destination="@id/fragmentTopDetails" />
+    </dialog>
 </navigation>

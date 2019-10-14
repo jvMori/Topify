@@ -16,3 +16,7 @@ fun navigateToDetails(item : TopTracksResponse?, fragment : Fragment, actionId :
 fun navigateToTopSettings(fragment: Fragment){
     NavHostFragment.findNavController(fragment).navigate(R.id.action_fragmentCreateTop_to_fragmentTopSettings2)
 }
+
+fun showConfirmationDialog(fragment: Fragment){
+    NavHostFragment.findNavController(fragment).navigate(R.id.action_fragmentCreateTop_to_confirmPlaylistCreationDialog)
+}

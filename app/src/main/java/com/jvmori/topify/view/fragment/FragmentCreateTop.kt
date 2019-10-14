@@ -16,6 +16,7 @@ import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.navigateToDetails
 import com.jvmori.topify.Utils.navigateToTopSettings
+import com.jvmori.topify.Utils.showConfirmationDialog
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
@@ -25,6 +26,8 @@ import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.top.Track
 import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.adapters.top.ArtistViewItem
+import com.jvmori.topify.view.dialog.ConfirmPlaylistCreationDialog
+import com.jvmori.topify.view.dialog.ConfirmPlaylistCreationListener
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
@@ -42,7 +45,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class FragmentCreateTop : DaggerFragment() {
+class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -154,12 +157,20 @@ class FragmentCreateTop : DaggerFragment() {
         create_btn.visibility = View.VISIBLE
         createTopTracksAdapter(topTracks.data?.tracks)
         create_btn.setOnClickListener {
-            navigateToDetails(
-                topTracks.data,
-                this,
-                R.id.action_fragmentCreateTop_to_fragmentTopDetails
-            )
+            val dialog = ConfirmPlaylistCreationDialog()
+            dialog.onConfirmListener = this
+            showConfirmationDialog(this)
+//            navigateToDetails(
+//                topTracks.data,
+//                this,
+//                R.id.action_fragmentCreateTop_to_fragmentTopDetails
+//            )
         }
+    }
+
+    override fun onConfirm(playlistName: String) {
+        Log.i("TOPIFY", "confirm")
+        //TODO: change name of playlist. If success, navigate to details
     }
 
     private fun createTopTracksAdapter(tracks: List<Track>?) {
