@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.jvmori.topify.data.response.user.User
 import com.jvmori.topify.di.scope.ApplicationScope
 import com.jvmori.topify.view.activity.AuthResource
+import io.reactivex.Observable
 import javax.inject.Inject
 
 @ApplicationScope

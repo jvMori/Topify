@@ -2,11 +2,12 @@ package com.jvmori.topify.view.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import dagger.android.support.DaggerDialogFragment
-import android.content.DialogInterface
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.jvmori.topify.R
+import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.confirm_create_playlist_dialog.*
+import kotlinx.android.synthetic.main.confirm_create_playlist_dialog.view.*
 
 
 class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
@@ -14,9 +15,9 @@ class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
     var onConfirmListener: ConfirmPlaylistCreationListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        context?.let {
+        activity?.let {
             val builder = AlertDialog.Builder(it)
-            val inflater = activity!!.layoutInflater
+            val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.confirm_create_playlist_dialog, null)
 
             builder.setView(view)
@@ -26,7 +27,9 @@ class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
                 ) { dialog, which -> }
                 .setPositiveButton(
                     "create"
-                ) { dialog, which -> onConfirmListener?.onConfirm(playlistsName.text.toString()) }
+                ) { dialog, which ->
+                    onConfirmListener?.onConfirm(view.playlistsName.text.toString())
+                }
             return builder.create()
         }
 

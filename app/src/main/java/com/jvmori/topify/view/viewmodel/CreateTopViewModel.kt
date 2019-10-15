@@ -3,6 +3,7 @@ package com.jvmori.topify.view.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.Utils.TOP_ARTISTS
 import com.jvmori.topify.Utils.TOP_PARAMS
 import com.jvmori.topify.Utils.TOP_TRACKS
@@ -41,6 +42,9 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var repository: IRepository
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private val disposable = CompositeDisposable()
 

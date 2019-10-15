@@ -13,10 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
-import com.jvmori.topify.Utils.ImageLoader
-import com.jvmori.topify.Utils.navigateToDetails
-import com.jvmori.topify.Utils.navigateToTopSettings
-import com.jvmori.topify.Utils.showConfirmationDialog
+import com.jvmori.topify.Utils.*
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
@@ -54,6 +51,7 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
     lateinit var imageLoader: ImageLoader
 
     private var topViewModel: CreateTopViewModel? = null
+    private var topTracksResponse: TopTracksResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +133,7 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
                 artistsAdapter.add(ArtistViewItem(imageLoader, it))
             }
         }
-        topRecyclerView.apply{
+        topRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = artistsAdapter
         }
@@ -159,18 +157,20 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
         create_btn.setOnClickListener {
             val dialog = ConfirmPlaylistCreationDialog()
             dialog.onConfirmListener = this
-            showConfirmationDialog(this)
-//            navigateToDetails(
-//                topTracks.data,
-//                this,
-//                R.id.action_fragmentCreateTop_to_fragmentTopDetails
-//            )
+            topTracksResponse = topTracks.data
+            fragmentManager?.let {
+                dialog.show(it, "ConfirmPlaylistCreationDialog")
+            }
         }
     }
 
     override fun onConfirm(playlistName: String) {
-        Log.i("TOPIFY", "confirm")
-        //TODO: change name of playlist. If success, navigate to details
+        navigateToDetails(
+            topTracksResponse,
+            playlistName,
+            this,
+            R.id.action_fragmentCreateTop_to_fragmentTopDetails
+        )
     }
 
     private fun createTopTracksAdapter(tracks: List<Track>?) {

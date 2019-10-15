@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.SessionManager
+import com.jvmori.topify.Utils.playlistNameKey
 import com.jvmori.topify.Utils.topDetailsKey
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopTracksResponse
@@ -55,23 +56,27 @@ class FragmentTopDetails : DaggerFragment() {
 
     private lateinit var playlistId : String
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
+        arguments?.getString(playlistNameKey)?.let {
+            createPlaylist(it)
+        }
+        topViewModel.addTracksSnapshot().observe(this, Observer {
+            when(it.status){
+                Resource.Status.SUCCESS -> {
+                    showPlaylistImage(playlistId)
+                    hideProgressBar()
+                }
+            }
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        createPlaylist()
-        topViewModel.addTracksSnapshot().observe(this, Observer {
-           when(it.status){
-               Resource.Status.SUCCESS -> {
-                   Log.i("TOPIFY", it.data?.snapshot_id)
-                   showPlaylistImage(playlistId)
-                   hideProgressBar()
-               }
-           }
-        })
-
         return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
     }
 
@@ -94,11 +99,11 @@ class FragmentTopDetails : DaggerFragment() {
         }
     }
 
-    private fun createPlaylist() {
+    private fun createPlaylist(playlistName : String) {
         sessionManager.getUser().observe(this, Observer { user ->
             when (user.status) {
                 AuthResource.AuthStatus.AUTHENTICATED -> {
-                    topViewModel.createTopTracksPlaylist(user.data?.id!!, "Topify top 50")
+                    topViewModel.createTopTracksPlaylist(user.data?.id!!, playlistName)
                 }
             }
         })
