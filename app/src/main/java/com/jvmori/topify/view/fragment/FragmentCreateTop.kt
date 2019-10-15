@@ -59,6 +59,10 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
             ViewModelProviders.of(it, factory).get(CreateTopViewModel::class.java)
         }
         topViewModel?.fetchTopParams()
+    }
+
+    override fun onResume() {
+        super.onResume()
         topViewModel?.getTopParam()?.observe(this, Observer {
             displayArtistOrTracksList(it)
             setActionBarTitle(it)
