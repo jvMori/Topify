@@ -43,17 +43,22 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="260dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:paddingLeft="32dp" android:paddingRight="32dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/playlistRecyclerView"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/colorPrimaryDark"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            android:layout_height="wrap_content" android:id="@+id/playlistRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/created_playlist_item" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
-            android:layout_marginTop="16dp" android:paddingBottom="16dp"/>
+            tools:listitem="@layout/created_playlist_item" />
 
     <include android:id="@+id/loadingLayout" layout="@layout/loading" android:visibility="gone"/>
 

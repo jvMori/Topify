@@ -11,7 +11,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Choose playlist's name"
+            android:hint="Playlist's name"
             android:inputType="textPersonName"
             android:text="On Repeat with Topify" />
+
+    <EditText
+            android:id="@+id/playlistDescription"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Playlist's description"
+            android:inputType="textPersonName"
+            android:text="Lately most listened songs." />
 </LinearLayout>

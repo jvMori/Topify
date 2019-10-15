@@ -9,11 +9,13 @@ import com.jvmori.topify.view.fragment.FragmentCreateTop
 
 const val topDetailsKey = "topPlaylist"
 const val playlistNameKey = "playlistName"
+const val playlistDescriptionKey = "playlistDescription"
 
-fun navigateToDetails(item : TopTracksResponse?, playlistName: String, fragment : Fragment, actionId : Int){
+fun navigateToDetails(item : TopTracksResponse?, playlistName: String, playlistDescription : String, fragment : Fragment, actionId : Int){
     val bundle = Bundle()
     bundle.putParcelable(topDetailsKey, item)
     bundle.putString(playlistNameKey, playlistName)
+    bundle.putString(playlistDescriptionKey, playlistDescription)
     NavHostFragment.findNavController(fragment).navigate(actionId, bundle)
 }
 fun navigateToTopSettings(fragment: Fragment){

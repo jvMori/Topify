@@ -164,10 +164,11 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
         }
     }
 
-    override fun onConfirm(playlistName: String) {
+    override fun onConfirm(playlistName: String, playlistDescription : String) {
         navigateToDetails(
             topTracksResponse,
             playlistName,
+            playlistDescription,
             this,
             R.id.action_fragmentCreateTop_to_fragmentTopDetails
         )

@@ -114,10 +114,10 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
                 ))
     }
 
-    fun createTopTracksPlaylist(userId: String, playlistName: String) {
+    fun createTopTracksPlaylist(userId: String, playlistName: String, playlistDescription : String) {
         _topTracksPlaylist.value = Resource.loading(null)
         disposable.add(
-            repository.createPlaylist(userId, playlistName)
+            repository.createPlaylist(userId, playlistName, playlistDescription)
                 .subscribe(
                     { success ->
                         _topTracksPlaylist.value = Resource.success(success)

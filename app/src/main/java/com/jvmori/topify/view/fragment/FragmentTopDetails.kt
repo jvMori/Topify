@@ -12,11 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jvmori.topify.Utils.*
 
-import com.jvmori.topify.Utils.ImageLoader
-import com.jvmori.topify.Utils.SessionManager
-import com.jvmori.topify.Utils.playlistNameKey
-import com.jvmori.topify.Utils.topDetailsKey
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.AddTracks
@@ -59,9 +56,12 @@ class FragmentTopDetails : DaggerFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
-        arguments?.getString(playlistNameKey)?.let {
-            createPlaylist(it)
+        arguments?.let{
+            val name = it.getString(playlistNameKey)
+            val description = it.getString(playlistDescriptionKey)
+            createPlaylist(name, description)
         }
+
         topViewModel.addTracksSnapshot().observe(this, Observer {
             when(it.status){
                 Resource.Status.SUCCESS -> {
@@ -99,12 +99,14 @@ class FragmentTopDetails : DaggerFragment() {
         }
     }
 
-    private fun createPlaylist(playlistName : String) {
+    private fun createPlaylist(playlistName : String?, playlistDescription : String?) {
         sessionManager.getUser().observe(this, Observer { user ->
             when (user.status) {
                 AuthResource.AuthStatus.AUTHENTICATED -> {
-                    topViewModel.createTopTracksPlaylist(user.data?.id!!, playlistName)
+                    if (playlistName!=null && playlistDescription!=null)
+                        topViewModel.createTopTracksPlaylist(user.data?.id!!, playlistName, playlistDescription)
                 }
+                else -> Log.i("TOPIFY", "Not authenticated")
             }
         })
         topViewModel.topTracksPlaylist().observe(this, Observer {

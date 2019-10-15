@@ -16,7 +16,7 @@ interface NetworkDataSource {
     fun getCurrentUser() : Observable<User>
     fun getTopTracks(param: TopParam) : Observable<TopTracksResponse>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
-    fun createPlaylist(userId: String, playlistName : String) : Observable<PlaylistResponse>
+    fun createPlaylist(userId: String, playlistName : String, playlistDescription : String) : Observable<PlaylistResponse>
     fun addTracksToPlaylist(playlistId : String, tracks : AddTracks) : Observable<AddTracksResponse>
     fun getPlaylistCoverImage(playlistId: String) : Observable<List<Image>>
 }

@@ -36,8 +36,8 @@ class Repository @Inject constructor(
            .subscribeOn(Schedulers.io())
     }
 
-    override fun createPlaylist(userId: String, playlistName: String): Observable<PlaylistResponse> {
-        return networkDataSource.createPlaylist(userId, playlistName)
+    override fun createPlaylist(userId: String, playlistName: String, playlistDescription : String): Observable<PlaylistResponse> {
+        return networkDataSource.createPlaylist(userId, playlistName, playlistDescription)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }

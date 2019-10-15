@@ -28,7 +28,10 @@ class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
                 .setPositiveButton(
                     "create"
                 ) { dialog, which ->
-                    onConfirmListener?.onConfirm(view.playlistsName.text.toString())
+                    onConfirmListener?.onConfirm(
+                        view.playlistsName.text.toString(),
+                        view.playlistDescription.text.toString()
+                    )
                 }
             return builder.create()
         }
@@ -38,5 +41,5 @@ class ConfirmPlaylistCreationDialog : DaggerDialogFragment() {
 }
 
 interface ConfirmPlaylistCreationListener {
-    fun onConfirm(playlistName: String)
+    fun onConfirm(playlistName: String, playlistDescription : String)
 }

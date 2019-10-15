@@ -14,7 +14,7 @@ interface IRepository {
     fun searchArtist(query: String) : Observable<List<Artists>>
     fun getCurrentUser() : Observable<User>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
-    fun createPlaylist(userId: String, playlistName : String) : Observable<PlaylistResponse>
+    fun createPlaylist(userId: String, playlistName : String, playlistDescription : String) : Observable<PlaylistResponse>
     fun addTracksToPlaylist(playlistId : String, tracks : AddTracks) : Observable<AddTracksResponse>
     fun getPlaylistCoverImage(playlistId: String) : Observable<List<Image>>
 }
