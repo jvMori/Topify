@@ -30,7 +30,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_create_top.*
-import kotlinx.android.synthetic.main.fragment_top_details.*
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,6 +51,7 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
 
     private var topViewModel: CreateTopViewModel? = null
     private var topTracksResponse: TopTracksResponse? = null
+    private lateinit var timeRangeText: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,7 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
     override fun onResume() {
         super.onResume()
         topViewModel?.getTopParam()?.observe(this, Observer {
+            timeRangeText = setTimeRangeText(it.timeRange)
             displayArtistOrTracksList(it)
             setActionBarTitle(it)
         })
@@ -79,17 +80,21 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
     }
 
     private fun setActionBarTitle(it: TopParam) {
-        val timeRange = when (it.timeRange) {
+        val navController = Navigation.findNavController(this.requireView())
+        navController.currentDestination?.label =
+            "Top ${it.topCategory.toString().toLowerCase()} $timeRangeText"
+        Log.i("TOPIFY", "top")
+    }
+
+    private fun setTimeRangeText(timeRange: String) : String{
+        return when (timeRange) {
             TimeRange().shortTerm -> "last week"
             TimeRange().mediumTerm -> "last month"
             TimeRange().longTerm -> "last year"
             else -> ""
         }
-        val navController = Navigation.findNavController(this.requireView())
-        navController.currentDestination?.label =
-            "Top ${it.topCategory.toString().toLowerCase()} $timeRange"
-        Log.i("TOPIFY", "top")
     }
+
 
     private fun displayArtistOrTracksList(it: TopParam) {
         when (it.topCategory) {
@@ -159,12 +164,16 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
         create_btn.visibility = View.VISIBLE
         createTopTracksAdapter(topTracks.data?.tracks)
         create_btn.setOnClickListener {
-            val dialog = ConfirmPlaylistCreationDialog()
-            dialog.onConfirmListener = this
             topTracksResponse = topTracks.data
-            fragmentManager?.let {
-                dialog.show(it, "ConfirmPlaylistCreationDialog")
-            }
+            showConfirmationDialog()
+        }
+    }
+
+    private fun showConfirmationDialog() {
+        val dialog = ConfirmPlaylistCreationDialog(timeRangeText)
+        dialog.onConfirmListener = this
+        fragmentManager?.let {
+            dialog.show(it, "ConfirmPlaylistCreationDialog")
         }
     }
 

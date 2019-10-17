@@ -13,7 +13,9 @@
             android:ems="10"
             android:hint="Playlist's name"
             android:inputType="textPersonName"
-            android:text="On Repeat with Topify" />
+            android:text="On Repeat with Topify"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textSecondary" />
 
     <EditText
             android:id="@+id/playlistDescription"
@@ -23,5 +25,7 @@
             android:ems="10"
             android:hint="Playlist's description"
             android:inputType="textPersonName"
-            android:text="Lately most listened songs." />
+            android:text="Lately most listened songs."
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textSecondary" />
 </LinearLayout>
