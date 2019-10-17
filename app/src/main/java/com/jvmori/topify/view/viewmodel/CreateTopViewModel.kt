@@ -61,7 +61,7 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     fun getPlaylistCoverImage(): LiveData<Resource<List<Image>>> = _playlistCoverImage
 
     private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
-    fun addTracksSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
+    fun trackSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
 
     private val _topParam = MutableLiveData<TopParam>()
     fun getTopParam(): LiveData<TopParam> = _topParam

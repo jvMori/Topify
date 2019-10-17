@@ -61,5 +61,6 @@
             tools:listitem="@layout/created_playlist_item" />
 
     <include android:id="@+id/loadingLayout" layout="@layout/loading" android:visibility="gone"/>
+    <include android:id="@+id/errorLayout" layout="@layout/error_layout" android:visibility="gone"/>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
