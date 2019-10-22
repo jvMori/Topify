@@ -15,10 +15,13 @@ class SessionManager @Inject constructor() {
 
     fun getUser(): LiveData<AuthResource<User>> = cachedUser
 
+    lateinit var user : Observable<AuthResource<User>>
+
     fun authenticateWithId(source: LiveData<AuthResource<User>>) {
         cachedUser.value = AuthResource.loading(null)
         cachedUser.addSource(source, Observer {
             cachedUser.value = it
+            Observable.just(it)
             cachedUser.removeSource(source)
         })
     }

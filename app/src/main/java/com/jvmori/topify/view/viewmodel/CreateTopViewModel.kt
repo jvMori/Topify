@@ -43,9 +43,6 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var repository: IRepository
 
-    @Inject
-    lateinit var sessionManager: SessionManager
-
     private val disposable = CompositeDisposable()
 
     private val _topArtists = MutableLiveData<Resource<TopArtistsResponse>>()
@@ -54,14 +51,8 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     private val _topTracks = MutableLiveData<Resource<TopTracksResponse>>()
     fun topTracks(): LiveData<Resource<TopTracksResponse>> = _topTracks
 
-    private val _topTracksPlaylist = MutableLiveData<Resource<PlaylistResponse>>()
-    fun topTracksPlaylist(): LiveData<Resource<PlaylistResponse>> = _topTracksPlaylist
-
     private val _playlistCoverImage = MutableLiveData<Resource<List<Image>>>()
     fun getPlaylistCoverImage(): LiveData<Resource<List<Image>>> = _playlistCoverImage
-
-    private val _addTracksSnapshot = MutableLiveData<Resource<AddTracksResponse>>()
-    fun trackSnapshot(): LiveData<Resource<AddTracksResponse>> = _addTracksSnapshot
 
     private val _topParam = MutableLiveData<TopParam>()
     fun getTopParam(): LiveData<TopParam> = _topParam
@@ -79,7 +70,6 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setTopParams(topParam: TopParam) {
-        //_topParam.value = topParam
         topParamsRepository.insert(topParam)
     }
 
@@ -114,46 +104,33 @@ class CreateTopViewModel @Inject constructor() : ViewModel() {
                 ))
     }
 
-    fun createTopTracksPlaylist(userId: String, playlistName: String, playlistDescription : String) {
-        _topTracksPlaylist.value = Resource.loading(null)
-        disposable.add(
-            repository.createPlaylist(userId, playlistName, playlistDescription)
-                .subscribe(
-                    { success ->
-                        _topTracksPlaylist.value = Resource.success(success)
-                    }, { error ->
-                        _topTracksPlaylist.value = Resource.error("ERROR ${error?.message}", null)
-                    }
-                )
-        )
-    }
-
-    fun addTracksToPlaylist(playlistId: String, tracks: AddTracks) {
-        _topTracksPlaylist.value = Resource.loading(null)
-        disposable.add(
-            repository.addTracksToPlaylist(playlistId, tracks)
-                .subscribe(
-                    { success ->
-                        _addTracksSnapshot.value = Resource.success(success)
-                    }, { error ->
-                        _addTracksSnapshot.value = Resource.error("ERROR ${error?.message}", null)
-                    }
-                )
-        )
-    }
-
-    fun fetchPlaylistCoverImage(playlistId: String) {
+    fun createPlaylistAndAddTracks(playlistName: String, playlistDescription : String, data: TopTracksResponse?){
         _playlistCoverImage.value = Resource.loading(null)
+        var playlistId = ""
         disposable.add(
-            repository.getPlaylistCoverImage(playlistId)
-                .subscribe(
-                    { success ->
-                        _playlistCoverImage.value = Resource.success(success)
-                    }, { error ->
-                        _playlistCoverImage.value = Resource.error(error.message!!, null)
-                    }
-                )
+            repository.getCurrentUser().flatMap {
+                repository.createPlaylist(it.id, playlistName, playlistDescription)
+            }.flatMap { playlist ->
+                playlistId = playlist.id
+                repository.addTracksToPlaylist(playlist.id, AddTracks(createUris(data)))
+            }.flatMap {
+                repository.getPlaylistCoverImage(playlistId)
+            }.subscribe(
+                { success ->
+                    _playlistCoverImage.value = Resource.success(success)
+                }, { error ->
+                    _playlistCoverImage.value = Resource.error(error.message!!, null)
+                }
+            )
         )
+    }
+
+    private fun createUris(data: TopTracksResponse?) : MutableList<String>{
+        val tracksUris = mutableListOf<String>()
+        data?.tracks?.forEach { item ->
+            tracksUris.add(item.uri)
+        }
+        return tracksUris
     }
 
     override fun onCleared() {

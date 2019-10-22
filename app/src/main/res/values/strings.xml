@@ -8,4 +8,6 @@
     <string name="text_discover">Discover</string>
     <string name="create_top">Top items</string>
     <string name="action_favorite">Settings</string>
+    <string name="topPlaylistName">Topify playlist</string>
+    <string name="topPlaylistDescription">Lately most played songs</string>
 </resources>

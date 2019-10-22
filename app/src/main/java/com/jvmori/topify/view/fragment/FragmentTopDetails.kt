@@ -2,7 +2,6 @@ package com.jvmori.topify.view.fragment
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jvmori.topify.R
 import com.jvmori.topify.Utils.*
 
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopTracksResponse
-import com.jvmori.topify.data.response.playlist.AddTracks
+import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.top.Track
-import com.jvmori.topify.view.activity.AuthResource
 import com.jvmori.topify.view.adapters.top.TrackItem
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
 import com.xwray.groupie.GroupAdapter
@@ -50,9 +49,6 @@ class FragmentTopDetails : DaggerFragment() {
     lateinit var imageLoader: ImageLoader
 
     private lateinit var topViewModel: CreateTopViewModel
-    private val tracksUris = mutableListOf<String>()
-
-    private lateinit var playlistId: String
     private lateinit var topTracksResponse: TopTracksResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,17 +57,24 @@ class FragmentTopDetails : DaggerFragment() {
 
         getTopTracksResponse()?.let { topTracks ->
             topTracksResponse = topTracks
-            createUris(topTracks)
-            createPlaylist()
-            addTracksToPlaylist()
+            arguments?.let {
+                val name = it.getString(playlistNameKey) ?: getString(R.string.topPlaylistName)
+                val description = it.getString(playlistDescriptionKey) ?: getString(R.string.topPlaylistDescription)
+                topViewModel.createPlaylistAndAddTracks(name, description, topTracks)
+            }
         }
     }
+
+    private fun getTopTracksResponse(): TopTracksResponse? {
+        return (arguments?.getParcelable(topDetailsKey)) as TopTracksResponse?
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
+        return inflater.inflate(R.layout.fragment_top_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,54 +82,30 @@ class FragmentTopDetails : DaggerFragment() {
         displayPlaylist()
     }
 
-    private fun getTopTracksResponse(): TopTracksResponse? {
-        return (arguments?.getParcelable(topDetailsKey)) as TopTracksResponse?
-    }
-
-    private fun createUris(data: TopTracksResponse?) {
-        data?.tracks?.forEach { item ->
-            tracksUris.add(item.uri)
-        }
-    }
-
-    private fun createPlaylist() {
-        arguments?.let {
-            val name = it.getString(playlistNameKey)
-            val description = it.getString(playlistDescriptionKey)
-            createEmptyPlaylist(name, description)
-        }
-    }
-
     private fun displayPlaylist() {
-        topViewModel.trackSnapshot().observe(this, Observer {
+        topViewModel.getPlaylistCoverImage().observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> showProgressBar()
                 Resource.Status.SUCCESS -> {
                     hideProgressBar()
-                    showPlaylistImage(playlistId)
-                    showCreatedPlaylist(topTracksResponse.tracks)
+                    showImage(it)
+                    showListOfTracks(topTracksResponse.tracks)
                 }
-                Resource.Status.ERROR -> showError(it.data.toString())
+                Resource.Status.ERROR -> showError(it.message)
             }
         })
     }
 
-    private fun showPlaylistImage(playlistId: String) {
-        topViewModel.fetchPlaylistCoverImage(playlistId)
-        topViewModel.getPlaylistCoverImage().observe(this, Observer {
-            when (it.status) {
-                Resource.Status.SUCCESS -> imageLoader.loadImage(
-                    it.data?.let { list ->
-                        list[0].url
-                    },
-                    playlistsCoverImg
-                )
-                Resource.Status.ERROR -> Log.i("Topify", "something went wrong!")
-            }
-        })
+    private fun showImage(it: Resource<List<Image>>) {
+        imageLoader.loadImage(
+            it.data?.let { list ->
+                list[0].url
+            },
+            playlistsCoverImg
+        )
     }
 
-    private fun showCreatedPlaylist(tracks: List<Track>) {
+    private fun showListOfTracks(tracks: List<Track>) {
         val adapter = GroupAdapter<ViewHolder>()
         tracks.forEach {
             adapter.add(TrackItem(it))
@@ -134,36 +113,6 @@ class FragmentTopDetails : DaggerFragment() {
         playlistRecyclerView.layoutManager =
             LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         playlistRecyclerView.adapter = adapter
-    }
-
-    private fun createEmptyPlaylist(playlistName: String?, playlistDescription: String?) {
-        sessionManager.getUser().observe(this, Observer { user ->
-            when (user.status) {
-                AuthResource.AuthStatus.AUTHENTICATED -> {
-                    if (playlistName != null && playlistDescription != null)
-                        topViewModel.createTopTracksPlaylist(
-                            user.data?.id!!,
-                            playlistName,
-                            playlistDescription
-                        )
-                }
-                else -> Log.i("TOPIFY", "Not authenticated")
-            }
-        })
-    }
-
-    private fun addTracksToPlaylist() {
-        topViewModel.topTracksPlaylist().observe(this, Observer {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    hideProgressBar()
-                    topViewModel.addTracksToPlaylist(it.data?.id!!, AddTracks(uris = tracksUris))
-                    playlistId = it.data.id
-                    toolbarPlaylistName.text = it.data.name
-                }
-                Resource.Status.ERROR -> showError(it.message)
-            }
-        })
     }
 
     private fun hideProgressBar() {
