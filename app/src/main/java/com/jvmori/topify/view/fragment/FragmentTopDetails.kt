@@ -53,20 +53,47 @@ class FragmentTopDetails : DaggerFragment() {
     private val tracksUris = mutableListOf<String>()
 
     private lateinit var playlistId: String
+    private lateinit var topTracksResponse: TopTracksResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         topViewModel = ViewModelProviders.of(this, factory).get(CreateTopViewModel::class.java)
 
-        createPlaylist()
+        getTopTracksResponse()?.let { topTracks ->
+            topTracksResponse = topTracks
+            createUris(topTracks)
+            createPlaylist()
+            addTracksToPlaylist()
+        }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         displayPlaylist()
+    }
+
+    private fun getTopTracksResponse(): TopTracksResponse? {
+        return (arguments?.getParcelable(topDetailsKey)) as TopTracksResponse?
+    }
+
+    private fun createUris(data: TopTracksResponse?) {
+        data?.tracks?.forEach { item ->
+            tracksUris.add(item.uri)
+        }
     }
 
     private fun createPlaylist() {
         arguments?.let {
             val name = it.getString(playlistNameKey)
             val description = it.getString(playlistDescriptionKey)
-            createTopPlaylist(name, description)
+            createEmptyPlaylist(name, description)
         }
     }
 
@@ -77,7 +104,7 @@ class FragmentTopDetails : DaggerFragment() {
                 Resource.Status.SUCCESS -> {
                     hideProgressBar()
                     showPlaylistImage(playlistId)
-                    showTopTracks()
+                    showCreatedPlaylist(topTracksResponse.tracks)
                 }
                 Resource.Status.ERROR -> showError(it.data.toString())
             }
@@ -99,14 +126,6 @@ class FragmentTopDetails : DaggerFragment() {
         })
     }
 
-    private fun showTopTracks() {
-        val playlistResponse = getTopTracksResponse()
-        playlistResponse?.let { topTracks ->
-            createUris(topTracks)
-            showCreatedPlaylist(topTracks.tracks)
-        }
-    }
-
     private fun showCreatedPlaylist(tracks: List<Track>) {
         val adapter = GroupAdapter<ViewHolder>()
         tracks.forEach {
@@ -115,29 +134,6 @@ class FragmentTopDetails : DaggerFragment() {
         playlistRecyclerView.layoutManager =
             LinearLayoutManager(this.requireContext(), RecyclerView.VERTICAL, false)
         playlistRecyclerView.adapter = adapter
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(com.jvmori.topify.R.layout.fragment_top_details, container, false)
-    }
-
-    private fun getTopTracksResponse(): TopTracksResponse? {
-        return (arguments?.getParcelable(topDetailsKey)) as TopTracksResponse?
-    }
-
-    private fun createUris(data: TopTracksResponse?) {
-        data?.tracks?.forEach { item ->
-            tracksUris.add(item.uri)
-        }
-    }
-
-    private fun createTopPlaylist(playlistName: String?, playlistDescription: String?) {
-        createEmptyPlaylist(playlistName, playlistDescription)
-        addTracksToPlaylist()
     }
 
     private fun createEmptyPlaylist(playlistName: String?, playlistDescription: String?) {
