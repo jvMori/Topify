@@ -4,6 +4,7 @@ import com.jvmori.topify.data.response.search.Artists
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.response.playlist.*
+import com.jvmori.topify.data.response.recommendations.RecommendationsResponse
 import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
@@ -25,6 +26,9 @@ interface SpotifyApi {
 
     @GET("playlists/{playlist_id}/images")
     fun getPlaylistCoverImage(@Path ("playlist_id") playlistId : String) : Observable<List<Image>>
+
+    @GET()
+    fun getRecommendations() : Observable<RecommendationsResponse>
 
     @POST("users/{user_id}/playlists")
     @Headers("Content-Type: application/json")
