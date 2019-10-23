@@ -13,7 +13,7 @@ import retrofit2.http.*
 
 interface SpotifyApi {
     @GET("search")
-    fun search(@Query("query") query: String, @Query("type") type: String): Observable<List<Artists>>
+    fun search(@Query("query") query: String, @Query("type") type: String):Observable<Artists>
 
     @GET("me")
     fun getUser(): Observable<User>
@@ -27,8 +27,8 @@ interface SpotifyApi {
     @GET("playlists/{playlist_id}/images")
     fun getPlaylistCoverImage(@Path ("playlist_id") playlistId : String) : Observable<List<Image>>
 
-    @GET()
-    fun getRecommendations() : Observable<RecommendationsResponse>
+    @GET("recommendations")
+    fun getRecommendations(@QueryMap parameters: Map<String, String>) : Observable<RecommendationsResponse>
 
     @POST("users/{user_id}/playlists")
     @Headers("Content-Type: application/json")

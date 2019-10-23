@@ -11,7 +11,7 @@ import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
 
 interface IRepository {
-    fun searchArtist(query: String) : Observable<List<Artists>>
+    fun searchArtist(query: String) : Observable<Artists>
     fun getCurrentUser() : Observable<User>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
     fun createPlaylist(userId: String, playlistName : String, playlistDescription : String) : Observable<PlaylistResponse>

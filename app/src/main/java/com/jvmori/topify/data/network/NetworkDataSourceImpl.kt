@@ -14,7 +14,7 @@ class NetworkDataSourceImpl @Inject constructor(
     val api: SpotifyApi
 ) : NetworkDataSource {
 
-    override fun searchArtists(query: String): Observable<List<Artists>> {
+    override fun searchArtists(query: String): Observable<Artists> {
         return api.search(query, "artist")
     }
 

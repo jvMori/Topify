@@ -18,7 +18,7 @@ class Repository @Inject constructor(
     private val networkDataSource: NetworkDataSource
 ) : IRepository
 {
-    override fun searchArtist(query: String) : Observable<List<Artists>>{
+    override fun searchArtist(query: String) : Observable<Artists>{
         return networkDataSource.searchArtists(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())

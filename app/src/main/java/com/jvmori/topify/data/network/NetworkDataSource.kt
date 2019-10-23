@@ -12,7 +12,7 @@ import com.jvmori.topify.data.response.user.User
 import io.reactivex.Observable
 
 interface NetworkDataSource {
-    fun searchArtists(query: String) : Observable<List<Artists>>
+    fun searchArtists(query: String) : Observable<Artists>
     fun getCurrentUser() : Observable<User>
     fun getTopTracks(param: TopParam) : Observable<TopTracksResponse>
     fun getTopArtists(param: TopParam) : Observable<TopArtistsResponse>
