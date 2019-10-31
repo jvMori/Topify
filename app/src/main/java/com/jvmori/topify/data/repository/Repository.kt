@@ -1,11 +1,11 @@
 package com.jvmori.topify.data.repository
 
+import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.network.NetworkDataSource
 import com.jvmori.topify.data.response.playlist.AddTracks
 import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
-import com.jvmori.topify.data.response.search.Artists
-import com.jvmori.topify.data.db.entity.TopArtistsResponse
+import com.jvmori.topify.data.response.search.ArtistsResponse
 import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.data.response.user.User
@@ -18,7 +18,7 @@ class Repository @Inject constructor(
     private val networkDataSource: NetworkDataSource
 ) : IRepository
 {
-    override fun searchArtist(query: String) : Observable<Artists>{
+    override fun searchArtist(query: String) : Observable<ArtistsResponse>{
         return networkDataSource.searchArtists(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())

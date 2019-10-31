@@ -10,6 +10,7 @@ import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.repository.recommendations.RecommendationsRepository
 import com.jvmori.topify.data.response.recommendations.RecommendationsResponse
 import com.jvmori.topify.data.response.search.Artists
+import com.jvmori.topify.data.response.search.ArtistsResponse
 import com.jvmori.topify.data.response.user.User
 import com.jvmori.topify.view.activity.AuthResource
 import io.reactivex.disposables.CompositeDisposable
@@ -19,8 +20,8 @@ import javax.inject.Inject
 class DiscoverViewModel @Inject constructor() : ViewModel() {
 
     private val disposable = CompositeDisposable()
-    private val _artists = MutableLiveData<Resource<Artists>>()
-    fun artists(): LiveData<Resource<Artists>> = _artists
+    private val _artists = MutableLiveData<Resource<ArtistsResponse>>()
+    fun artists(): LiveData<Resource<ArtistsResponse>> = _artists
 
     private val _recommendations = MutableLiveData<Resource<RecommendationsResponse>>()
     fun recommendations() : LiveData<Resource<RecommendationsResponse>> = _recommendations
