@@ -8,16 +8,19 @@ import javax.inject.Inject
 
 class RecommendationsNetworkDataSourceImpl @Inject constructor(
     val spotifyApi: SpotifyApi
-): RecommendationsNetworkDataSource {
+) : RecommendationsNetworkDataSource {
 
-    override fun getRecommendations(params : RecommendationsParams): Observable<RecommendationsResponse> {
+    override fun getRecommendations(params: RecommendationsParams): Observable<RecommendationsResponse> {
         val map = mutableMapOf<String, String>()
-        map["limit"] = params.limit.toString()
-        map["market"] = params.market
-        map["seed_artists"] = params.getArtistsSeed()
-        map["seed_tracks"] = params.getTracksSeed()
-        map["target_acousticness"] = params.acoustics
-        map["target_danceability"] = params.danceability
+        params.apply {
+            map["limit"] = limit.toString()
+            map["market"] = market
+            if (getArtistsSeed().isNotEmpty()) map["seed_artists"] = getArtistsSeed()
+            if (getTracksSeed().isNotEmpty()) map["seed_tracks"] = getTracksSeed()
+            if (acoustics.isNotEmpty()) map["target_acousticness"] = acoustics
+            if (danceability.isNotEmpty()) map["target_danceability"] = danceability
+        }
+
 
         return spotifyApi.getRecommendations(map)
     }

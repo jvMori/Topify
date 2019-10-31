@@ -37,18 +37,18 @@ class DiscoverViewModel @Inject constructor() : ViewModel() {
     fun search(query: String) {
         disposable.add(
             repository.searchArtist(query)
-//                .flatMap {
-//                    recommendationsRepository.getRecommendations(
-//                        RecommendationsParams(
-//                            seedArtists = listOf(it[0].items[0])
-//                        )
-//                    )
-//                }
+                .flatMap {
+                    recommendationsRepository.getRecommendations(
+                        RecommendationsParams(
+                            seedArtists = listOf(it.artists.items[0])
+                        )
+                    )
+                }
                .subscribe(
                     { success ->
-                        _artists.value = Resource.success(success)
+                        _recommendations.value = Resource.success(success)
                     }, { error ->
-                        _artists.value = Resource.error(error.message ?: "Something went wrong!", null)
+                        _recommendations.value = Resource.error(error.message ?: "Something went wrong!", null)
                     }
                 )
         )
