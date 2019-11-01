@@ -14,7 +14,9 @@
                 android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
                 app:destination="@id/fragmentTopDetails" />
         <action android:id="@+id/action_fragmentCreateTop_to_fragmentArtistDetails"
-                app:destination="@id/fragmentArtistDetails"/>
+                app:destination="@id/fragmentArtistDetails" app:enterAnim="@anim/slide_in_top"
+                app:exitAnim="@anim/slide_out_bottom"
+        />
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
