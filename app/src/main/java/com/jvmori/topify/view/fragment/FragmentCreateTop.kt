@@ -17,10 +17,7 @@ import com.jvmori.topify.Utils.*
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.db.entity.TopArtistsResponse
 import com.jvmori.topify.data.db.entity.TopTracksResponse
-import com.jvmori.topify.data.response.top.TimeRange
-import com.jvmori.topify.data.response.top.TopCategory
-import com.jvmori.topify.data.response.top.TopParam
-import com.jvmori.topify.data.response.top.Track
+import com.jvmori.topify.data.response.top.*
 import com.jvmori.topify.view.adapters.TopTracksAdapter
 import com.jvmori.topify.view.adapters.top.ArtistViewItem
 import com.jvmori.topify.view.dialog.ConfirmPlaylistCreationDialog
@@ -139,7 +136,9 @@ class FragmentCreateTop : DaggerFragment(), ConfirmPlaylistCreationListener {
         val artistsAdapter = GroupAdapter<ViewHolder>()
         topArtists.data?.artists?.let { artists ->
             artists.forEach {
-                artistsAdapter.add(ArtistViewItem(imageLoader, it))
+                artistsAdapter.add(ArtistViewItem(imageLoader, it) {artistItem ->
+                    navigateToArtistDetails(artistItem, this, R.id.action_fragmentCreateTop_to_fragmentArtistDetails)
+                })
             }
         }
         topRecyclerView.apply {

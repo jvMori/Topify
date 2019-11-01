@@ -13,6 +13,8 @@
         <action
                 android:id="@+id/action_fragmentCreateTop_to_fragmentTopDetails"
                 app:destination="@id/fragmentTopDetails" />
+        <action android:id="@+id/action_fragmentCreateTop_to_fragmentArtistDetails"
+                app:destination="@id/fragmentArtistDetails"/>
     </fragment>
     <fragment android:id="@+id/fragmentHome" android:name="com.jvmori.topify.view.fragment.FragmentHome"
               android:label="fragment_home" tools:layout="@layout/fragment_home"/>
@@ -22,4 +24,7 @@
               android:label="fragment_fragment_top_details" tools:layout="@layout/fragment_top_details"/>
     <fragment android:id="@+id/fragmentTopSettings" android:name="com.jvmori.topify.view.fragment.FragmentTopSettings"
               android:label="Settings"/>
+    <fragment android:id="@+id/fragmentArtistDetails"
+              android:name="com.jvmori.topify.view.fragment.FragmentArtistDetails"
+              android:label="FragmentArtistDetails"/>
 </navigation>

@@ -32,4 +32,8 @@ abstract class MainFragmentBuildersModule {
     @MainActivityScope
     @ContributesAndroidInjector
     abstract fun contributeDiscoverFrament() : FragmentDiscover
+
+    @MainActivityScope
+    @ContributesAndroidInjector
+    abstract fun contributeArtistDetailsFragment() : FragmentArtistDetails
 }

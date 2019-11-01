@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.top_artist.view.*
 
 class ArtistViewItem (
     private val imageLoader : ImageLoader,
-    private val artist: ArtistItem
+    private val artist: ArtistItem,
+    private var onClick : (artist: ArtistItem) -> Unit?
 ) : Item<ViewHolder>() {
 
     override fun getLayout(): Int {
@@ -23,6 +24,11 @@ class ArtistViewItem (
            genres.text = artist.genresToString(2)
            followers.text = artist.followersToString()
            imageLoader.loadImage(artist.getImageUrl(), artistImage)
+           setOnClickListener {
+               onClick(artist)
+           }
        }
     }
+
+
 }
