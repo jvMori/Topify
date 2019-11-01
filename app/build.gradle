@@ -95,6 +95,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.xwray:groupie:2.5.1'
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.5.1'
+
+    //Circular ImageView
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
 
 repositories {

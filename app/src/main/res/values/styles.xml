@@ -40,6 +40,13 @@
         <item name="android:elevation">5dp</item>
     </style>
 
+    <style name="ButtonBordered" parent="Widget.MaterialComponents.Button">
+        <item name="android:colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:background">@drawable/transparent_bg_bordered_button</item>
+        <item name="android:elevation">5dp</item>
+    </style>
+
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
         <item name="android:textColorPrimary">@color/textColor</item>
