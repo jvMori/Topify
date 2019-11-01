@@ -15,4 +15,13 @@ class ImageLoaderImpl @Inject constructor(
             .error(R.drawable.placeholder_img)
             .into(imageView)
     }
+
+    override fun loadImageWithRoundedCorners(url: String?, imageView: ImageView) {
+        picasso
+            .load(url)
+            .transform(RoundedTransformation(100F, 0F))
+            .placeholder(R.drawable.placeholder_img)
+            .error(R.drawable.placeholder_img)
+            .into(imageView)
+    }
 }
