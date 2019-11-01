@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
+import com.jvmori.topify.Utils.ImageParams
 import com.jvmori.topify.Utils.artistDetailsKey
 import com.jvmori.topify.data.response.top.ArtistItem
 import dagger.android.support.DaggerFragment
@@ -32,7 +33,9 @@ class FragmentArtistDetails : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             artistItem = it.getParcelable(artistDetailsKey)
-            imageLoader.loadImageWithRoundedCorners(artistItem?.getImageUrl(), profilePic, 100F, 0f)
+            imageLoader.loadImageWithRoundedCorners(artistItem?.getImageUrl(), profilePic, ImageParams(
+                5000F, 0F, 160, 160
+            ))
         }
 
     }

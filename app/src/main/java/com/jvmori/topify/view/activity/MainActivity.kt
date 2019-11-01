@@ -21,7 +21,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setupNavController()
         controller.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id){
-                R.id.fragmentHome, R.id.fragmentTopDetails-> my_toolbar.visibility = View.GONE
+                R.id.fragmentHome, R.id.fragmentTopDetails, R.id.fragmentArtistDetails-> my_toolbar.visibility = View.GONE
                 R.id.fragmentCreateTop, R.id.fragmentDiscover -> my_toolbar.visibility = View.VISIBLE
             }
         }
