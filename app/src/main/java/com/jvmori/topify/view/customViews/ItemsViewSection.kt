@@ -3,15 +3,26 @@ package com.jvmori.topify.view.customViews
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.ImageParams
+import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.album_item.view.*
 import kotlinx.android.synthetic.main.items_view_section.view.*
 
 class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
+
+    private lateinit var imageLoader: ImageLoader
+    private lateinit var items: List<AlbumItem>
+
+    constructor(context: Context, attrs: AttributeSet, _imageLoader: ImageLoader, _items : List<AlbumItem>) : this(context, attrs){
+        imageLoader = _imageLoader
+        items = _items
+    }
 
     init {
         inflate(context, R.layout.items_view_section, this)
@@ -24,7 +35,7 @@ class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout
         ).apply {
             try {
                 sectionName.text = getString(R.styleable.ItemsViewSection_sectionName)
-
+                setRecyclerView(imageLoader, items)
             } finally {
                 recycle()
             }
@@ -35,8 +46,17 @@ class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout
         sectionName.text = title
     }
 
-    fun setRecyclerView() {
-
+    fun setRecyclerView(imageLoader: ImageLoader, items : List<AlbumItem>) {
+        val groupAdapter = GroupAdapter<ViewHolder>()
+        items.forEach {
+            groupAdapter.add(
+                AlbumViewItem(imageLoader, it)
+            )
+        }
+        itemsRv.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            adapter = groupAdapter
+        }
     }
 }
 
