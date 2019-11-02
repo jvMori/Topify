@@ -4,13 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.jvmori.topify.R
+import com.jvmori.topify.Utils.ImageLoader
+import com.jvmori.topify.Utils.ImageParams
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.album_item.view.*
 import kotlinx.android.synthetic.main.items_view_section.view.*
 
 class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
     init {
         inflate(context, R.layout.items_view_section, this)
-        //val titleTextView: TextView = findViewById(R.id.titleTextView)
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -35,3 +39,35 @@ class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout
 
     }
 }
+
+class AlbumViewItem(
+    private val imageLoader : ImageLoader,
+    private val albumItem: AlbumItem
+) : Item<ViewHolder>() {
+    override fun getLayout(): Int {
+        return R.layout.album_item
+    }
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.apply {
+            imageLoader.loadImageWithRoundedCorners(
+                albumItem.url,
+                albumPhoto,
+                ImageParams(
+                    25F,
+                    0F,
+                    100,
+                    100
+                )
+            )
+            albumTitle.text = albumItem.albumName
+            albumYear.text = albumItem.year.toString()
+        }
+    }
+}
+
+data class AlbumItem (
+    var url : String?,
+    var albumName : String,
+    var year : Int
+)
