@@ -7,6 +7,7 @@ import com.jvmori.topify.data.response.playlist.AddTracksResponse
 import com.jvmori.topify.data.response.playlist.NewPlaylist
 import com.jvmori.topify.data.response.playlist.PlaylistResponse
 import com.jvmori.topify.data.response.recommendations.RecommendationsResponse
+import com.jvmori.topify.data.response.search.ArtistsAlbumsResponse
 import com.jvmori.topify.data.response.search.ArtistsResponse
 import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.user.User
@@ -32,6 +33,9 @@ interface SpotifyApi {
 
     @GET("recommendations")
     fun getRecommendations(@QueryMap parameters: Map<String, String>) : Observable<RecommendationsResponse>
+
+    @GET("artists/{id}/albums")
+    fun getArtistsAlbums(@Path("id") artistId : String) : Observable<ArtistsAlbumsResponse>
 
     @POST("users/{user_id}/playlists")
     @Headers("Content-Type: application/json")
