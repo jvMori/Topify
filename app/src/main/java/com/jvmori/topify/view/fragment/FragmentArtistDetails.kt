@@ -31,13 +31,6 @@ class FragmentArtistDetails : DaggerFragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
-    private lateinit var viewModel : ArtistsDetailsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,10 +43,10 @@ class FragmentArtistDetails : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(ArtistsDetailsViewModel::class.java)
+        //val viewModel = ViewModelProviders.of(this, factory).get(ArtistsDetailsViewModel::class.java)
         arguments?.let {
             artistItem = it.getParcelable(artistDetailsKey)
-            viewModel.fetchAlbums(artistItem?.id)
+           // viewModel.fetchAlbums(artistItem?.id)
         }
 
         imageLoader.loadImageWithRoundedCorners(
@@ -61,13 +54,13 @@ class FragmentArtistDetails : DaggerFragment() {
                 5000F, 0F, 160, 160
             )
         )
-        viewModel.getAlbums().observe(this, Observer {
-            when(it.status){
-                Resource.Status.LOADING -> loading()
-                Resource.Status.SUCCESS -> albumsSuccess(it.data)
-                Resource.Status.ERROR -> error()
-            }
-        })
+//        viewModel.getAlbums().observe(this, Observer {
+//            when(it.status){
+//                Resource.Status.LOADING -> loading()
+//                Resource.Status.SUCCESS -> albumsSuccess(it.data)
+//                Resource.Status.ERROR -> error()
+//            }
+//        })
     }
 
     private fun loading(){}
