@@ -4,6 +4,7 @@ import android.app.Application
 import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.application.BaseApplication
 import com.jvmori.topify.di.module.app.*
+import com.jvmori.topify.di.module.main.ArtistsModule
 import com.jvmori.topify.di.module.main.RecommendationsModule
 import com.jvmori.topify.di.module.main.TopItemsModule
 import com.jvmori.topify.di.scope.ApplicationScope
@@ -24,7 +25,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         ImageLoaderModule::class,
         DatabaseModule::class,
         TopItemsModule::class,
-        RecommendationsModule::class
+        RecommendationsModule::class,
+        ArtistsModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
