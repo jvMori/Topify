@@ -36,7 +36,13 @@ class FragmentArtistDetails : DaggerFragment() {
             imageLoader.loadImageWithRoundedCorners(artistItem?.getImageUrl(), profilePic, ImageParams(
                 5000F, 0F, 160, 160
             ))
+
         }
 
     }
+
+    private fun createGenres(artistItem: ArtistItem){
+
+    }
+
 }

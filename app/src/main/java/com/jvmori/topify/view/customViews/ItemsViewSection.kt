@@ -16,14 +16,6 @@ import kotlinx.android.synthetic.main.items_view_section.view.*
 
 class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
-    private lateinit var imageLoader: ImageLoader
-    private lateinit var items: List<AlbumItem>
-
-    constructor(context: Context, attrs: AttributeSet, _imageLoader: ImageLoader, _items : List<AlbumItem>) : this(context, attrs){
-        imageLoader = _imageLoader
-        items = _items
-    }
-
     init {
         inflate(context, R.layout.items_view_section, this)
 
@@ -35,7 +27,6 @@ class ItemsViewSection(context: Context, attrs: AttributeSet) : ConstraintLayout
         ).apply {
             try {
                 sectionName.text = getString(R.styleable.ItemsViewSection_sectionName)
-                setRecyclerView(imageLoader, items)
             } finally {
                 recycle()
             }
