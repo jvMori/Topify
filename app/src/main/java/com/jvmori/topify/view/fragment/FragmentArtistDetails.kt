@@ -4,21 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
 import com.jvmori.topify.Utils.ImageParams
 import com.jvmori.topify.Utils.artistDetailsKey
+import com.jvmori.topify.data.Resource
+import com.jvmori.topify.data.response.top.Album
 import com.jvmori.topify.data.response.top.ArtistItem
+import com.jvmori.topify.view.customViews.AlbumItem
+import com.jvmori.topify.view.customViews.AlbumViewItem
+import com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.artist_details.*
 import javax.inject.Inject
 
 class FragmentArtistDetails : DaggerFragment() {
 
-    private var artistItem : ArtistItem? = null
+    private var artistItem: ArtistItem? = null
 
     @Inject
     lateinit var imageLoader: ImageLoader
+
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(ArtistsDetailsViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            artistItem = it.getParcelable(artistDetailsKey)
+            viewModel.fetchAlbums(artistItem?.id)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,17 +54,49 @@ class FragmentArtistDetails : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            artistItem = it.getParcelable(artistDetailsKey)
-            imageLoader.loadImageWithRoundedCorners(artistItem?.getImageUrl(), profilePic, ImageParams(
+
+        imageLoader.loadImageWithRoundedCorners(
+            artistItem?.getImageUrl(), profilePic, ImageParams(
                 5000F, 0F, 160, 160
-            ))
-
-        }
-
+            )
+        )
+        viewModel.getAlbums().observe(this, Observer {
+            when(it.status){
+                Resource.Status.LOADING -> loading()
+                Resource.Status.SUCCESS -> albumsSuccess(it.data)
+                Resource.Status.ERROR -> error()
+            }
+        })
     }
 
-    private fun createGenres(artistItem: ArtistItem){
+    private fun loading(){}
+    private fun albumsSuccess(items : List<Album>?){
+        createArtistsAlbums(items ?: mutableListOf())
+    }
+    private fun error(){}
+
+    private fun createArtistsAlbums(items: List<Album>) {
+        popularAlbums.setRecyclerView(
+            imageLoader,
+            getAlbumViewItems(items)
+        )
+    }
+
+    private fun getAlbumViewItems(items: List<Album>): List<AlbumItem> {
+        val viewItems = mutableListOf<AlbumItem>()
+        items.forEach {
+            viewItems.add(
+                AlbumItem(
+                    it.images[0].url,
+                    it.name,
+                    it.releaseDate
+                )
+            )
+        }
+        return viewItems
+    }
+
+    private fun createGenres(artistItem: ArtistItem) {
 
     }
 

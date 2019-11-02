@@ -17,13 +17,13 @@ class ArtistsDetailsViewModel : ViewModel() {
     @Inject
     lateinit var repository : ArtistsRepository
 
-    val _albums  = MutableLiveData<Resource<List<Album>>>()
+    private val _albums  = MutableLiveData<Resource<List<Album>>>()
     fun getAlbums() : LiveData<Resource<List<Album>>> = _albums
 
-    fun fetchAlbums(id : String) {
+    fun fetchAlbums(id : String?) {
         _albums.value = Resource.loading(null)
         disposable.add(
-            repository.fetchArtistsAlbums(id)
+            repository.fetchArtistsAlbums(id ?: "")
                 .flatMap {
                     return@flatMap Observable.just(it.items)
                 }.subscribe({

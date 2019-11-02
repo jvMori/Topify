@@ -72,7 +72,7 @@ class AlbumViewItem(
                 )
             )
             albumTitle.text = albumItem.albumName
-            albumYear.text = albumItem.year.toString()
+            albumYear.text = albumItem.year
         }
     }
 }
@@ -80,5 +80,5 @@ class AlbumViewItem(
 data class AlbumItem (
     var url : String?,
     var albumName : String,
-    var year : Int
+    var year : String
 )
