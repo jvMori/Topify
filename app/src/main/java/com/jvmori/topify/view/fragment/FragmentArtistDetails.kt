@@ -31,16 +31,11 @@ class FragmentArtistDetails : DaggerFragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this).get(ArtistsDetailsViewModel::class.java)
-    }
+    private lateinit var viewModel : ArtistsDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            artistItem = it.getParcelable(artistDetailsKey)
-            viewModel.fetchAlbums(artistItem?.id)
-        }
+
     }
 
     override fun onCreateView(
@@ -54,6 +49,12 @@ class FragmentArtistDetails : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, factory).get(ArtistsDetailsViewModel::class.java)
+        arguments?.let {
+            artistItem = it.getParcelable(artistDetailsKey)
+            viewModel.fetchAlbums(artistItem?.id)
+        }
 
         imageLoader.loadImageWithRoundedCorners(
             artistItem?.getImageUrl(), profilePic, ImageParams(

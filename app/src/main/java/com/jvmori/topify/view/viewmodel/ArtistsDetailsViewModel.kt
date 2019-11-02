@@ -10,7 +10,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class ArtistsDetailsViewModel : ViewModel() {
+class ArtistsDetailsViewModel @Inject constructor() : ViewModel() {
 
     private val disposable = CompositeDisposable()
 
