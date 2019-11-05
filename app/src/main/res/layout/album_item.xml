@@ -7,21 +7,22 @@
                                                    android:layout_height="wrap_content"
 >
 
-    <ImageView android:id="@+id/albumPhoto" android:layout_width="100dp"
-               android:layout_height="100dp"
+    <ImageView android:id="@+id/albumPhoto" android:layout_width="120dp"
+               android:layout_height="120dp"
                android:layout_marginEnd="16dp"
-               android:background="@color/colorAccent" app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
     <TextView
             android:id="@+id/albumTitle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:layout_marginTop="8dp"
-            android:capitalize="none" android:ellipsize="end"
-            android:fontFamily="monospace" android:maxLines="1"
+            android:layout_height="wrap_content" android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp" android:capitalize="none"
+            android:ellipsize="end" android:fontFamily="sans-serif-condensed-medium"
+            android:maxLines="2"
             android:text="THE SEARCH IN EVERYTHING"
             android:textAlignment="viewStart"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@+id/albumPhoto"
             app:layout_constraintStart_toStartOf="@+id/albumPhoto"
             app:layout_constraintTop_toBottomOf="@+id/albumPhoto"/>
@@ -29,8 +30,9 @@
             android:id="@+id/albumYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" android:text="2019"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:text="2019"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@+id/albumPhoto"
-            app:layout_constraintTop_toBottomOf="@+id/albumTitle"/>
+            app:layout_constraintStart_toStartOf="@+id/albumPhoto" app:layout_constraintTop_toBottomOf="@+id/albumTitle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

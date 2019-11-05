@@ -65,7 +65,7 @@ class AlbumViewItem(
                 albumItem.url,
                 albumPhoto,
                 ImageParams(
-                    25F,
+                    15F,
                     0F,
                     100,
                     100

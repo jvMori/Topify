@@ -87,7 +87,11 @@ class FragmentArtistDetails : DaggerFragment() {
 
     private fun getAlbumViewItems(items: List<Album>): List<AlbumItem> {
         val viewItems = mutableListOf<AlbumItem>()
+        val albumSet = mutableSetOf<Album>()
         items.forEach {
+            if( !albumSet.contains(it)) albumSet.add(it)
+        }
+        albumSet.forEach {
             viewItems.add(
                 AlbumItem(
                     it.images[0].url,

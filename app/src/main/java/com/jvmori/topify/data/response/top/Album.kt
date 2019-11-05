@@ -26,4 +26,9 @@ data class Album(
     val totalTracks: Int,
     val type: String,
     val uri: String
-) : Parcelable
+) : Parcelable{
+
+    override fun equals(other: Any?): Boolean {
+        return (other as Album).name == name && other.totalTracks == totalTracks
+    }
+}
