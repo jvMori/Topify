@@ -94,7 +94,7 @@ class FragmentArtistDetails : DaggerFragment() {
         albumSet.forEach {
             viewItems.add(
                 AlbumItem(
-                    it.images[0].url,
+                    it.getMediumImageUrl(),
                     it.name,
                     it.releaseDate
                 )

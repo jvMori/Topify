@@ -67,8 +67,8 @@ class AlbumViewItem(
                 ImageParams(
                     15F,
                     0F,
-                    100,
-                    100
+                    120,
+                    120
                 )
             )
             albumTitle.text = albumItem.albumName

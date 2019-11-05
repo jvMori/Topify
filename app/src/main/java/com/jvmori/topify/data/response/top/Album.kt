@@ -31,4 +31,10 @@ data class Album(
     override fun equals(other: Any?): Boolean {
         return (other as Album).name == name && other.totalTracks == totalTracks
     }
+
+    fun getMediumImageUrl() : String{
+        if(images.isNotEmpty())
+            return images[1].url
+        return ""
+    }
 }
