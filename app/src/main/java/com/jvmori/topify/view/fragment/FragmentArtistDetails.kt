@@ -15,7 +15,6 @@ import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.top.Album
 import com.jvmori.topify.data.response.top.ArtistItem
 import com.jvmori.topify.view.customViews.AlbumItem
-import com.jvmori.topify.view.customViews.AlbumViewItem
 import com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.artist_details.*
@@ -31,6 +30,17 @@ class FragmentArtistDetails : DaggerFragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
+    private lateinit var viewModel: ArtistsDetailsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.let {
+            viewModel = ViewModelProviders.of(it, factory).get(ArtistsDetailsViewModel::class.java)
+        }
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,10 +53,9 @@ class FragmentArtistDetails : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val viewModel = ViewModelProviders.of(this, factory).get(ArtistsDetailsViewModel::class.java)
         arguments?.let {
             artistItem = it.getParcelable(artistDetailsKey)
-           // viewModel.fetchAlbums(artistItem?.id)
+            viewModel.fetchAlbums(artistItem?.id)
         }
 
         imageLoader.loadImageWithRoundedCorners(
@@ -54,13 +63,13 @@ class FragmentArtistDetails : DaggerFragment() {
                 5000F, 0F, 160, 160
             )
         )
-//        viewModel.getAlbums().observe(this, Observer {
-//            when(it.status){
-//                Resource.Status.LOADING -> loading()
-//                Resource.Status.SUCCESS -> albumsSuccess(it.data)
-//                Resource.Status.ERROR -> error()
-//            }
-//        })
+        viewModel.getAlbums().observe(this, Observer {
+            when(it.status){
+                Resource.Status.LOADING -> loading()
+                Resource.Status.SUCCESS -> albumsSuccess(it.data)
+                Resource.Status.ERROR -> error()
+            }
+        })
     }
 
     private fun loading(){}

@@ -13,7 +13,7 @@ abstract class ArtistsModule {
 
     @ApplicationScope
     @Binds
-    abstract fun bindNetorkDataSource(networkDataSource: ArtistsNetworkDataSourceImpl) : ArtistsNetworkDataSource
+    abstract fun bindNetworkDataSource(networkDataSource: ArtistsNetworkDataSourceImpl) : ArtistsNetworkDataSource
 
     @ApplicationScope
     @Binds
