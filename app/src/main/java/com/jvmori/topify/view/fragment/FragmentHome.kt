@@ -44,10 +44,10 @@ class FragmentHome : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
-        discoverViewModel.currentUser()
-        discoverViewModel.user().observe(this, Observer {
-             hello.text = it.data?.displayName
-        })
+//        val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
+//        discoverViewModel.currentUser()
+//        discoverViewModel.user().observe(this, Observer {
+//             hello.text = it.data?.displayName
+//        })
     }
 }

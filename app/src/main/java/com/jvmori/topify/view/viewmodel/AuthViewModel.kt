@@ -12,6 +12,8 @@ import com.jvmori.topify.data.db.dao.AuthDao
 import com.jvmori.topify.data.db.entity.AuthKey
 import com.jvmori.topify.data.network.MyServiceInterceptor
 import com.jvmori.topify.data.repository.AuthRepository
+import com.jvmori.topify.data.repository.IRepository
+import com.jvmori.topify.data.response.user.User
 import com.jvmori.topify.view.activity.AuthResource
 import com.jvmori.topify.view.activity.MainActivity
 import com.spotify.sdk.android.authentication.AuthenticationClient
@@ -26,9 +28,13 @@ import javax.inject.Named
 
 class AuthViewModel @Inject constructor(
     private var authRepository: AuthRepository,
+    private val repository : IRepository,
     @Named("REDIRECT_URI") var redirectUri: String,
     private var myServiceInterceptor: MyServiceInterceptor
 ) : ViewModel() {
+
+    private val _currentUser = MutableLiveData<AuthResource<User>>()
+    val user: LiveData<AuthResource<User>> = _currentUser
 
     private val _response = MutableLiveData<AuthResource<AuthenticationResponse>>()
     fun response(): LiveData<AuthResource<AuthenticationResponse>> = _response
@@ -82,5 +88,19 @@ class AuthViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun currentUser() {
+        disposable.add(
+            repository.getCurrentUser()
+                .subscribe(
+                    { success ->
+                        _currentUser.value = AuthResource.authenticated(success)
+                    }, { error ->
+                        Log.i("TOPIFY", error.message)
+                        _currentUser.value = AuthResource.error(error.message!!, null)
+                    }
+                )
+        )
     }
 }

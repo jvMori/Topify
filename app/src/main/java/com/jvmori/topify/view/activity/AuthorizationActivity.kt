@@ -57,9 +57,8 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
     }
 
     private fun authenticateUser() {
-        val discoverViewModel = ViewModelProviders.of(this, viewModelProvider).get(DiscoverViewModel::class.java)
-        discoverViewModel.currentUser()
-        sessionManager.authenticateWithId(discoverViewModel.user())
+        authViewModel.currentUser()
+        sessionManager.authenticateWithId(authViewModel.user)
 
         sessionManager.getUser().observe(this, Observer {
             Log.i("Main", it.status.toString())
@@ -70,7 +69,7 @@ class AuthorizationActivity : DaggerAppCompatActivity() {
                     finish()
                 }
                 AuthResource.AuthStatus.NOT_AUTHENTICATED, AuthResource.AuthStatus.ERROR -> {
-                    authViewModel.authorize(this)
+                    this.authViewModel.authorize(this)
                 }
                 else -> {
                     loginBtn.visibility = View.GONE

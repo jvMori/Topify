@@ -14,21 +14,6 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(DiscoverViewModel::class)
-    abstract fun bindDiscoverViewModel(discoverViewModel: DiscoverViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ArtistsDetailsViewModel::class)
-    abstract fun bindArtistsDetailsViewModel(discoverViewModel: ArtistsDetailsViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(CreateTopViewModel::class)
-    abstract fun bindCreateTopViewModel(createTopViewModel: CreateTopViewModel): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(AuthViewModel::class)
     abstract fun bindAuthViewModel(authViewModel: AuthViewModel): ViewModel
 

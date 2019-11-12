@@ -24,9 +24,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         DataSourceModule::class,
         ImageLoaderModule::class,
         DatabaseModule::class,
-        TopItemsModule::class,
-        RecommendationsModule::class,
-        ArtistsModule::class
+        AppSubcomponents::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {

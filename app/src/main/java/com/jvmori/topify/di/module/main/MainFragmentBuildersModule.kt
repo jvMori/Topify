@@ -6,6 +6,7 @@ import com.jvmori.topify.view.fragment.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+
 @Module
 abstract class MainFragmentBuildersModule {
 

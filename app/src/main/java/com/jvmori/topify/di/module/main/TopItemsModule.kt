@@ -12,6 +12,7 @@ import com.jvmori.topify.data.db.entity.TopTracksResponse
 import com.jvmori.topify.data.repository.top.*
 import com.jvmori.topify.data.response.top.TopParam
 import com.jvmori.topify.di.scope.ApplicationScope
+import com.jvmori.topify.di.scope.MainActivityScope
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -20,15 +21,15 @@ import javax.inject.Named
 class TopItemsModule {
 
     @Provides
-    @ApplicationScope
+    @MainActivityScope
     fun provideTopTracksDao(topifyDatabase: TopifyDatabase): TopTracksDao = topifyDatabase.topTracksDao()
 
     @Provides
-    @ApplicationScope
+    @MainActivityScope
     fun provideTopArtistsDao(topifyDatabase: TopifyDatabase): TopArtistsDao = topifyDatabase.topArtistsDao()
 
     @Provides
-    @ApplicationScope
+    @MainActivityScope
     @Named(TOP_TRACKS)
     fun provideTopTracksRepository(
         networkDataSource: NetworkDataSource,
@@ -37,7 +38,7 @@ class TopItemsModule {
         TopTracksRepository(networkDataSource, topTracksDao)
 
     @Provides
-    @ApplicationScope
+    @MainActivityScope
     @Named(TOP_ARTISTS)
     fun provideTopArtistsRepository(
         networkDataSource: NetworkDataSource,
@@ -46,7 +47,7 @@ class TopItemsModule {
         TopArtistsRepository(networkDataSource, topArtistsDao)
 
     @Provides
-    @ApplicationScope
+    @MainActivityScope
     fun provideTopParamsRepository(
         topTracksDao: TopTracksDao
     ): TopParamsRepository =
