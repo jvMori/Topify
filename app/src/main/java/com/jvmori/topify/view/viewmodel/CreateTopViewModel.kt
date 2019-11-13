@@ -21,6 +21,7 @@ import com.jvmori.topify.data.repository.top.TopRepository
 import com.jvmori.topify.data.response.top.Image
 import com.jvmori.topify.data.response.top.TimeRange
 import com.jvmori.topify.data.response.top.TopCategory
+import com.jvmori.topify.di.scope.MainActivityScope
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,6 +30,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
+@MainActivityScope
 class CreateTopViewModel @Inject constructor() : ViewModel() {
 
     @field:[Inject Named(TOP_TRACKS)]

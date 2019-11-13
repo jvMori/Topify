@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.data.Resource
-
 import com.jvmori.topify.view.viewmodel.AuthViewModel
-import com.jvmori.topify.view.viewmodel.DiscoverViewModel
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*

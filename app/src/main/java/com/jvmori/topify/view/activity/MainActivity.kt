@@ -6,6 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.jvmori.topify.R
+import com.jvmori.topify.application.BaseApplication
+import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.top_toolbar.*
@@ -18,6 +20,7 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(my_toolbar)
+        (application as BaseApplication).appComponent.mainActivityComponent().create().inject(this)
         setupNavController()
         controller.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id){

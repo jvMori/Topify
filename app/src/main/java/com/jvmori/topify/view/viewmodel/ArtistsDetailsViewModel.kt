@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.repository.artists.ArtistsRepository
 import com.jvmori.topify.data.response.top.Album
+import com.jvmori.topify.di.scope.MainActivityScope
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
+@MainActivityScope
 class ArtistsDetailsViewModel @Inject constructor() : ViewModel() {
 
     private val disposable = CompositeDisposable()

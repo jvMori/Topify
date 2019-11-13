@@ -9,10 +9,11 @@ import com.jvmori.topify.data.repository.IRepository
 import com.jvmori.topify.data.repository.recommendations.RecommendationsRepository
 import com.jvmori.topify.data.response.recommendations.RecommendationsResponse
 import com.jvmori.topify.data.response.search.ArtistsResponse
+import com.jvmori.topify.di.scope.MainActivityScope
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-
+@MainActivityScope
 class DiscoverViewModel @Inject constructor() : ViewModel() {
 
     private val disposable = CompositeDisposable()
