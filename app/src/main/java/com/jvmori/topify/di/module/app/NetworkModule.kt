@@ -1,9 +1,11 @@
 package com.jvmori.topify.di.module.app
 
+import com.jvmori.topify.data.network.AccessToken
 import com.jvmori.topify.data.network.MyServiceInterceptor
 import com.jvmori.topify.di.module.auth.AuthModule
 import okhttp3.OkHttpClient
 import com.jvmori.topify.di.scope.ApplicationScope
+import com.jvmori.topify.di.scope.AuthActivityScope
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -11,6 +13,13 @@ import javax.inject.Named
 
 @Module
 class NetworkModule {
+
+    @ApplicationScope
+    @Provides
+    @Named("Access_Token")
+    fun provideAccessToken() : String {
+        return AccessToken().accessToken
+    }
 
     @Provides
     @ApplicationScope

@@ -7,7 +7,6 @@ import com.jvmori.topify.di.scope.AuthActivityScope
 import com.jvmori.topify.di.scope.MainActivityScope
 import com.jvmori.topify.view.activity.AuthorizationActivity
 import com.jvmori.topify.view.activity.MainActivity
-import com.jvmori.topify.view.activity.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -34,7 +33,4 @@ abstract class ActivityBuildersModule {
         ]
     )
     abstract fun contributeMainActivity(): MainActivity
-
-    @ContributesAndroidInjector
-    abstract fun contributeSplashActivity(): SplashActivity
 }

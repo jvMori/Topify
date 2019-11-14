@@ -16,13 +16,6 @@ class AuthModule {
 
     @AuthActivityScope
     @Provides
-    @Named("Access_Token")
-    fun provideAccessToken() : String {
-        return AccessToken().accessToken
-    }
-
-    @AuthActivityScope
-    @Provides
     @Named("REDIRECT_URI")
     fun provideRedirectUri() : String {
         return  "jvmori://topify"
