@@ -22,8 +22,4 @@ class DatabaseModule {
             .fallbackToDestructiveMigration()
             .build()
     }
-
-    @Provides
-    @ApplicationScope
-    fun provideAuthDao(topifyDatabase: TopifyDatabase) : AuthDao = topifyDatabase.authDao()
 }

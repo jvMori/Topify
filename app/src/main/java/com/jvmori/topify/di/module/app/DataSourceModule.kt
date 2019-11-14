@@ -9,7 +9,7 @@ import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [ApiModule::class])
+@Module
 class DataSourceModule {
 
     @Provides

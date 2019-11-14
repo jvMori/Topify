@@ -20,7 +20,6 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(my_toolbar)
-        (application as BaseApplication).appComponent.mainActivityComponent().create().inject(this)
         setupNavController()
         controller.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id){

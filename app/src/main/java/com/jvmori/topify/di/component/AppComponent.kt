@@ -4,10 +4,7 @@ import android.app.Application
 import com.jvmori.topify.Utils.SessionManager
 import com.jvmori.topify.application.BaseApplication
 import com.jvmori.topify.di.module.app.*
-import com.jvmori.topify.di.module.main.ArtistsModule
-import com.jvmori.topify.di.module.main.MainViewModelsModule
-import com.jvmori.topify.di.module.main.RecommendationsModule
-import com.jvmori.topify.di.module.main.TopItemsModule
+import com.jvmori.topify.di.module.auth.ViewModelsModule
 import com.jvmori.topify.di.scope.ApplicationScope
 import dagger.BindsInstance
 import dagger.Component
@@ -21,17 +18,17 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidSupportInjectionModule::class,
         AndroidInjectionModule::class,
         ActivityBuildersModule::class,
-        ViewModelsModule::class,
+        DatabaseModule::class,
+        NetworkModule::class,
+        ApiModule::class,
         DataSourceModule::class,
         ImageLoaderModule::class,
-        DatabaseModule::class,
-        AppSubcomponents::class
+        ViewModelBuilder::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
 
     val sessionManager: SessionManager
-    fun mainActivityComponent() : MainActivityComponent.Factory
 
     @Component.Builder
     interface Builder {

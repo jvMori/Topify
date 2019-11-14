@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.Provides
 
 
-@Module(includes = [NetworkModule::class])
+@Module
 class ApiModule {
 
     companion object {

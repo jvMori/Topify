@@ -3,6 +3,7 @@ package com.jvmori.topify.di.module.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jvmori.topify.di.ViewModelKey
+import com.jvmori.topify.di.module.app.ViewModelBuilder
 import com.jvmori.topify.di.scope.MainActivityScope
 import com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel
 import com.jvmori.topify.view.viewmodel.CreateTopViewModel
@@ -33,6 +34,5 @@ abstract class MainViewModelsModule {
     @ViewModelKey(CreateTopViewModel::class)
     @MainActivityScope
     abstract fun bindCreateTopViewModel(createTopViewModel: CreateTopViewModel): ViewModel
-
 
 }

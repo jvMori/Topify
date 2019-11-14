@@ -9,11 +9,7 @@ import dagger.Provides
 import javax.inject.Named
 
 
-@Module(
-    includes = [
-        AuthModule::class
-    ]
-)
+@Module
 class NetworkModule {
 
     @Provides
