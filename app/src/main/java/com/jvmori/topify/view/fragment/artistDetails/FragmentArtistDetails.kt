@@ -60,12 +60,6 @@ class FragmentArtistDetails : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.fetchCurrentArtist(arguments)
-
-//        imageLoader.loadImageWithRoundedCorners(
-//            viewModel.currentArtist?.getImageUrl(), profilePic, ImageParams(
-//                5000F, 0F, 160, 160
-//            )
-//        )
         viewModel.fetchAlbums(viewModel.currentArtist?.id)
         viewModel.fetchPopularity(viewModel.currentArtist)
         viewModel.getAlbums().observe(this, Observer {
