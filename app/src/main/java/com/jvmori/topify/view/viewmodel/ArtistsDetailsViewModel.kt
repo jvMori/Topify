@@ -1,9 +1,13 @@
 package com.jvmori.topify.view.viewmodel
 
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jvmori.topify.Utils.ImageLoader
+import com.jvmori.topify.Utils.ImageParams
 import com.jvmori.topify.Utils.artistDetailsKey
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.repository.artists.ArtistsRepository
@@ -24,6 +28,9 @@ class ArtistsDetailsViewModel @Inject constructor(
     var currentArtist: ArtistItem? = null
     var popularity: String? = null
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private val _albums = MutableLiveData<Resource<List<Album>>>()
     fun getAlbums(): LiveData<Resource<List<Album>>> = _albums
 
@@ -33,7 +40,7 @@ class ArtistsDetailsViewModel @Inject constructor(
         }
     }
 
-    fun fetchPopularity(currentArtist : ArtistItem?) {
+    fun fetchPopularity(currentArtist: ArtistItem?) {
         popularity = "${currentArtist?.popularity} / 100"
     }
 
@@ -50,6 +57,20 @@ class ArtistsDetailsViewModel @Inject constructor(
                 })
         )
     }
+
+
+    companion object {
+        @BindingAdapter(value = ["imageUrl", "imageLoader"])
+        @JvmStatic
+        fun ImageView.bindImageCircle(imageUrl: String, imageLoader: ImageLoader) {
+            imageLoader.loadImageWithRoundedCorners(
+                imageUrl, this, ImageParams(
+                    5000F, 0F, 160, 160
+                )
+            )
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()

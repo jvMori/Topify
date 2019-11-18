@@ -27,6 +27,6 @@
     <fragment android:id="@+id/fragmentTopSettings" android:name="com.jvmori.topify.view.fragment.FragmentTopSettings"
               android:label="Settings"/>
     <fragment android:id="@+id/fragmentArtistDetails"
-              android:name="com.jvmori.topify.view.fragment.FragmentArtistDetails"
+              android:name="com.jvmori.topify.view.fragment.artistDetails.FragmentArtistDetails"
               android:label="FragmentArtistDetails"/>
 </navigation>

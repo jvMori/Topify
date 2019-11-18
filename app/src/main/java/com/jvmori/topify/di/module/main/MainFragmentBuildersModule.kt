@@ -2,6 +2,7 @@ package com.jvmori.topify.di.module.main
 
 import com.jvmori.topify.view.dialog.ConfirmPlaylistCreationDialog
 import com.jvmori.topify.view.fragment.*
+import com.jvmori.topify.view.fragment.artistDetails.FragmentArtistDetails
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

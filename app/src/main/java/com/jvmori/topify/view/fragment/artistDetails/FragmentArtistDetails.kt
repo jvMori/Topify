@@ -1,11 +1,10 @@
-package com.jvmori.topify.view.fragment
+package com.jvmori.topify.view.fragment.artistDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -62,11 +61,11 @@ class FragmentArtistDetails : DaggerFragment() {
 
         viewModel.fetchCurrentArtist(arguments)
 
-        imageLoader.loadImageWithRoundedCorners(
-            viewModel.currentArtist?.getImageUrl(), profilePic, ImageParams(
-                5000F, 0F, 160, 160
-            )
-        )
+//        imageLoader.loadImageWithRoundedCorners(
+//            viewModel.currentArtist?.getImageUrl(), profilePic, ImageParams(
+//                5000F, 0F, 160, 160
+//            )
+//        )
         viewModel.fetchAlbums(viewModel.currentArtist?.id)
         viewModel.fetchPopularity(viewModel.currentArtist)
         viewModel.getAlbums().observe(this, Observer {
