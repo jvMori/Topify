@@ -14,6 +14,9 @@ android {
     androidExtensions {
         experimental = true
     }
+    dataBinding {
+        enabled true
+    }
     defaultConfig {
         applicationId "com.jvmori.topify"
         minSdkVersion 24

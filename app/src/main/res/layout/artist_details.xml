@@ -1,90 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:orientation="vertical">
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data >
+        <variable
+                name="viewmodel"
+                type="com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel"/>
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                       android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView android:id="@+id/gradient" android:layout_width="0dp"
-                   android:layout_height="200dp"
-                   android:background="@drawable/gradient"
-                   app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
-                android:id="@+id/artistName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="monospace" android:text="NF"
-                android:textSize="20sp" android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        <ImageView
-                android:id="@+id/profilePic"
-                android:layout_width="160dp" android:layout_height="160dp"
-                android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp" app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="@+id/gradient" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/artistName"/>
-        <TextView
-                android:id="@+id/followers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp" android:text="Followers"
-                android:textStyle="bold" app:layout_constraintEnd_toStartOf="@+id/profilePic"
-                app:layout_constraintTop_toBottomOf="@+id/profilePic"/>
-        <TextView
-                android:id="@+id/popularity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp" android:layout_marginTop="8dp"
-                android:text="Popularity" android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/profilePic" app:layout_constraintTop_toBottomOf="@+id/profilePic"/>
-        <TextView
-                android:id="@+id/followersCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp" android:text="164889"
-                android:textStyle="bold" app:layout_constraintEnd_toEndOf="@+id/followers"
-                app:layout_constraintStart_toStartOf="@+id/followers" app:layout_constraintTop_toBottomOf="@+id/followers"/>
-        <TextView
-                android:id="@+id/popularityCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="71 / 100" android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/popularity" app:layout_constraintStart_toStartOf="@+id/popularity"
-                app:layout_constraintTop_toBottomOf="@+id/popularity"/>
-        <Button
-                android:id="@+id/openInSpotify"
-                style="@style/Button"
-                android:layout_width="wrap_content" android:layout_height="50dp"
-                android:layout_marginTop="16dp" android:text="OPEN IN SPOTIFY"
-                android:textSize="18sp" android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/profilePic"
-                app:layout_constraintHorizontal_bias="0.529" app:layout_constraintStart_toStartOf="@+id/profilePic"
-                app:layout_constraintTop_toBottomOf="@+id/followersCount"/>
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/genresRv"
-                android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp" android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/openInSpotify" app:reverseLayout="false" tools:itemCount="1"
-                tools:listitem="@layout/genre_item"/>
-        <com.jvmori.topify.view.customViews.ItemsViewSection
-                android:id="@+id/popularAlbums"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/genresRv" app:sectionName="Popular albums"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                           android:layout_height="match_parent">
 
+            <ImageView android:id="@+id/gradient" android:layout_width="0dp"
+                       android:layout_height="200dp"
+                       android:background="@drawable/gradient"
+                       app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                    android:id="@+id/artistName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="monospace"
+                    android:text="@{viewmodel.currentArtist.name}"
+                    android:textSize="20sp" android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="160dp" android:layout_height="160dp"
+                    android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/gradient" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/artistName"/>
+            <TextView
+                    android:id="@+id/followers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="Followers"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/profilePic"
+                    app:layout_constraintTop_toBottomOf="@+id/profilePic"/>
+            <TextView
+                    android:id="@+id/popularity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp" android:layout_marginTop="8dp"
+                    android:text="Popularity" android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/profilePic"
+                    app:layout_constraintTop_toBottomOf="@+id/profilePic"/>
+            <TextView
+                    android:id="@+id/followersCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{Integer.toString(viewmodel.currentArtist.followers.total)}"
+                    android:textStyle="bold" app:layout_constraintEnd_toEndOf="@+id/followers"
+                    app:layout_constraintStart_toStartOf="@+id/followers"
+                    app:layout_constraintTop_toBottomOf="@+id/followers"/>
+            <TextView
+                    android:id="@+id/popularityCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{viewmodel.popularity}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/popularity"
+                    app:layout_constraintStart_toStartOf="@+id/popularity"
+                    app:layout_constraintTop_toBottomOf="@+id/popularity"/>
+            <Button
+                    android:id="@+id/openInSpotify"
+                    style="@style/Button"
+                    android:layout_width="wrap_content" android:layout_height="50dp"
+                    android:layout_marginTop="16dp" android:text="OPEN IN SPOTIFY"
+                    android:textSize="18sp" android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/profilePic"
+                    app:layout_constraintHorizontal_bias="0.529" app:layout_constraintStart_toStartOf="@+id/profilePic"
+                    app:layout_constraintTop_toBottomOf="@+id/followersCount"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/genresRv"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp" android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/openInSpotify" app:reverseLayout="false"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/genre_item"/>
+            <com.jvmori.topify.view.customViews.ItemsViewSection
+                    android:id="@+id/popularAlbums"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/genresRv" app:sectionName="Popular albums"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</layout>
