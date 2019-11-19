@@ -1,4 +1,4 @@
-package com.jvmori.topify.view.viewmodel
+package com.jvmori.topify.view.artistDetails
 
 import android.os.Bundle
 import android.widget.ImageView
@@ -27,6 +27,7 @@ class ArtistsDetailsViewModel @Inject constructor(
 
     var currentArtist: ArtistItem? = null
     var popularity: String? = null
+    var adapter : GenreAdapter? = null
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -38,6 +39,10 @@ class ArtistsDetailsViewModel @Inject constructor(
         arguments?.let {
             currentArtist = it.getParcelable(artistDetailsKey)
         }
+    }
+
+    fun fetchAdapter(){
+        adapter = GenreAdapter(currentArtist?.genres)
     }
 
     fun fetchPopularity(currentArtist: ArtistItem?) {
@@ -70,7 +75,6 @@ class ArtistsDetailsViewModel @Inject constructor(
             )
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()

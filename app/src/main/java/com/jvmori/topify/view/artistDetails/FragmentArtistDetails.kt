@@ -1,4 +1,4 @@
-package com.jvmori.topify.view.fragment.artistDetails
+package com.jvmori.topify.view.artistDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jvmori.topify.R
 import com.jvmori.topify.Utils.ImageLoader
-import com.jvmori.topify.Utils.ImageParams
 import com.jvmori.topify.data.Resource
 import com.jvmori.topify.data.response.top.Album
 import com.jvmori.topify.data.response.top.ArtistItem
 import com.jvmori.topify.databinding.ArtistDetailsBinding
 import com.jvmori.topify.view.customViews.AlbumItem
-import com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.artist_details.*
 import javax.inject.Inject
@@ -59,9 +57,13 @@ class FragmentArtistDetails : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchCurrentArtist(arguments)
-        viewModel.fetchAlbums(viewModel.currentArtist?.id)
-        viewModel.fetchPopularity(viewModel.currentArtist)
+        viewModel.apply {
+            fetchCurrentArtist(arguments)
+            fetchAlbums(viewModel.currentArtist?.id)
+            fetchPopularity(viewModel.currentArtist)
+            fetchAdapter()
+        }
+
         viewModel.getAlbums().observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> loading()
@@ -69,6 +71,7 @@ class FragmentArtistDetails : DaggerFragment() {
                 Resource.Status.ERROR -> error()
             }
         })
+
     }
 
     private fun loading() {}
@@ -102,9 +105,4 @@ class FragmentArtistDetails : DaggerFragment() {
         }
         return viewItems
     }
-
-    private fun createGenres(artistItem: ArtistItem) {
-
-    }
-
 }

@@ -6,7 +6,7 @@
     <data >
         <variable
                 name="viewmodel"
-                type="com.jvmori.topify.view.viewmodel.ArtistsDetailsViewModel"/>
+                type="com.jvmori.topify.view.artistDetails.ArtistsDetailsViewModel"/>
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -93,11 +93,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/followersCount"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/genresRv"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp" android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/openInSpotify" app:reverseLayout="false"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    android:adapter="@{viewmodel.adapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/openInSpotify"
+                    app:reverseLayout="false"
                     tools:itemCount="1"
                     tools:listitem="@layout/genre_item"/>
             <com.jvmori.topify.view.customViews.ItemsViewSection
