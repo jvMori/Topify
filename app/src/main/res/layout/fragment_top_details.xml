@@ -34,28 +34,34 @@
                android:layout_marginEnd="8dp"
                android:layout_marginTop="68dp" app:layout_constraintTop_toTopOf="@+id/toolbar"
                app:layout_constraintHorizontal_bias="0.497"/>
+
     <Button
-            android:text="Open in Spotify"
+            android:id="@+id/btnOpenInSpotify"
             style="@style/Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/btnOpenInSpotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="260dp"
+            android:layout_marginBottom="0dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="Open in Spotify"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="260dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:paddingLeft="32dp" android:paddingRight="32dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/playlistRecyclerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
             tools:listitem="@layout/created_playlist_item" />

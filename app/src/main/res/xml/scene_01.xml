@@ -42,13 +42,14 @@
                 android:background="@color/colorPrimaryDark"
                 motion:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/created_playlist_item"
                 motion:layout_constraintHorizontal_bias="1.0"
-                motion:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
-                android:layout_marginTop="16dp">
+                motion:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"
+                motion:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify">
 
         </Constraint>
     </ConstraintSet>
@@ -83,13 +84,14 @@
                 android:background="@color/colorPrimaryDark"
                 motion:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintEnd_toEndOf="parent"
                 tools:listitem="@layout/created_playlist_item"
                 motion:layout_constraintHorizontal_bias="1.0"
-                motion:layout_constraintTop_toBottomOf="@+id/toolbar"
-                android:layout_marginTop="0dp">
+                motion:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
+                motion:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp">
 
         </Constraint>
     </ConstraintSet>
