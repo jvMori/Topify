@@ -15,84 +15,56 @@
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
+                android:id="@+id/btnOpenInSpotify"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="260dp" />
+        <Constraint
                 android:id="@+id/playlistsCoverImg"
+                motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                tools:srcCompat="@drawable/placeholder_img"
-                motion:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="68dp"
-                motion:layout_constraintTop_toTopOf="@+id/toolbar">
-        </Constraint>
-        <Constraint
-                android:text="Open in Spotify"
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnOpenInSpotify"
-                motion:layout_constraintStart_toStartOf="@+id/playlistsCoverImg"
-                motion:layout_constraintEnd_toEndOf="@+id/playlistsCoverImg" android:textStyle="bold"
-                motion:layout_constraintHorizontal_bias="0.51"
-                android:layout_marginTop="260dp" motion:layout_constraintTop_toTopOf="parent">
-        </Constraint>
-        <Constraint
-                android:id="@+id/playlistRecyclerView"
-                android:layout_width="0dp"
-                android:background="@color/colorPrimaryDark"
-                motion:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                motion:layout_constraintTop_toTopOf="@+id/toolbar"
+                motion:layout_constraintHorizontal_bias="0.497"
                 motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintEnd_toEndOf="parent"
-                tools:listitem="@layout/created_playlist_item"
-                motion:layout_constraintHorizontal_bias="1.0"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="8dp"
-                motion:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify">
-
+                android:layout_marginTop="68dp" >
+            <CustomAttribute
+                    motion:attributeName="alpha"
+                    motion:customFloatValue="1" />
         </Constraint>
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+                android:id="@+id/btnOpenInSpotify"
+                motion:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                motion:layout_constraintTop_toTopOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="55dp" />
         <Constraint
                 android:id="@+id/playlistsCoverImg"
+                motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                tools:srcCompat="@drawable/placeholder_img"
-                motion:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                motion:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="68dp"
-                motion:layout_constraintTop_toTopOf="@+id/toolbar">
-        </Constraint>
-        <Constraint
-                android:text="Open in Spotify"
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnOpenInSpotify"
-                motion:layout_constraintStart_toStartOf="@+id/playlistsCoverImg"
-                motion:layout_constraintEnd_toEndOf="@+id/playlistsCoverImg" android:textStyle="bold"
-                motion:layout_constraintHorizontal_bias="0.51"
-                android:layout_marginTop="55dp"
-                motion:layout_constraintTop_toTopOf="parent">
-        </Constraint>
-        <Constraint
-                android:id="@+id/playlistRecyclerView"
-                android:layout_width="0dp"
-                android:background="@color/colorPrimaryDark"
-                motion:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                motion:layout_constraintTop_toTopOf="@+id/toolbar"
+                motion:layout_constraintHorizontal_bias="0.497"
                 motion:layout_constraintStart_toStartOf="parent"
-                motion:layout_constraintEnd_toEndOf="parent"
-                tools:listitem="@layout/created_playlist_item"
-                motion:layout_constraintHorizontal_bias="1.0"
-                motion:layout_constraintTop_toBottomOf="@+id/btnOpenInSpotify"
-                motion:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="8dp">
-
+                android:layout_marginTop="68dp" >
+            <CustomAttribute
+                    motion:attributeName="alpha"
+                    motion:customFloatValue="0.5" />
         </Constraint>
     </ConstraintSet>
 
